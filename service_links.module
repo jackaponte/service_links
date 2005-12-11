@@ -1,0 +1,90 @@
+<?php
+/* $Id$ */
+
+/**
+ * @file
+ * Author: Fredrik Jonsson <fredrik at combonet dot se>
+ * A module that adds Digg, del.icio.us, reddit and Technorati links to nodes.
+ */
+
+/**
+ * Implementation of hook_help().
+ */
+function service_links_help($section = 'admin/help#service_links') {
+  switch ($section) {
+    case 'admin/modules#description':
+      $output = t('Add Digg, del.icio.us, reddit and Technorati links to nodes.');
+      break;
+    case 'admin/settings/service_links':
+      $output = t('Here you can configure the service links.');
+      break;
+  }
+  return $output;
+}
+
+/**
+ * Implementation of hook_settings().
+ */
+function service_links_settings() {
+
+  foreach(node_list() as $type) {
+    $name = node_invoke($type, 'node_name');
+    $options[$type] = $name;
+  }
+
+  $show_set = form_checkbox(t('Show Digg links'), 'service_links_show_digg', 1, variable_get('service_links_show_digg', 1));
+  $show_set .= form_checkbox(t('Show del.icio.us links'), 'service_links_show_delicious', 1, variable_get('service_links_show_delicious', 1));
+  $show_set .= form_checkbox(t('Show reddit links'), 'service_links_show_reddit', 1, variable_get('service_links_show_reddit', 1));
+  $show_set .= form_checkbox(t('Show Technorati links'), 'service_links_show_technorati', 1, variable_get('service_links_show_technorati', 1));
+  $output = form_group(t('What links to show'), $show_set);
+
+  $how_set = form_radios(t('Link style'), 'service_links_style', variable_get('service_links_style', 1), array('1' => t('Text links'),'2' => t('Image links'),'3' => t('Image and text links')));
+  $how_set .= form_select(t('Node types to display links for'), 'service_links_node_types', variable_get('service_links_node_types', array()), $options, NULL, 0, TRUE);
+  $output .= form_group(t('Where and how to show the links'), $how_set);
+
+  return $output;
+}
+
+/**
+ * Implementation of hook_link().
+ */
+function service_links_link($type, $node = 0, $main) {
+  $links = array();
+
+  $node_type = in_array($node->type, variable_get('service_links_node_types', array()), TRUE);
+
+  if ($type == 'node' && $node_type && $main == 0) {
+    $url = url("node/$node->nid", NULL, NULL, TRUE);
+    $title = $node->title;
+
+    if (variable_get('service_links_show_digg', 1)) {
+      $links[] = _service_link_build_link(t('digg'), "http://digg.com/submit?phase=2&url=$url", t('Digg this post on digg.com'), 'digg.png');
+    }
+    if (variable_get('service_links_show_delicious', 1)) {
+      $links[] = _service_link_build_link(t('bookmark'), "http://del.icio.us/post?url=$url&title=$title", t('Bookmark this post on del.icio.us'), 'delicious.png');
+    }
+    if (variable_get('service_links_show_reddit', 1)) {
+      $links[] = _service_link_build_link(t('reddit'), "http://reddit.com/submit?url=$url&title=$title", t('Submit this post on reddit.com'), 'reddit.png');
+    }
+    if (variable_get('service_links_show_technorati', 1)) {
+      $links[] = _service_link_build_link(t('cosmos'), "http://technorati.com/cosmos/search.html?url=$url", t('Search Technorati for links to this post'), 'technorati.png');
+    }
+  }
+
+  return $links;
+}
+
+function _service_link_build_link($text, $url, $title, $image) {
+  if (variable_get('service_links_style', 3) == '3') {
+    $link = l('<img src="'. drupal_get_path('module', 'service_links') .'/'. $image .'" alt="'. $text .'" /> '. $text, $url, array('title' => $title), NULL, NULL, FALSE, TRUE);
+  }
+  elseif (variable_get('service_links_style', 1) == '2') {
+    $link = l('<img src="'. drupal_get_path('module', 'service_links') .'/'. $image .'" alt="'. $text .'" />', $url, array('title' => $title), NULL, NULL, FALSE, TRUE);
+  }
+  else {
+    $link = l($text, $url, array('title' => $title));
+  }
+
+  return $link;
+}
+?>
