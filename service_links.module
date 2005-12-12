@@ -58,16 +58,16 @@ function service_links_link($type, $node = 0, $main) {
     $title = $node->title;
 
     if (variable_get('service_links_show_digg', 1)) {
-      $links[] = _service_link_build_link(t('digg'), "http://digg.com/submit?phase=2&url=$url", t('Digg this post on digg.com'), 'digg.png');
+      $links[] = _service_link_build_link(t('digg'), "http://digg.com/submit?phase=2&url=$url", t('Digg this post on digg.com.'), 'digg.png');
     }
     if (variable_get('service_links_show_delicious', 1)) {
-      $links[] = _service_link_build_link(t('bookmark'), "http://del.icio.us/post?url=$url&title=$title", t('Bookmark this post on del.icio.us'), 'delicious.png');
+      $links[] = _service_link_build_link(t('bookmark'), "http://del.icio.us/post?url=$url&title=$title", t('Bookmark this post on del.icio.us.'), 'delicious.png');
     }
     if (variable_get('service_links_show_reddit', 1)) {
-      $links[] = _service_link_build_link(t('reddit'), "http://reddit.com/submit?url=$url&title=$title", t('Submit this post on reddit.com'), 'reddit.png');
+      $links[] = _service_link_build_link(t('reddit'), "http://reddit.com/submit?url=$url&title=$title", t('Submit this post on reddit.com.'), 'reddit.png');
     }
     if (variable_get('service_links_show_technorati', 1)) {
-      $links[] = _service_link_build_link(t('cosmos'), "http://technorati.com/cosmos/search.html?url=$url", t('Search Technorati for links to this post'), 'technorati.png');
+      $links[] = _service_link_build_link(t('cosmos'), "http://technorati.com/cosmos/search.html?url=$url", t('Search Technorati for links to this post.'), 'technorati.png');
     }
   }
 
@@ -76,13 +76,13 @@ function service_links_link($type, $node = 0, $main) {
 
 function _service_link_build_link($text, $url, $title, $image) {
   if (variable_get('service_links_style', 3) == '3') {
-    $link = l('<img src="'. drupal_get_path('module', 'service_links') .'/'. $image .'" alt="'. $text .'" /> '. $text, $url, array('title' => $title), NULL, NULL, FALSE, TRUE);
+    $link = '<a href="'. check_url($url) .'" title="'. $title .'"><img src="'. drupal_get_path('module', 'service_links') .'/'. $image .'" alt="'. $text .'" /> '. $text .'</a>';
   }
   elseif (variable_get('service_links_style', 1) == '2') {
-    $link = l('<img src="'. drupal_get_path('module', 'service_links') .'/'. $image .'" alt="'. $text .'" />', $url, array('title' => $title), NULL, NULL, FALSE, TRUE);
+    $link = '<a href="'. check_url($url) .'" title="'. $title .'"><img src="'. drupal_get_path('module', 'service_links') .'/'. $image .'" alt="'. $text .'" /></a>';
   }
   else {
-    $link = l($text, $url, array('title' => $title));
+    $link = '<a href="'. check_url($url) .'" title="'. $title .'">'. $text .'</a>';
   }
 
   return $link;
