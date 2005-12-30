@@ -37,10 +37,13 @@ function service_links_settings() {
   $show_set .= form_checkbox(t('Show reddit links'), 'service_links_show_reddit', 1, variable_get('service_links_show_reddit', 1));
   $show_set .= form_checkbox(t('Show Technorati links'), 'service_links_show_technorati', 1, variable_get('service_links_show_technorati', 1));
   $output = form_group(t('What links to show'), $show_set);
-
+  
   $how_set = form_radios(t('Link style'), 'service_links_style', variable_get('service_links_style', 1), array('1' => t('Text links'),'2' => t('Image links'),'3' => t('Image and text links')));
-  $how_set .= form_select(t('Node types to display links for'), 'service_links_node_types', variable_get('service_links_node_types', array()), $options, NULL, 0, TRUE);
-  $output .= form_group(t('Where and how to show the links'), $how_set);
+  $output .= form_group(t('How to show the links'), $how_set); 
+
+  $how_set = form_select(t('Node types to display links for'), 'service_links_node_types', variable_get('service_links_node_types', array()), $options, t('Links will display on the node pages themselves (as dictated by the theme).<br/>To display links on main feed pages, check the box below.'), 0, TRUE);
+  $how_set .= form_checkbox(t('Display in main feeds (optional)'), 'service_links_main', 1, variable_get('service_links_main', 0));
+  $output .= form_group(t('Where to show the links'), $how_set);
 
   return $output;
 }
@@ -53,7 +56,8 @@ function service_links_link($type, $node = 0, $main) {
 
   $node_type = in_array($node->type, variable_get('service_links_node_types', array()), TRUE);
 
-  if ($type == 'node' && $node_type && $main == 0) {
+  if ($type == 'node' && $node_type && variable_get('service_links_main', '0') == '1') {
+  
     $url = url("node/$node->nid", NULL, NULL, TRUE);
     $title = $node->title;
 
@@ -61,13 +65,13 @@ function service_links_link($type, $node = 0, $main) {
       $links[] = _service_link_build_link(t('digg'), "http://digg.com/submit?phase=2&url=$url", t('Digg this post on digg.com.'), 'digg.png');
     }
     if (variable_get('service_links_show_delicious', 1)) {
-      $links[] = _service_link_build_link(t('bookmark'), "http://del.icio.us/post?url=$url&title=$title", t('Bookmark this post on del.icio.us.'), 'delicious.png');
+      $links[] = _service_link_build_link(t('delicious'), "http://del.icio.us/post?url=$url&title=$title", t('Bookmark this post on del.icio.us.'), 'delicious.png');
     }
     if (variable_get('service_links_show_reddit', 1)) {
       $links[] = _service_link_build_link(t('reddit'), "http://reddit.com/submit?url=$url&title=$title", t('Submit this post on reddit.com.'), 'reddit.png');
     }
     if (variable_get('service_links_show_technorati', 1)) {
-      $links[] = _service_link_build_link(t('cosmos'), "http://technorati.com/cosmos/search.html?url=$url", t('Search Technorati for links to this post.'), 'technorati.png');
+      $links[] = _service_link_build_link(t('technorati'), "http://technorati.com/cosmos/search.html?url=$url", t('Search Technorati for links to this post.'), 'technorati.png');
     }
   }
 
