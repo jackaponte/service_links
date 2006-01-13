@@ -1,19 +1,21 @@
 Drupal service_links module:
 ------------------------
 Author - Fredrik Jonsson <fredrik at combonet dot se>
-Requires - Drupal 4.6
+Requires - Drupal 4.7
 License - GPL (see LICENSE)
 
 
 Overview:
 --------
-The service_links module enables admins to add the following 
+The service links module enables admins to add the following 
 links to nodes:
 * Digg - Submit this post on digg.com
 * del.icio.us - Bookmark this post on del.icio.us
 * reddit - Submit this post on reddit.com
 * Technorati - Search Technorati for links to this post
 
+The links can be text, image or both and admins can choose on
+what node types to show them on.
 
 Installation and configuration:
 ------------------------------
