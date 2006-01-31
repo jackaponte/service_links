@@ -7,15 +7,17 @@ License - GPL (see LICENSE)
 
 Overview:
 --------
-The service links module enables admins to add the following 
+The service links module enables admins to add the following
 links to nodes:
-* Digg - Submit this post on digg.com
 * del.icio.us - Bookmark this post on del.icio.us
-* reddit - Submit this post on reddit.com
+* Digg - Submit this post on digg.com
+* Reddit - Submit this post on reddit.com
 * Technorati - Search Technorati for links to this post
 
-The links can be text, image or both and admins can choose on
-what node types to show them on.
+The site owner can deside to show the links as text, image or both.
+What node types to display links for and if the they should show 
+on the front page or not.
+
 
 Installation and configuration:
 ------------------------------
@@ -25,5 +27,4 @@ copying the module and the images into it, then
 enabling the module at 'administer >> modules'.
 
 For configuration options go to 'administer >> settings
->> service_links'. There you can deside where and how the links
-will show. You can also choose what links to show.
+>> service_links'.

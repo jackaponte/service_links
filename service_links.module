@@ -16,7 +16,7 @@ function service_links_help($section = 'admin/help#service_links') {
       $output = t('Add Digg, del.icio.us, reddit and Technorati links to nodes.');
       break;
     case 'admin/settings/service_links':
-      $output = t('Here you can configure the service links.');
+      $output = t('<p>Here you can configure the service links.</p>');
       break;
   }
   return $output;
@@ -35,21 +35,21 @@ function service_links_settings() {
     '#type' => 'fieldset',
     '#title' => t('What links to show'),
   );
-  $form['what_links_to_show']['service_links_show_digg'] = array(
-    '#type' => 'checkbox',
-    '#title' => t('Show Digg links'),
-    '#return_value' => 1,
-    '#default_value' => variable_get('service_links_show_digg', '1'),
-  );
   $form['what_links_to_show']['service_links_show_delicious'] = array(
     '#type' => 'checkbox',
     '#title' => t('Show del.icio.us links'),
     '#return_value' => 1,
     '#default_value' => variable_get('service_links_show_delicious', '1'),
   );
+  $form['what_links_to_show']['service_links_show_digg'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Show Digg links'),
+    '#return_value' => 1,
+    '#default_value' => variable_get('service_links_show_digg', '1'),
+  );
   $form['what_links_to_show']['service_links_show_reddit'] = array(
     '#type' => 'checkbox',
-    '#title' => t('Show reddit links'),
+    '#title' => t('Show Reddit links'),
     '#return_value' => 1,
     '#default_value' => variable_get('service_links_show_reddit', '1'),
   );
@@ -98,13 +98,13 @@ function service_links_link($type, $node = 0, $main) {
 
   if ($type == 'node' && $node_type && $links_main) {
     $url = url("node/$node->nid", NULL, NULL, TRUE);
-    $title = $node->title;
+    $title = drupal_urlencode($node->title);
 
-    if (variable_get('service_links_show_digg', 1)) {
-      $links[] = _service_link_build_link(t('digg'), "http://digg.com/submit?phase=2&url=$url", t('Digg this post on digg.com.'), 'digg.png');
-    }
     if (variable_get('service_links_show_delicious', 1)) {
       $links[] = _service_link_build_link(t('delicious'), "http://del.icio.us/post?url=$url&title=$title", t('Bookmark this post on del.icio.us.'), 'delicious.png');
+    }
+    if (variable_get('service_links_show_digg', 1)) {
+      $links[] = _service_link_build_link(t('digg'), "http://digg.com/submit?phase=2&url=$url", t('Digg this post on digg.com.'), 'digg.png');
     }
     if (variable_get('service_links_show_reddit', 1)) {
       $links[] = _service_link_build_link(t('reddit'), "http://reddit.com/submit?url=$url&title=$title", t('Submit this post on reddit.com.'), 'reddit.png');
@@ -118,11 +118,13 @@ function service_links_link($type, $node = 0, $main) {
 }
 
 function _service_link_build_link($text, $url, $title, $image) {
-  if (variable_get('service_links_style', 3) == '3') {
-    $link = '<a href="'. check_url($url) .'" title="'. $title .'"><img src="'. drupal_get_path('module', 'service_links') .'/'. $image .'" alt="'. $text .'" /> '. $text .'</a>';
+  global $base_path;
+
+  if (variable_get('service_links_style', 1) == '3') {
+    $link = '<a href="'. check_url($url) .'" title="'. $title .'"><img src="'. $base_path . drupal_get_path('module', 'service_links') .'/'. $image .'" alt="'. $text .'" /> '. $text .'</a>';
   }
   elseif (variable_get('service_links_style', 1) == '2') {
-    $link = '<a href="'. check_url($url) .'" title="'. $title .'"><img src="'. drupal_get_path('module', 'service_links') .'/'. $image .'" alt="'. $text .'" /></a>';
+    $link = '<a href="'. check_url($url) .'" title="'. $title .'"><img src="'. $base_path . drupal_get_path('module', 'service_links') .'/'. $image .'" alt="'. $text .'" /></a>';
   }
   else {
     $link = '<a href="'. check_url($url) .'" title="'. $title .'">'. $text .'</a>';
