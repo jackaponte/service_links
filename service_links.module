@@ -3,17 +3,17 @@
 
 /**
  * @file
- * Author: Fredrik Jonsson <fredrik at combonet dot se>
- * A module that adds Digg, del.icio.us, reddit and Technorati links to nodes.
+ * Author: Fredrik Jonsson fredrik at combonet dot se
+ * A module that adds Digg, del.icio.us, reddit, ma.gnolia.com and Technorati links to nodes.
  */
 
 /**
  * Implementation of hook_help().
  */
-function service_links_help($section = 'admin/help#service_links') {
+function service_links_help($section) {
   switch ($section) {
     case 'admin/modules#description':
-      $output = t('Add Digg, del.icio.us, reddit and Technorati links to nodes.');
+      $output = t('Add Digg, del.icio.us, reddit, ma.gnolia.com and Technorati links to nodes.');
       break;
     case 'admin/settings/service_links':
       $output = t('<p>Here you can configure the service links.</p>');
@@ -27,109 +27,257 @@ function service_links_help($section = 'admin/help#service_links') {
  */
 function service_links_settings() {
 
-  foreach(node_get_types() as $type => $name) {
-    $options[$type] = $name;
-  }
+  $form['whereto_show_the_links'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Node types'),
+    '#description' => t('Set the node types you want to display links for.'),
+  );
+  $form['whereto_show_the_links']['service_links_node_types'] = array(
+    '#type' => 'checkboxes',
+    '#title' => t('Types'),
+    '#default_value' => variable_get('service_links_node_types', array()),
+    '#options' => node_get_types(),
+  );
 
   $form['what_links_to_show'] = array(
     '#type' => 'fieldset',
-    '#title' => t('What links to show'),
+    '#title' => t('What bookmark links to show'),
   );
   $form['what_links_to_show']['service_links_show_delicious'] = array(
     '#type' => 'checkbox',
-    '#title' => t('Show del.icio.us links'),
+    '#title' => t('Show del.icio.us link'),
     '#return_value' => 1,
-    '#default_value' => variable_get('service_links_show_delicious', '1'),
+    '#default_value' => variable_get('service_links_show_delicious', 1),
   );
   $form['what_links_to_show']['service_links_show_digg'] = array(
     '#type' => 'checkbox',
-    '#title' => t('Show Digg links'),
+    '#title' => t('Show Digg link'),
     '#return_value' => 1,
-    '#default_value' => variable_get('service_links_show_digg', '1'),
+    '#default_value' => variable_get('service_links_show_digg', 1),
   );
   $form['what_links_to_show']['service_links_show_reddit'] = array(
     '#type' => 'checkbox',
-    '#title' => t('Show Reddit links'),
+    '#title' => t('Show Reddit link'),
     '#return_value' => 1,
-    '#default_value' => variable_get('service_links_show_reddit', '1'),
+    '#default_value' => variable_get('service_links_show_reddit', 0),
   );
-  $form['what_links_to_show']['service_links_show_technorati'] = array(
+  $form['what_links_to_show']['service_links_show_magnoliacom'] = array(
     '#type' => 'checkbox',
-    '#title' => t('Show Technorati links'),
+    '#title' => t('Show ma.gnolia.com link'),
     '#return_value' => 1,
-    '#default_value' => variable_get('service_links_show_technorati', '1'),
+    '#default_value' => variable_get('service_links_show_magnoliacom', 0),
+  );
+  $form['what_links_to_show']['service_links_show_newsvine'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Show Newsvine link'),
+    '#return_value' => 1,
+    '#default_value' => variable_get('service_links_show_newsvine', 0),
+  );
+  $form['what_links_to_show']['service_links_show_furl'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Show Furl link'),
+    '#return_value' => 1,
+    '#default_value' => variable_get('service_links_show_furl', 0),
+  );
+  $form['what_links_to_show']['service_links_show_google'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Show Google link'),
+    '#return_value' => 1,
+    '#default_value' => variable_get('service_links_show_google', 0),
+  );
+  $form['what_links_to_show']['service_links_show_yahoo'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Show Yahoo link'),
+    '#return_value' => 1,
+    '#default_value' => variable_get('service_links_show_yahoo', 0),
   );
 
-  $form['where_and_how_to_show_the_links'] = array(
+  $form['what_links2_to_show'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('What search links to show'),
+  );
+  $form['what_links2_to_show']['service_links_show_technorati'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Show Technorati link'),
+    '#return_value' => 1,
+    '#default_value' => variable_get('service_links_show_technorati', 1),
+  );
+  $form['what_links2_to_show']['service_links_show_icerocket'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Show IceRocket link'),
+    '#return_value' => 1,
+    '#default_value' => variable_get('service_links_show_icerocket', 0),
+  );
+  $form['what_links2_to_show']['service_links_show_pubsub'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Show PubSub link'),
+    '#return_value' => 1,
+    '#default_value' => variable_get('service_links_show_pubsub', 0),
+  );
+
+  $form['how_to_show_the_links'] = array(
     '#type' => 'fieldset',
     '#title' => t('Where and how to show the links'),
   );
-  $form['where_and_how_to_show_the_links']['service_links_style'] = array(
-    '#type' => 'radios',
+  $form['how_to_show_the_links']['service_links_in_links'] = array(
+    '#type' => 'select',
+    '#title' => t('Service links in links'),
+    '#default_value' => variable_get('service_links_in_links', 0),
+    '#options' => array(0 => t('Disabled'), 1 => t('Teaser view'), 2 => t('Full-page view'), 3 => t('Teasers and full-page view')),
+    '#description' => t('When to display the services in the links section.'),
+  );
+  $form['how_to_show_the_links']['service_links_in_node'] = array(
+    '#type' => 'select',
+    '#title' => t('Service links in nodes'),
+    '#default_value' => variable_get('service_links_in_node', 2),
+    '#options' => array(0 => t('Disabled'), 1 => t('Teaser view'), 2 => t('Full-page view'), 3 => t('Teasers and full-page view')),
+    '#description' => t('When to display the services after the node text.'),
+  );
+  $form['how_to_show_the_links']['service_links_style'] = array(
+    '#type' => 'select',
     '#title' => t('Link style'),
     '#default_value' => variable_get('service_links_style', 1),
-    '#options' => array('1' => t('Text links'),'2' => t('Image links'),'3' => t('Image and text links')),
-  );
-  $form['where_and_how_to_show_the_links']['service_links_node_types'] = array(
-    '#type' => 'select',
-    '#title' => t('Node types to display links for'),
-    '#default_value' => variable_get('service_links_node_types', array()),
-    '#options' => $options,
-    '#multiple' => TRUE,
-  );
-  $form['where_and_how_to_show_the_links']['service_links_main'] = array(
-    '#type' => 'checkbox',
-    '#title' => t('Show links also on nodes on front page'),
-    '#return_value' => 1,
-    '#default_value' => variable_get('service_links_main', 0),
+    '#options' => array(1 => t('Text links'), 2 => t('Image links'), 3 => t('Image and text links')),
   );
 
   return $form;
 }
 
 /**
+ * Implementation of hook_nodeapi().
+ */
+function service_links_nodeapi(&$node, $op, $teaser = NULL, $page = NULL) {
+  switch ($op) {
+    case 'view':
+
+      $node_type = in_array($node->type, variable_get('service_links_node_types', array()), TRUE);
+      if ($node_type) {
+        $url = url("node/$node->nid", NULL, NULL, TRUE);
+        $title = drupal_urlencode($node->title);
+
+        switch (variable_get('service_links_in_node', 0)) {
+          case 1:
+            if ($teaser) {
+              $node->teaser .= _service_links_render($url, $title, 'nodeapi');
+            }
+            break;
+          case 2:
+            if ($page) {
+              $node->body .= _service_links_render($url, $title, 'nodeapi');
+            }
+            break;
+          case 3:
+            if ($teaser) {
+              $node->teaser .= _service_links_render($url, $title, 'nodeapi');
+            }
+            elseif ($page) {
+              $node->body .= _service_links_render($url, $title, 'nodeapi');
+            }
+            break;
+        }
+
+      }
+      break;
+  }
+}
+
+/**
  * Implementation of hook_link().
  */
-function service_links_link($type, $node = 0, $main) {
+function service_links_link($type, $node = NULL, $teaser = FALSE) {
   $links = array();
 
-  $node_type = in_array($node->type, variable_get('service_links_node_types', array()), TRUE);
-  $links_main = variable_get('service_links_main', 0) == '1' || $main == 0 ? '1' : '0';
+  switch (variable_get('service_links_in_links', 0)) {
+    case 0:
+      $show_links = FALSE;
+      break;
+    case 1:
+      $show_links = $teaser ? TRUE : FALSE;
+      break;
+    case 2:
+      $show_links = $teaser ? FALSE : TRUE;
+      break;
+    case 3:
+      $show_links = TRUE;
+      break;
+    default:
+      $show_links = FALSE;
+  }
 
-  if ($type == 'node' && $node_type && $links_main) {
+  $node_type = in_array($node->type, variable_get('service_links_node_types', array()), TRUE);
+
+  if ($type == 'node' && $node_type && $show_links) {
     $url = url("node/$node->nid", NULL, NULL, TRUE);
     $title = drupal_urlencode($node->title);
-
-    if (variable_get('service_links_show_delicious', 1)) {
-      $links[] = _service_link_build_link(t('delicious'), "http://del.icio.us/post?url=$url&title=$title", t('Bookmark this post on del.icio.us.'), 'delicious.png');
-    }
-    if (variable_get('service_links_show_digg', 1)) {
-      $links[] = _service_link_build_link(t('digg'), "http://digg.com/submit?phase=2&url=$url", t('Digg this post on digg.com.'), 'digg.png');
-    }
-    if (variable_get('service_links_show_reddit', 1)) {
-      $links[] = _service_link_build_link(t('reddit'), "http://reddit.com/submit?url=$url&title=$title", t('Submit this post on reddit.com.'), 'reddit.png');
-    }
-    if (variable_get('service_links_show_technorati', 1)) {
-      $links[] = _service_link_build_link(t('technorati'), "http://technorati.com/cosmos/search.html?url=$url", t('Search Technorati for links to this post.'), 'technorati.png');
-    }
+    $links = _service_links_render($url, $title);
   }
 
   return $links;
 }
 
-function _service_link_build_link($text, $url, $title, $image) {
+function _service_links_render($url, $title, $type = NULL) {
+  $links = array();
+
+  if (variable_get('service_links_show_delicious', 0)) {
+    $links[] = _service_links_build_link(t('delicious'), "http://del.icio.us/post?url=$url&title=$title", t('Bookmark this post on del.icio.us.'), 'delicious.png');
+  }
+  if (variable_get('service_links_show_digg', 0)) {
+    $links[] = _service_links_build_link(t('digg'), "http://digg.com/submit?phase=2&url=$url", t('Digg this post on digg.com.'), 'digg.png');
+  }
+  if (variable_get('service_links_show_reddit', 0)) {
+    $links[] = _service_links_build_link(t('reddit'), "http://reddit.com/submit?url=$url&title=$title", t('Submit this post on reddit.com.'), 'reddit.png');
+  }
+  if (variable_get('service_links_show_magnoliacom', 0)) {
+    $links[] = _service_links_build_link(t('magnoliacom'), "http://ma.gnolia.com/bookmarklet/add?url=$url&title=$title", t('Submit this post on ma.gnolia.com.'), 'magnoliacom.png');
+  }
+  if (variable_get('service_links_show_newsvine', 0)) {
+    $links[] = _service_links_build_link(t('newsvine'), "http://www.newsvine.com/_tools/seed&save?u=$url&h=$title", t('Submit this post on newsvine.com.'), 'newsvine.png');
+  }
+  if (variable_get('service_links_show_furl', 0)) {
+    $links[] = _service_links_build_link(t('furl'), "http://www.furl.net/storeIt.jsp?u=$url&t=$title", t('Submit this post on furl.net.'), 'furl.png');
+  }
+  if (variable_get('service_links_show_google', 0)) {
+    $links[] = _service_links_build_link(t('google'), "http://www.google.com/bookmarks/mark?op=add&bkmk=$url&title=$title", t('Bookmark this post on Google.'), 'google.png');
+  }
+  if (variable_get('service_links_show_yahoo', 0)) {
+    $links[] = _service_links_build_link(t('yahoo'), "http://myweb2.search.yahoo.com/myresults/bookmarklet?u=$url&t=$title", t('Bookmark this post on Yahoo.'), 'yahoo.png');
+  }
+  if (variable_get('service_links_show_technorati', 0)) {
+    $links[] = _service_links_build_link(t('technorati'), "http://technorati.com/cosmos/search.html?url=$url", t('Search Technorati for links to this post.'), 'technorati.png');
+  }
+  if (variable_get('service_links_show_icerocket', 0)) {
+    $links[] = _service_links_build_link(t('icerocket'), "http://blogs.icerocket.com/search?q=$url", t('Search IceRocket for links to this post.'), 'icerocket.png');
+  }
+  if (variable_get('service_links_show_pubsub', 0)) {
+    $links[] = _service_links_build_link(t('pubsub'), "http://www.pubsub.com/index.php?q=$url", t('Search PubSub for links to this post.'), 'pubsub.png');
+  }
+
+  // Add your own link by modifing the link below and uncomment it.
+  //$links[] = _service_links_build_link(t('delicious'), "http://del.icio.us/post?url=$url&title=$title", t('Bookmark this post on del.icio.us.'), 'delicious.png');
+
+  if ($type == 'nodeapi') {
+    $links = '<p class="service_links">'. t('Bookmark/Search this post with: ') .'<br />'. theme('links', $links) .'</p>';
+  }
+
+  return $links;
+}
+
+function _service_links_build_link($text, $url, $title, $image) {
   global $base_path;
 
-  if (variable_get('service_links_style', 1) == '3') {
-    $link = '<a href="'. check_url($url) .'" title="'. $title .'"><img src="'. $base_path . drupal_get_path('module', 'service_links') .'/'. $image .'" alt="'. $text .'" /> '. $text .'</a>';
-  }
-  elseif (variable_get('service_links_style', 1) == '2') {
-    $link = '<a href="'. check_url($url) .'" title="'. $title .'"><img src="'. $base_path . drupal_get_path('module', 'service_links') .'/'. $image .'" alt="'. $text .'" /></a>';
-  }
-  else {
-    $link = '<a href="'. check_url($url) .'" title="'. $title .'">'. $text .'</a>';
+  switch (variable_get('service_links_style', 1)) {
+    case 1:
+      $link = '<a href="'. check_url($url) .'" title="'. $title .'">'. $text .'</a>';
+      break;
+    case 2:
+      $link = '<a href="'. check_url($url) .'" title="'. $title .'"><img src="'. $base_path . drupal_get_path('module', 'service_links') .'/'. $image .'" alt="'. $text .'" /></a>';
+      break;
+    case 3:
+      $link = '<a href="'. check_url($url) .'" title="'. $title .'"><img src="'. $base_path . drupal_get_path('module', 'service_links') .'/'. $image .'" alt="'. $text .'" /> '. $text .'</a>';
+      break;
   }
 
   return $link;
 }
+
 ?>

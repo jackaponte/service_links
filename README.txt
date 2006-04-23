@@ -1,6 +1,6 @@
 Drupal service_links module:
 ------------------------
-Author - Fredrik Jonsson <fredrik at combonet dot se>
+Author - Fredrik Jonsson fredrik at combonet dot se
 Requires - Drupal 4.7
 License - GPL (see LICENSE)
 
@@ -12,11 +12,20 @@ links to nodes:
 * del.icio.us - Bookmark this post on del.icio.us
 * Digg - Submit this post on digg.com
 * Reddit - Submit this post on reddit.com
+* ma.gnolia.com - Bookmark this post on ma.gnolia.com
+* Newsvine - Submit this post on Newsvine
+* Furl - Submit this post on Furl
+* Google - Bookmark this post on Google
+* Yahoo - Bookmark this post on Yahoo
 * Technorati - Search Technorati for links to this post
+* IceRocket - Search IceRocket for links to this post
+* PubSub - Search PubSub for links to this post
 
-The site owner can deside to show the links as text, image or both.
-What node types to display links for and if the they should show 
-on the front page or not.
+The site owner can deside:
+- To show the links as text, image or both.
+- What node types to display links for.
+- If the links should be displays in teaser view or full page view or both.
+- If the links should be added after the body text or in the links section.
 
 
 Installation and configuration:
@@ -28,3 +37,12 @@ enabling the module at 'administer >> modules'.
 
 For configuration options go to 'administer >> settings
 >> service_links'.
+
+
+Add links to new services:
+-------------------------
+Open the file service_links.module in your text editor and in the
+function _service_links_render() you will find this comment at the end.
+
+// Add your own link by modifing the link below and uncomment it.
+//$links[] = _service_links_build_link(t('delicious'), "http://del.icio.us/post?url=$url&title=$title", t('Bookmark this post on del.icio.us.'), 'delicious.png');
