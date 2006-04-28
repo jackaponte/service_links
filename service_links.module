@@ -13,13 +13,20 @@
 function service_links_help($section) {
   switch ($section) {
     case 'admin/modules#description':
-      $output = t('Add Digg, del.icio.us, reddit, ma.gnolia.com and Technorati links to nodes.');
+      $output = t('Add Digg, del.icio.us, reddit, Technorati etc. links to nodes.');
       break;
     case 'admin/settings/service_links':
       $output = t('<p>Here you can configure the service links.</p>');
       break;
   }
   return $output;
+}
+
+/**
+ * Implementation of hook_perm().
+ */
+function service_links_perm() {
+  return array ('use service links');
 }
 
 /**
@@ -151,7 +158,7 @@ function service_links_nodeapi(&$node, $op, $teaser = NULL, $page = NULL) {
     case 'view':
 
       $node_type = in_array($node->type, variable_get('service_links_node_types', array()), TRUE);
-      if ($node_type) {
+      if ($node_type && user_access('use service links')) {
         $url = url("node/$node->nid", NULL, NULL, TRUE);
         $title = drupal_urlencode($node->title);
 
@@ -206,7 +213,7 @@ function service_links_link($type, $node = NULL, $teaser = FALSE) {
 
   $node_type = in_array($node->type, variable_get('service_links_node_types', array()), TRUE);
 
-  if ($type == 'node' && $node_type && $show_links) {
+  if ($type == 'node' && $node_type && $show_links && user_access('use service links')) {
     $url = url("node/$node->nid", NULL, NULL, TRUE);
     $title = drupal_urlencode($node->title);
     $links = _service_links_render($url, $title);
@@ -219,50 +226,50 @@ function _service_links_render($url, $title, $type = NULL) {
   $links = array();
 
   if (variable_get('service_links_show_delicious', 0)) {
-    $links[] = _service_links_build_link(t('delicious'), "http://del.icio.us/post?url=$url&title=$title", t('Bookmark this post on del.icio.us.'), 'delicious.png');
+    $links[] = theme('service_links_build_link', t('delicious'), "http://del.icio.us/post?url=$url&title=$title", t('Bookmark this post on del.icio.us.'), 'delicious.png');
   }
   if (variable_get('service_links_show_digg', 0)) {
-    $links[] = _service_links_build_link(t('digg'), "http://digg.com/submit?phase=2&url=$url", t('Digg this post on digg.com.'), 'digg.png');
+    $links[] = theme('service_links_build_link', t('digg'), "http://digg.com/submit?phase=2&url=$url", t('Digg this post on digg.com.'), 'digg.png');
   }
   if (variable_get('service_links_show_reddit', 0)) {
-    $links[] = _service_links_build_link(t('reddit'), "http://reddit.com/submit?url=$url&title=$title", t('Submit this post on reddit.com.'), 'reddit.png');
+    $links[] = theme('service_links_build_link', t('reddit'), "http://reddit.com/submit?url=$url&title=$title", t('Submit this post on reddit.com.'), 'reddit.png');
   }
   if (variable_get('service_links_show_magnoliacom', 0)) {
-    $links[] = _service_links_build_link(t('magnoliacom'), "http://ma.gnolia.com/bookmarklet/add?url=$url&title=$title", t('Submit this post on ma.gnolia.com.'), 'magnoliacom.png');
+    $links[] = theme('service_links_build_link', t('magnoliacom'), "http://ma.gnolia.com/bookmarklet/add?url=$url&title=$title", t('Submit this post on ma.gnolia.com.'), 'magnoliacom.png');
   }
   if (variable_get('service_links_show_newsvine', 0)) {
-    $links[] = _service_links_build_link(t('newsvine'), "http://www.newsvine.com/_tools/seed&save?u=$url&h=$title", t('Submit this post on newsvine.com.'), 'newsvine.png');
+    $links[] = theme('service_links_build_link', t('newsvine'), "http://www.newsvine.com/_tools/seed&save?u=$url&h=$title", t('Submit this post on newsvine.com.'), 'newsvine.png');
   }
   if (variable_get('service_links_show_furl', 0)) {
-    $links[] = _service_links_build_link(t('furl'), "http://www.furl.net/storeIt.jsp?u=$url&t=$title", t('Submit this post on furl.net.'), 'furl.png');
+    $links[] = theme('service_links_build_link', t('furl'), "http://www.furl.net/storeIt.jsp?u=$url&t=$title", t('Submit this post on furl.net.'), 'furl.png');
   }
   if (variable_get('service_links_show_google', 0)) {
-    $links[] = _service_links_build_link(t('google'), "http://www.google.com/bookmarks/mark?op=add&bkmk=$url&title=$title", t('Bookmark this post on Google.'), 'google.png');
+    $links[] = theme('service_links_build_link', t('google'), "http://www.google.com/bookmarks/mark?op=add&bkmk=$url&title=$title", t('Bookmark this post on Google.'), 'google.png');
   }
   if (variable_get('service_links_show_yahoo', 0)) {
-    $links[] = _service_links_build_link(t('yahoo'), "http://myweb2.search.yahoo.com/myresults/bookmarklet?u=$url&t=$title", t('Bookmark this post on Yahoo.'), 'yahoo.png');
+    $links[] = theme('service_links_build_link', t('yahoo'), "http://myweb2.search.yahoo.com/myresults/bookmarklet?u=$url&t=$title", t('Bookmark this post on Yahoo.'), 'yahoo.png');
   }
   if (variable_get('service_links_show_technorati', 0)) {
-    $links[] = _service_links_build_link(t('technorati'), "http://technorati.com/cosmos/search.html?url=$url", t('Search Technorati for links to this post.'), 'technorati.png');
+    $links[] = theme('service_links_build_link', t('technorati'), "http://technorati.com/cosmos/search.html?url=$url", t('Search Technorati for links to this post.'), 'technorati.png');
   }
   if (variable_get('service_links_show_icerocket', 0)) {
-    $links[] = _service_links_build_link(t('icerocket'), "http://blogs.icerocket.com/search?q=$url", t('Search IceRocket for links to this post.'), 'icerocket.png');
+    $links[] = theme('service_links_build_link', t('icerocket'), "http://blogs.icerocket.com/search?q=$url", t('Search IceRocket for links to this post.'), 'icerocket.png');
   }
   if (variable_get('service_links_show_pubsub', 0)) {
-    $links[] = _service_links_build_link(t('pubsub'), "http://www.pubsub.com/index.php?q=$url", t('Search PubSub for links to this post.'), 'pubsub.png');
+    $links[] = theme('service_links_build_link', t('pubsub'), "http://www.pubsub.com/index.php?q=$url", t('Search PubSub for links to this post.'), 'pubsub.png');
   }
 
   // Add your own link by modifing the link below and uncomment it.
-  //$links[] = _service_links_build_link(t('delicious'), "http://del.icio.us/post?url=$url&title=$title", t('Bookmark this post on del.icio.us.'), 'delicious.png');
+  //$links[] = theme('service_links_build_link', t('delicious'), "http://del.icio.us/post?url=$url&title=$title", t('Bookmark this post on del.icio.us.'), 'delicious.png');
 
   if ($type == 'nodeapi') {
-    $links = '<p class="service_links">'. t('Bookmark/Search this post with: ') .'<br />'. theme('links', $links) .'</p>';
+    $links = theme('service_links_nodeformat', $links);
   }
 
   return $links;
 }
 
-function _service_links_build_link($text, $url, $title, $image) {
+function theme_service_links_build_link($text, $url, $title, $image) {
   global $base_path;
 
   switch (variable_get('service_links_style', 1)) {
@@ -278,6 +285,10 @@ function _service_links_build_link($text, $url, $title, $image) {
   }
 
   return $link;
+}
+
+function theme_service_links_nodeformat($links) {
+  return '<p class="service_links">'. t('Bookmark/Search this post with: ') .'<br />'. theme('links', $links) .'</p>';
 }
 
 ?>
