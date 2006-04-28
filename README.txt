@@ -26,6 +26,7 @@ The site owner can deside:
 - What node types to display links for.
 - If the links should be displays in teaser view or full page view or both.
 - If the links should be added after the body text or in the links section.
+- Deside what roles get to see/use the service links.
 
 
 Installation and configuration:
@@ -37,6 +38,8 @@ enabling the module at 'administer >> modules'.
 
 For configuration options go to 'administer >> settings
 >> service_links'.
+
+For permisson settings go to 'administer >> access control.
 
 
 Add links to new services:
