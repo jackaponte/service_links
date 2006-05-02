@@ -4,7 +4,7 @@
 /**
  * @file
  * Author: Fredrik Jonsson fredrik at combonet dot se
- * A module that adds Digg, del.icio.us, reddit, ma.gnolia.com and Technorati links to nodes.
+ * A module that adds Digg, del.icio.us, reddit, Technorati etc. links to nodes.
  */
 
 /**
@@ -34,12 +34,12 @@ function service_links_perm() {
  */
 function service_links_settings() {
 
-  $form['whereto_show_the_links'] = array(
+  $form['where_to_show_the_links'] = array(
     '#type' => 'fieldset',
     '#title' => t('Node types'),
     '#description' => t('Set the node types you want to display links for.'),
   );
-  $form['whereto_show_the_links']['service_links_node_types'] = array(
+  $form['where_to_show_the_links']['service_links_node_types'] = array(
     '#type' => 'checkboxes',
     '#title' => t('Types'),
     '#default_value' => variable_get('service_links_node_types', array()),
