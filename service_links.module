@@ -165,20 +165,20 @@ function service_links_nodeapi(&$node, $op, $teaser = NULL, $page = NULL) {
         switch (variable_get('service_links_in_node', 0)) {
           case 1:
             if ($teaser) {
-              $node->teaser .= _service_links_render($url, $title, 'nodeapi');
+              $node->teaser .= theme('service_links_node_format', _service_links_render($url, $title));
             }
             break;
           case 2:
             if ($page) {
-              $node->body .= _service_links_render($url, $title, 'nodeapi');
+              $node->body .= theme('service_links_node_format', _service_links_render($url, $title));
             }
             break;
           case 3:
             if ($teaser) {
-              $node->teaser .= _service_links_render($url, $title, 'nodeapi');
+              $node->teaser .= theme('service_links_node_format', _service_links_render($url, $title));
             }
             elseif ($page) {
-              $node->body .= _service_links_render($url, $title, 'nodeapi');
+              $node->body .= theme('service_links_node_format', _service_links_render($url, $title));
             }
             break;
         }
@@ -222,7 +222,32 @@ function service_links_link($type, $node = NULL, $teaser = FALSE) {
   return $links;
 }
 
-function _service_links_render($url, $title, $type = NULL) {
+/**
+ * Implementation of hook_block().
+ */
+function service_links_block($op = 'list', $delta = 0, $edit = array()) {
+  if ($op == 'list') {
+    $blocks[0]['info'] = t('Service links');
+    return $blocks;
+  }
+  else if ($op == 'view') {
+    if (user_access('use service links') && arg(0) == 'node' && is_numeric(arg(1))) {
+      $node = node_load(arg(1));
+      $node_type = in_array($node->type, variable_get('service_links_node_types', array()), TRUE);
+      if ($node_type) {
+        $url = url("node/$node->nid", NULL, NULL, TRUE);
+        $title = drupal_urlencode($node->title);
+
+        $block['subject'] = t('Bookmark/Search this post');
+        $block['content'] = theme('service_links_block_format', _service_links_render($url, $title));
+      }
+    }
+
+    return $block;
+  }
+}
+
+function _service_links_render($url, $title) {
   $links = array();
 
   if (variable_get('service_links_show_delicious', 0)) {
@@ -262,10 +287,6 @@ function _service_links_render($url, $title, $type = NULL) {
   // Add your own link by modifing the link below and uncomment it.
   //$links[] = theme('service_links_build_link', t('delicious'), "http://del.icio.us/post?url=$url&title=$title", t('Bookmark this post on del.icio.us.'), 'delicious.png');
 
-  if ($type == 'nodeapi') {
-    $links = theme('service_links_nodeformat', $links);
-  }
-
   return $links;
 }
 
@@ -287,8 +308,12 @@ function theme_service_links_build_link($text, $url, $title, $image) {
   return $link;
 }
 
-function theme_service_links_nodeformat($links) {
+function theme_service_links_node_format($links) {
   return '<p class="service_links">'. t('Bookmark/Search this post with: ') .'<br />'. theme('links', $links) .'</p>';
+}
+
+function theme_service_links_block_format($items) {
+  return theme('item_list', $items);
 }
 
 ?>

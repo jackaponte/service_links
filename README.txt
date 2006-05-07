@@ -24,8 +24,10 @@ links to nodes:
 The site owner can deside:
 - To show the links as text, image or both.
 - What node types to display links for.
-- If the links should be displays in teaser view or full page view or both.
-- If the links should be added after the body text or in the links section.
+- If the links should be displays in teaser view or full page view
+  or both.
+- If the links should be added after the body text or in the links
+  section or in a block.
 - Deside what roles get to see/use the service links.
 
 
@@ -45,7 +47,8 @@ For permisson settings go to 'administer >> access control.
 Add links to new services:
 -------------------------
 Open the file service_links.module in your text editor and in the
-function _service_links_render() you will find this comment at the end.
+function theme_service_links_build_link() you will find this comment
+at the end.
 
 // Add your own link by modifing the link below and uncomment it.
-//$links[] = _service_links_build_link(t('delicious'), "http://del.icio.us/post?url=$url&title=$title", t('Bookmark this post on del.icio.us.'), 'delicious.png');
+//$links[] = theme('service_links_build_link', t('delicious'), "http://del.icio.us/post?url=$url&title=$title", t('Bookmark this post on del.icio.us.'), 'delicious.png');
