@@ -11,15 +11,16 @@ The service links module enables admins to add the following
 links to nodes:
 * del.icio.us - Bookmark this post on del.icio.us
 * Digg - Submit this post on digg.com
-* Reddit - Submit this post on reddit.com
-* ma.gnolia.com - Bookmark this post on ma.gnolia.com
-* Newsvine - Submit this post on Newsvine
 * Furl - Submit this post on Furl
 * Google - Bookmark this post on Google
-* Yahoo - Bookmark this post on Yahoo
-* Technorati - Search Technorati for links to this post
 * IceRocket - Search IceRocket for links to this post
+* ma.gnolia.com - Bookmark this post on ma.gnolia.com
+* Newsvine - Submit this post on Newsvine
 * PubSub - Search PubSub for links to this post
+* Reddit - Submit this post on reddit.com
+* Technorati - Search Technorati for links to this post
+* vigillar.se - Bookmark this post on vigillar.se
+* Yahoo - Bookmark this post on Yahoo
 
 The site owner can deside:
 - To show the links as text, image or both.

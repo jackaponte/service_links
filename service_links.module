@@ -62,6 +62,12 @@ function service_links_settings() {
     '#return_value' => 1,
     '#default_value' => variable_get('service_links_show_digg', 1),
   );
+  $form['what_links_to_show']['service_links_show_vigillar'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Show vigillar.se link'),
+    '#return_value' => 1,
+    '#default_value' => variable_get('service_links_show_vigillar', 0),
+  );
   $form['what_links_to_show']['service_links_show_reddit'] = array(
     '#type' => 'checkbox',
     '#title' => t('Show Reddit link'),
@@ -256,6 +262,9 @@ function _service_links_render($url, $title) {
   if (variable_get('service_links_show_digg', 0)) {
     $links[] = theme('service_links_build_link', t('digg'), "http://digg.com/submit?phase=2&url=$url", t('Digg this post on digg.com.'), 'digg.png');
   }
+  if (variable_get('service_links_show_vigillar', 0)) {
+    $links[] = theme('service_links_build_link', t('vigillar'), "http://vigillar.se/submit?edit[url]=$url&edit[title]=$title", t('Submit this post on vigillar.se.'), 'vigillar.png');
+  }
   if (variable_get('service_links_show_reddit', 0)) {
     $links[] = theme('service_links_build_link', t('reddit'), "http://reddit.com/submit?url=$url&title=$title", t('Submit this post on reddit.com.'), 'reddit.png');
   }
@@ -309,7 +318,7 @@ function theme_service_links_build_link($text, $url, $title, $image) {
 }
 
 function theme_service_links_node_format($links) {
-  return '<p class="service_links">'. t('Bookmark/Search this post with: ') .'<br />'. theme('links', $links) .'</p>';
+  return '<p class="service-links"><div class="service-label">'. t('Bookmark/Search this post with: ') .'</div>'. theme('links', $links) .'</p>';
 }
 
 function theme_service_links_block_format($items) {
