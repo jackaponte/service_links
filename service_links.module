@@ -1,5 +1,5 @@
 <?php
-/* $Id$ */
+// $Id$
 
 /**
  * @file
@@ -130,7 +130,7 @@ function service_links_settings() {
 
   $form['how_to_show_the_links'] = array(
     '#type' => 'fieldset',
-    '#title' => t('Where and how to show the links'),
+    '#title' => t('When and how to show the links'),
   );
   $form['how_to_show_the_links']['service_links_in_links'] = array(
     '#type' => 'select',
@@ -148,10 +148,23 @@ function service_links_settings() {
   );
   $form['how_to_show_the_links']['service_links_style'] = array(
     '#type' => 'select',
-    '#title' => t('Link style'),
+    '#title' => t('Service links style'),
     '#default_value' => variable_get('service_links_style', 1),
     '#options' => array(1 => t('Text links'), 2 => t('Image links'), 3 => t('Image and text links')),
   );
+
+  if (module_exist('aggregator2')) {
+    $form['aggregator2_settings'] = array(
+      '#type' => 'fieldset',
+      '#title' => t('Aggregator2 settings'),
+    );
+    $form['aggregator2_settings']['service_links_agg2_link'] = array(
+      '#type' => 'checkbox',
+      '#title' => t('Use link to original article aggregated by aggregator2 module'),
+      '#return_value' => 1,
+      '#default_value' => variable_get('service_links_agg2_link', 0),
+    );
+  }
 
   return $form;
 }
@@ -162,33 +175,28 @@ function service_links_settings() {
 function service_links_nodeapi(&$node, $op, $teaser = NULL, $page = NULL) {
   switch ($op) {
     case 'view':
-
       $node_type = in_array($node->type, variable_get('service_links_node_types', array()), TRUE);
       if ($node_type && user_access('use service links')) {
-        $url = url("node/$node->nid", NULL, NULL, TRUE);
-        $title = drupal_urlencode($node->title);
-
         switch (variable_get('service_links_in_node', 0)) {
           case 1:
             if ($teaser) {
-              $node->teaser .= theme('service_links_node_format', _service_links_render($url, $title));
+              $node->teaser .= theme('service_links_node_format', service_links_render($node));
             }
             break;
           case 2:
             if ($page) {
-              $node->body .= theme('service_links_node_format', _service_links_render($url, $title));
+              $node->body .= theme('service_links_node_format', service_links_render($node));
             }
             break;
           case 3:
             if ($teaser) {
-              $node->teaser .= theme('service_links_node_format', _service_links_render($url, $title));
+              $node->teaser .= theme('service_links_node_format', service_links_render($node));
             }
             elseif ($page) {
-              $node->body .= theme('service_links_node_format', _service_links_render($url, $title));
+              $node->body .= theme('service_links_node_format', service_links_render($node));
             }
             break;
         }
-
       }
       break;
   }
@@ -220,9 +228,7 @@ function service_links_link($type, $node = NULL, $teaser = FALSE) {
   $node_type = in_array($node->type, variable_get('service_links_node_types', array()), TRUE);
 
   if ($type == 'node' && $node_type && $show_links && user_access('use service links')) {
-    $url = url("node/$node->nid", NULL, NULL, TRUE);
-    $title = drupal_urlencode($node->title);
-    $links = _service_links_render($url, $title);
+    $links = service_links_render($node);
   }
 
   return $links;
@@ -241,11 +247,8 @@ function service_links_block($op = 'list', $delta = 0, $edit = array()) {
       $node = node_load(arg(1));
       $node_type = in_array($node->type, variable_get('service_links_node_types', array()), TRUE);
       if ($node_type) {
-        $url = url("node/$node->nid", NULL, NULL, TRUE);
-        $title = drupal_urlencode($node->title);
-
         $block['subject'] = t('Bookmark/Search this post');
-        $block['content'] = theme('service_links_block_format', _service_links_render($url, $title));
+        $block['content'] = theme('service_links_block_format', service_links_render($node));
       }
     }
 
@@ -253,8 +256,21 @@ function service_links_block($op = 'list', $delta = 0, $edit = array()) {
   }
 }
 
-function _service_links_render($url, $title) {
+/**
+ * Function that renders the service links.
+ * This is the function themers want to call to insert the service links.
+ */
+function service_links_render($node) {
   $links = array();
+
+  if (variable_get('service_links_agg2_link', 0) && $node->link) {
+    $url = ($node->source_link ? $node->source_link : $node->link);
+  }
+  else {
+    $url = url("node/$node->nid", NULL, NULL, TRUE);
+  }
+
+  $title = drupal_urlencode($node->title);
 
   if (variable_get('service_links_show_delicious', 0)) {
     $links[] = theme('service_links_build_link', t('delicious'), "http://del.icio.us/post?url=$url&title=$title", t('Bookmark this post on del.icio.us.'), 'delicious.png');

@@ -29,6 +29,8 @@ The site owner can deside:
   or both.
 - If the links should be added after the body text or in the links
   section or in a block.
+- If aggregator2 nodes should use link to original article aggregated
+  by aggregator2 module.
 - Deside what roles get to see/use the service links.
 
 
@@ -42,14 +44,25 @@ enabling the module at 'administer >> modules'.
 For configuration options go to 'administer >> settings
 >> service_links'.
 
-For permisson settings go to 'administer >> access control.
+For permisson settings go to 'administer >> access control'.
 
 
 Add links to new services:
 -------------------------
 Open the file service_links.module in your text editor and in the
-function theme_service_links_build_link() you will find this comment
+function service_links_render() you will find this comment
 at the end.
 
 // Add your own link by modifing the link below and uncomment it.
 //$links[] = theme('service_links_build_link', t('delicious'), "http://del.icio.us/post?url=$url&title=$title", t('Bookmark this post on del.icio.us.'), 'delicious.png');
+
+
+Include service links in your theme:
+-----------------------------------
+In the included template.php file there are an example how to insert
+the service links in to a PHPTemplate theme.
+
+
+Last updated:
+------------
+$Id$
