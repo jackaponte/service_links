@@ -270,7 +270,8 @@ function service_links_render($node) {
     $url = url("node/$node->nid", NULL, NULL, TRUE);
   }
 
-  $title = drupal_urlencode($node->title);
+  $url = urlencode($url);
+  $title = urlencode($node->title);
 
   if (variable_get('service_links_show_delicious', 0)) {
     $links[] = theme('service_links_build_link', t('delicious'), "http://del.icio.us/post?url=$url&title=$title", t('Bookmark this post on del.icio.us.'), 'delicious.png');
