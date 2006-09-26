@@ -277,7 +277,7 @@ function service_links_render($node) {
     $links[] = theme('service_links_build_link', t('delicious'), "http://del.icio.us/post?url=$url&title=$title", t('Bookmark this post on del.icio.us.'), 'delicious.png');
   }
   if (variable_get('service_links_show_digg', 0)) {
-    $links[] = theme('service_links_build_link', t('digg'), "http://digg.com/submit?phase=2&url=$url", t('Digg this post on digg.com.'), 'digg.png');
+    $links[] = theme('service_links_build_link', t('digg'), "http://digg.com/submit?phase=2&url=$url&title=$title", t('Digg this post on digg.com.'), 'digg.png');
   }
   /* if (variable_get('service_links_show_vigillar', 0)) {
     $links[] = theme('service_links_build_link', t('vigillar'), "http://vigillar.se/submit?edit[url]=$url&edit[title]=$title", t('Submit this post on vigillar.se.'), 'vigillar.png');
