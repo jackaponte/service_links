@@ -39,6 +39,10 @@ msgstr "סוגים"
 msgid "What bookmark links to show"
 msgstr "אילו קישורי סימניות להציג"
 
+#: service_links.module
+msgid "Service links style"
+msgstr "סגנון קישורים"
+
 #: service_links.module:55
 #, fuzzy
 msgid "Show del.icio.us link"
@@ -118,7 +122,7 @@ msgstr "מתי וכיצד להציג את הקישורים"
 #: service_links.module:149
 #, fuzzy
 msgid "Service links in links"
-msgstr "קישורי שרות בקישורים"
+msgstr "הצג קישורי שרות בשורת הקישורים"
 
 #: service_links.module:151
 #: ;158
@@ -147,7 +151,7 @@ msgstr "תצוגת תקציר ועמוד עיקרי"
 #: service_links.module:152
 #, fuzzy
 msgid "When to display the services in the links section."
-msgstr "מתי להציג קישורי שרות באיזור הקישורים."
+msgstr "מתי להציג קישורי שרות באיזור הקישורים שמתחת לפריט התוכן."
 
 #: service_links.module:152
 #, fuzzy
@@ -157,12 +161,12 @@ msgstr "מתי ואיך להציג את הקישורים"
 #: service_links.module:156
 #, fuzzy
 msgid "Service links in nodes"
-msgstr "קישורי שרות בפריטים"
+msgstr "קישורי שרות בפריטי התוכן"
 	
 #: service_links.module:159
 #, fuzzy
 msgid "When to display the services after the node text."
-msgstr "מתי להציג קישורי שרות לאחר תוכן הפריט."
+msgstr "מתי להציג קישורי שרות מיד אחרי תוכן הפריט."
 
 #: service_links.module:163
 #, fuzzy
