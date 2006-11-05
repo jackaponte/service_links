@@ -1,7 +1,7 @@
 Drupal service_links module:
 ------------------------
 Author - Fredrik Jonsson fredrik at combonet dot se
-Requires - Drupal 4.7
+Requires - Drupal 5
 License - GPL (see LICENSE)
 
 
@@ -60,7 +60,8 @@ at the end.
 Include service links in your theme:
 -----------------------------------
 In the included template.php file there are an example how to insert
-the service links in to a PHPTemplate theme.
+the service links in to a PHPTemplate theme. Remember to place the
+template.php file in the folder of your theme.
 
 
 Last updated:
