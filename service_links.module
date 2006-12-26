@@ -33,14 +33,21 @@ function service_links_admin_settings() {
 
   $form['where_to_show_the_links'] = array(
     '#type' => 'fieldset',
-    '#title' => t('Node types'),
-    '#description' => t('Set the node types you want to display links for.'),
+    '#title' => t('Where to show the service links'),
+    '#description' => t('Set the node types and categories you want to display links for.'),
   );
   $form['where_to_show_the_links']['service_links_node_types'] = array(
     '#type' => 'checkboxes',
-    '#title' => t('Types'),
+    '#title' => t('Node types'),
     '#default_value' => variable_get('service_links_node_types', array()),
     '#options' => node_get_types('names'),
+  );
+  $form['where_to_show_the_links']['service_links_category_types'] = array(
+    '#type' => 'select',
+    '#multiple' => TRUE,
+    '#title' => t('Categories'),
+    '#default_value' => variable_get('service_links_category_types', array()),
+    '#options' => _service_links_get_terms(),
   );
 
   $form['what_links_to_show'] = array(
@@ -193,8 +200,8 @@ function service_links_menu($may_cache) {
 function service_links_nodeapi(&$node, $op, $teaser, $page) {
   switch ($op) {
     case 'view':
-      $node_type = in_array($node->type, variable_get('service_links_node_types', array()), TRUE);
-      if ($node_type && user_access('use service links')) {
+      $links_show = _service_links_show($node->type, $node->nid);
+      if ($links_show && user_access('use service links')) {
         switch (variable_get('service_links_in_node', 0)) {
           case 1:
             if ($teaser) {
@@ -255,9 +262,9 @@ function service_links_link($type, $node = NULL, $teaser = FALSE) {
       $show_links = FALSE;
   }
 
-  $node_type = in_array($node->type, variable_get('service_links_node_types', array()), TRUE);
+  $links_show = _service_links_show($node->type, $node->nid);
 
-  if ($type == 'node' && $node_type && $show_links && user_access('use service links')) {
+  if ($type == 'node' && $links_show && $show_links && user_access('use service links')) {
     $links = service_links_render($node, TRUE);
   }
 
@@ -275,8 +282,8 @@ function service_links_block($op = 'list', $delta = 0, $edit = array()) {
   else if ($op == 'view') {
     if (user_access('use service links') && arg(0) == 'node' && is_numeric(arg(1))) {
       $node = node_load(arg(1));
-      $node_type = in_array($node->type, variable_get('service_links_node_types', array()), TRUE);
-      if ($node_type) {
+      $links_show = _service_links_show($node->type, $node->nid);
+      if ($links_show) {
         $block['subject'] = t('Bookmark/Search this post');
         $block['content'] = theme('service_links_block_format', service_links_render($node));
       }
@@ -399,4 +406,37 @@ function theme_service_links_node_format($links) {
 
 function theme_service_links_block_format($items) {
   return theme('item_list', $items);
+}
+
+/**
+ * Build a array of all taxonomy terms.
+ */
+function _service_links_get_terms() {
+  $types = array();
+  $vocabularies = taxonomy_get_vocabularies();
+  foreach ($vocabularies as $vocabulary) {
+    $tree = taxonomy_get_tree($vocabulary->vid);
+    foreach ($tree as $term) {
+      $types[$term->tid] = $term->name;
+    }
+  }
+
+  return $types;
+}
+
+/**
+ * Check if the service links should be displayed for the node type/category.
+ */
+function _service_links_show($type, $nid) {
+  $links_show = FALSE;
+  $node_type = in_array($type, variable_get('service_links_node_types', array()), TRUE);
+  $terms = taxonomy_node_get_terms($nid);
+  foreach ($terms as $term) {
+    $category_type = in_array($term->tid, variable_get('service_links_category_types', array()), FALSE);
+  }
+  if ($node_type || $category_type) {
+    $links_show = TRUE;
+  }
+
+  return $links_show;
 }
