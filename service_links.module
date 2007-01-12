@@ -361,14 +361,14 @@ function theme_service_links_build_link($text, $url, $title, $image, $nodelink) 
       case 1:
         $link = array(
           'title' => $text,
-          'href' => check_url($url),
+          'href' => $url,
           'attributes' => array('title' => $title, 'rel' => 'nofollow')
         );
         break;
       case 2:
         $link = array(
           'title' => '<img src="'. $base_path . drupal_get_path('module', 'service_links') .'/'. $image .'" alt="'. $text .'" />',
-          'href' => check_url($url),
+          'href' => $url,
           'attributes' => array('title' => $title, 'rel' => 'nofollow'),
           'html' => TRUE
         );
@@ -376,7 +376,7 @@ function theme_service_links_build_link($text, $url, $title, $image, $nodelink) 
       case 3:
         $link = array(
           'title' => '<img src="'. $base_path . drupal_get_path('module', 'service_links') .'/'. $image .'" alt="'. $text .'" /> '. $text,
-          'href' => check_url($url),
+          'href' => $url,
           'attributes' => array('title' => $title, 'rel' => 'nofollow'),
           'html' => TRUE
         );
