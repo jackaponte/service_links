@@ -125,12 +125,6 @@ function service_links_admin_settings() {
     '#return_value' => 1,
     '#default_value' => variable_get('service_links_show_icerocket', 0),
   );
-  $form['what_links2_to_show']['service_links_show_pubsub'] = array(
-    '#type' => 'checkbox',
-    '#title' => t('Show PubSub link'),
-    '#return_value' => 1,
-    '#default_value' => variable_get('service_links_show_pubsub', 0),
-  );
 
   $form['how_to_show_the_links'] = array(
     '#type' => 'fieldset',
@@ -343,9 +337,6 @@ function service_links_render($node, $nodelink = FALSE) {
   if (variable_get('service_links_show_icerocket', 0)) {
     $links['service_links_icerocket'] = theme('service_links_build_link', t('Icerocket'), "http://blogs.icerocket.com/search?q=$url", t('Search IceRocket for links to this post.'), 'icerocket.png', $nodelink);
   }
-  if (variable_get('service_links_show_pubsub', 0)) {
-    $links['service_links_pubsub'] = theme('service_links_build_link', t('Pubsub'), "http://www.pubsub.com/index.php?q=$url", t('Search PubSub for links to this post.'), 'pubsub.png', $nodelink);
-  }
 
   // Add your own link by modifing the link below and uncomment it.
   //$links['service_links_delicious'] = theme('service_links_build_link', t('Delicious'), "http://del.icio.us/post?url=$url&title=$title", t('Bookmark this post on del.icio.us.'), 'delicious.png', $nodelink);
@@ -430,9 +421,11 @@ function _service_links_get_terms() {
 function _service_links_show($type, $nid) {
   $links_show = FALSE;
   $node_type = in_array($type, variable_get('service_links_node_types', array()), TRUE);
-  $terms = taxonomy_node_get_terms($nid);
-  foreach ($terms as $term) {
-    $category_type = in_array($term->tid, variable_get('service_links_category_types', array()), FALSE);
+  if (module_exists('taxonomy')) {
+    $terms = taxonomy_node_get_terms($nid);
+    foreach ($terms as $term) {
+      $category_type = in_array($term->tid, variable_get('service_links_category_types', array()), FALSE);
+    }
   }
   if ($node_type || $category_type) {
     $links_show = TRUE;

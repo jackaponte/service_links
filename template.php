@@ -10,8 +10,8 @@
 function _phptemplate_variables($hook, $vars) {
   switch($hook) {
     case 'node':
-      if (module_exist('service_links')) {
-        $vars['service_links'] = theme('links', service_links_render($vars['node']));
+      if (module_exists('service_links')) {
+        $vars['service_links'] = theme('links', service_links_render($vars['node'], TRUE));
       }
       break;
   }
