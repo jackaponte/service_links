@@ -1,12 +1,16 @@
+# $Id$
+#
 # LANGUAGE translation of Drupal (service_links.module)
 # Copyright YEAR NAME <EMAIL@ADDRESS>
-# Generated from file: service_links.module,v 1.15 2006/09/26 16:20:43 frjo
+# Generated from files:
+#  service_links.module,v 1.19 2007/02/25 21:15:33 frjo
+#  service_links.info,v 1.1 2006/11/05 12:29:36 frjo
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2006-10-22 15:07+0200\n"
+"POT-Creation-Date: 2007-03-02 11:35+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -16,242 +20,238 @@ msgstr ""
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
 #: service_links.module:16
-msgid "Add Digg, del.icio.us, reddit, Technorati etc. links to nodes."
-msgstr ""
-
-#: service_links.module:19
 msgid "<p>Here you can configure the service links.</p>"
 msgstr ""
 
-#: service_links.module:39
+#: service_links.module:36
+msgid "Where to show the service links"
+msgstr ""
+
+#: service_links.module:37
+msgid "Set the node types and categories you want to display links for."
+msgstr ""
+
+#: service_links.module:41
 msgid "Node types"
 msgstr ""
 
-#: service_links.module:40
-msgid "Set the node types you want to display links for."
-msgstr ""
-
-#: service_links.module:44
-msgid "Types"
-msgstr ""
-
-#: service_links.module:51
-msgid "What bookmark links to show"
+#: service_links.module:48
+msgid "Categories"
 msgstr ""
 
 #: service_links.module:55
+msgid "What bookmark links to show"
+msgstr ""
+
+#: service_links.module:59
 msgid "Show del.icio.us link"
 msgstr ""
 
-#: service_links.module:61
+#: service_links.module:65
 msgid "Show Digg link"
 msgstr ""
 
-#: service_links.module:73
+#: service_links.module:77
 msgid "Show Reddit link"
 msgstr ""
 
-#: service_links.module:79
+#: service_links.module:83
 msgid "Show ma.gnolia.com link"
 msgstr ""
 
-#: service_links.module:85
+#: service_links.module:89
 msgid "Show Newsvine link"
 msgstr ""
 
-#: service_links.module:91
+#: service_links.module:95
 msgid "Show Furl link"
 msgstr ""
 
-#: service_links.module:97
+#: service_links.module:101
 msgid "Show Google link"
 msgstr ""
 
-#: service_links.module:103
+#: service_links.module:107
 msgid "Show Yahoo link"
 msgstr ""
 
-#: service_links.module:110
+#: service_links.module:114
 msgid "What search links to show"
 msgstr ""
 
-#: service_links.module:114
+#: service_links.module:118
 msgid "Show Technorati link"
 msgstr ""
 
-#: service_links.module:120
+#: service_links.module:124
 msgid "Show IceRocket link"
 msgstr ""
 
-#: service_links.module:126
-msgid "Show PubSub link"
-msgstr ""
-
-#: service_links.module:133
+#: service_links.module:131
 msgid "When and how to show the links"
 msgstr ""
 
-#: service_links.module:137
+#: service_links.module:135
 msgid "Service links in links"
 msgstr ""
 
-#: service_links.module:139;146
+#: service_links.module:137;144
 msgid "Disabled"
 msgstr ""
 
-#: service_links.module:139;146
+#: service_links.module:137;144
 msgid "Teaser view"
 msgstr ""
 
-#: service_links.module:139;146
+#: service_links.module:137;144
 msgid "Full-page view"
 msgstr ""
 
-#: service_links.module:139;146
+#: service_links.module:137;144
 msgid "Teasers and full-page view"
 msgstr ""
 
-#: service_links.module:140
+#: service_links.module:138
 msgid "When to display the services in the links section."
 msgstr ""
 
-#: service_links.module:144
+#: service_links.module:142
 msgid "Service links in nodes"
 msgstr ""
 
-#: service_links.module:147
+#: service_links.module:145
 msgid "When to display the services after the node text."
 msgstr ""
 
-#: service_links.module:151
+#: service_links.module:149
 msgid "Service links style"
 msgstr ""
 
-#: service_links.module:153
+#: service_links.module:151
 msgid "Text links"
 msgstr ""
 
-#: service_links.module:153
+#: service_links.module:151
 msgid "Image links"
 msgstr ""
 
-#: service_links.module:153
+#: service_links.module:151
 msgid "Image and text links"
 msgstr ""
 
-#: service_links.module:159
+#: service_links.module:157
 msgid "Aggregator2 settings"
 msgstr ""
 
-#: service_links.module:163
+#: service_links.module:161
 msgid "Use link to original article aggregated by aggregator2 module"
 msgstr ""
 
-#: service_links.module:242
+#: service_links.module:179;273 service_links.info:0
 msgid "Service links"
 msgstr ""
 
-#: service_links.module:250
+#: service_links.module:180
+msgid "Control which and where service links should be active."
+msgstr ""
+
+#: service_links.module:281
 msgid "Bookmark/Search this post"
 msgstr ""
 
-#: service_links.module:277
-msgid "delicious"
+#: service_links.module:308
+msgid "Delicious"
 msgstr ""
 
-#: service_links.module:277
+#: service_links.module:308
 msgid "Bookmark this post on del.icio.us."
 msgstr ""
 
-#: service_links.module:280
-msgid "digg"
+#: service_links.module:311
+msgid "Digg"
 msgstr ""
 
-#: service_links.module:280
+#: service_links.module:311
 msgid "Digg this post on digg.com."
 msgstr ""
 
-#: service_links.module:286
-msgid "reddit"
+#: service_links.module:317
+msgid "Reddit"
 msgstr ""
 
-#: service_links.module:286
+#: service_links.module:317
 msgid "Submit this post on reddit.com."
 msgstr ""
 
-#: service_links.module:289
-msgid "magnoliacom"
+#: service_links.module:320
+msgid "Magnoliacom"
 msgstr ""
 
-#: service_links.module:289
+#: service_links.module:320
 msgid "Submit this post on ma.gnolia.com."
 msgstr ""
 
-#: service_links.module:292
-msgid "newsvine"
+#: service_links.module:323
+msgid "Newsvine"
 msgstr ""
 
-#: service_links.module:292
+#: service_links.module:323
 msgid "Submit this post on newsvine.com."
 msgstr ""
 
-#: service_links.module:295
-msgid "furl"
+#: service_links.module:326
+msgid "Furl"
 msgstr ""
 
-#: service_links.module:295
+#: service_links.module:326
 msgid "Submit this post on furl.net."
 msgstr ""
 
-#: service_links.module:298
-msgid "google"
+#: service_links.module:329
+msgid "Google"
 msgstr ""
 
-#: service_links.module:298
+#: service_links.module:329
 msgid "Bookmark this post on Google."
 msgstr ""
 
-#: service_links.module:301
-msgid "yahoo"
+#: service_links.module:332
+msgid "Yahoo"
 msgstr ""
 
-#: service_links.module:301
+#: service_links.module:332
 msgid "Bookmark this post on Yahoo."
 msgstr ""
 
-#: service_links.module:304
-msgid "technorati"
+#: service_links.module:335
+msgid "Technorati"
 msgstr ""
 
-#: service_links.module:304
+#: service_links.module:335
 msgid "Search Technorati for links to this post."
 msgstr ""
 
-#: service_links.module:307
-msgid "icerocket"
-msgstr ""
-
-#: service_links.module:307
-msgid "Search IceRocket for links to this post."
-msgstr ""
-
-#: service_links.module:310
-msgid "pubsub"
-msgstr ""
-
-#: service_links.module:310
-msgid "Search PubSub for links to this post."
+#: service_links.module:338
+msgid "Icerocket"
 msgstr ""
 
 #: service_links.module:338
+msgid "Search IceRocket for links to this post."
+msgstr ""
+
+#: service_links.module:395
 msgid "Bookmark/Search this post with: "
 msgstr ""
 
-#: service_links.module:29
+#: service_links.module:26
 msgid "use service links"
 msgstr ""
 
 #: service_links.module:0
 msgid "service_links"
+msgstr ""
+
+#: service_links.info:0
+msgid "Add Digg, del.icio.us, reddit, Technorati etc. links to nodes."
 msgstr ""
 
