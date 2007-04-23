@@ -13,17 +13,16 @@
 function service_links_help($section) {
   switch ($section) {
     case 'admin/settings/service_links':
-      $output = t('<p>Here you can configure the service links.</p>');
+      return '<p>'. t('Here you can configure the service links.') .'</p>';
       break;
   }
-  return $output;
 }
 
 /**
  * Implementation of hook_perm().
  */
 function service_links_perm() {
-  return array ('use service links');
+  return array('use service links');
 }
 
 /**
@@ -42,13 +41,15 @@ function service_links_admin_settings() {
     '#default_value' => variable_get('service_links_node_types', array()),
     '#options' => node_get_types('names'),
   );
-  $form['where_to_show_the_links']['service_links_category_types'] = array(
-    '#type' => 'select',
-    '#multiple' => TRUE,
-    '#title' => t('Categories'),
-    '#default_value' => variable_get('service_links_category_types', array()),
-    '#options' => _service_links_get_terms(),
-  );
+  if (module_exists('taxonomy')) {
+    $form['where_to_show_the_links']['service_links_category_types'] = array(
+      '#type' => 'select',
+      '#multiple' => TRUE,
+      '#title' => t('Categories'),
+      '#default_value' => variable_get('service_links_category_types', array()),
+      '#options' => _service_links_get_terms(),
+    );
+  }
 
   $form['what_links_to_show'] = array(
     '#type' => 'fieldset',
@@ -95,6 +96,12 @@ function service_links_admin_settings() {
     '#title' => t('Show Furl link'),
     '#return_value' => 1,
     '#default_value' => variable_get('service_links_show_furl', 0),
+  );
+  $form['what_links_to_show']['service_links_show_facebook'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Show Facebook link'),
+    '#return_value' => 1,
+    '#default_value' => variable_get('service_links_show_facebook', 0),
   );
   $form['what_links_to_show']['service_links_show_google'] = array(
     '#type' => 'checkbox',
@@ -324,6 +331,9 @@ function service_links_render($node, $nodelink = FALSE) {
   }
   if (variable_get('service_links_show_furl', 0)) {
     $links['service_links_furl'] = theme('service_links_build_link', t('Furl'), "http://www.furl.net/storeIt.jsp?u=$url&t=$title", t('Submit this post on furl.net.'), 'furl.png', $nodelink);
+  }
+  if (variable_get('service_links_show_facebook', 0)) {
+    $links['service_links_facebook'] = theme('service_links_build_link', t('Facebook'), "http://www.facebook.com/sharer.php?u=$url&t=$title", t('Share on Facebook.'), 'facebook.png', $nodelink);
   }
   if (variable_get('service_links_show_google', 0)) {
     $links['service_links_google'] = theme('service_links_build_link', t('Google'), "http://www.google.com/bookmarks/mark?op=add&bkmk=$url&title=$title", t('Bookmark this post on Google.'), 'google.png', $nodelink);

@@ -1,3 +1,4 @@
 ; $Id$
 name = Service links
 description = Add Digg, del.icio.us, reddit, Technorati etc. links to nodes.
+version = "$Name$"
