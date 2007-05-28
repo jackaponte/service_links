@@ -20,7 +20,7 @@ msgstr ""
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
 #: service_links.module:16
-msgid "<p>Here you can configure the service links.</p>"
+msgid "Here you can configure the service links."
 msgstr ""
 
 #: service_links.module:36

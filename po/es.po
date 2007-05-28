@@ -20,8 +20,8 @@ msgstr ""
 "X-Poedit-Country: SPAIN\n"
 
 #: service_links.module:16
-msgid "<p>Here you can configure the service links.</p>"
-msgstr "<p>Aquí puede configurar sus enlaces de servicio (service links).</p>"
+msgid "Here you can configure the service links."
+msgstr "Aquí puede configurar sus enlaces de servicio (service links)."
 
 #: service_links.module:36
 #, fuzzy

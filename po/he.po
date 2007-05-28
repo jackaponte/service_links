@@ -17,7 +17,7 @@ msgstr "הוספת קישורי Digg, del.icio.us, Reddit, Techorati לנושא�
 
 #: service_links.module:19
 #, fuzzy
-msgid "<p>Here you can configure the service links.</p>"
+msgid "Here you can configure the service links."
 msgstr "כאן ניתן להגדיר את קישורי השרות"
 
 #: service_links.module:39

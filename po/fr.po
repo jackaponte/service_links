@@ -16,8 +16,8 @@ msgid "Add Digg, del.icio.us, reddit, Technorati etc. links to nodes."
 msgstr "Ajoutez des liens Digg, del.icio.us, reddit, Technorati, etc. aux noeuds."
 
 #: service_links.module:19
-msgid "<p>Here you can configure the service links.</p>"
-msgstr "<p>Ici vous pouvez configurer les liens de service.</p>"
+msgid "Here you can configure the service links."
+msgstr "Ici vous pouvez configurer les liens de service."
 
 #: service_links.module:39
 msgid "Node types"

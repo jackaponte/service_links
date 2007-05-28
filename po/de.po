@@ -19,8 +19,8 @@ msgid "Add Digg, del.icio.us, reddit, Technorati etc. links to nodes."
 msgstr "Digg, del.icio.us, reddit, Technorati etc. Links dem Node hinzufügen"
 
 #: service_links.module:19
-msgid "<p>Here you can configure the service links.</p>"
-msgstr "<p>Service Links konfigurieren</p>"
+msgid "Here you can configure the service links."
+msgstr "Service Links konfigurieren"
 
 #: service_links.module:39
 #, fuzzy
