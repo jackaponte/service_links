@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: service_links\n"
 "POT-Creation-Date: 2007-03-02 11:35+0100\n"
-"PO-Revision-Date: 2007-06-08 00:26+0100\n"
+"PO-Revision-Date: 2007-06-08 01:00+0100\n"
 "Last-Translator: Alexander Hass\n"
 "Language-Team: Alexander Hass\n"
 "MIME-Version: 1.0\n"
@@ -30,7 +30,7 @@ msgstr "Wo sollen die Serviceverweise angezeigt werden"
 
 #: service_links.module:36
 msgid "Set the node types and categories you want to display links for."
-msgstr "Inhaltstypen und Kategorien einstellen mit denen Verweise angezeigt werden sollen."
+msgstr "Einstellen der Inhaltstypen und Kategorien mit denen Verweise angezeigt werden sollen."
 
 #: service_links.module:40
 msgid "Node types"
@@ -167,7 +167,7 @@ msgstr "Einstellen welche und wo Serviceverweise aktiv sein sollen."
 
 #: service_links.module:288
 msgid "Bookmark/Search this post"
-msgstr "Lesezeichen erstellen/Diesen Beitrag suchen"
+msgstr "Lesezeichen erstellen / Beitrag suchen"
 
 #: service_links.module:315
 msgid "Delicious"
@@ -259,7 +259,7 @@ msgstr "Durchsuche IceRocket nach Verweisen zu diesem Beitrag."
 
 #: service_links.module:405
 msgid "Bookmark/Search this post with: "
-msgstr "Lesezeichen erstellen/Diesen Beitrag suchen mit: "
+msgstr "Lesezeichen erstellen / Beitrag suchen mit: "
 
 #: service_links.module:25
 msgid "use service links"
