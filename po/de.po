@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: service_links\n"
 "POT-Creation-Date: 2007-03-02 11:35+0100\n"
-"PO-Revision-Date: 2007-06-08 01:00+0100\n"
+"PO-Revision-Date: 2007-07-10 00:24+0100\n"
 "Last-Translator: Alexander Hass\n"
 "Language-Team: Alexander Hass\n"
 "MIME-Version: 1.0\n"
@@ -46,39 +46,39 @@ msgstr "Welche Lesezeichen-Verweise sollen angezeigt werden"
 
 #: service_links.module:60
 msgid "Show del.icio.us link"
-msgstr "Zeige del.icio.us Verweis"
+msgstr "del.icio.us Verweis anzeigen"
 
 #: service_links.module:66
 msgid "Show Digg link"
-msgstr "Zeige Digg Verweis"
+msgstr "Digg Verweis anzeigen"
 
 #: service_links.module:78
 msgid "Show Reddit link"
-msgstr "Zeige Reddit Verweis"
+msgstr "Reddit Verweis anzeigen"
 
 #: service_links.module:84
 msgid "Show ma.gnolia.com link"
-msgstr "Zeige ma.gnolia.com Verweis"
+msgstr "ma.gnolia.com Verweis anzeigen"
 
 #: service_links.module:90
 msgid "Show Newsvine link"
-msgstr "Zeige Newsvine Verweis"
+msgstr "Newsvine Verweis anzeigen"
 
 #: service_links.module:96
 msgid "Show Furl link"
-msgstr "Zeige Furl Verweis"
+msgstr "Furl Verweis anzeigen"
 
 #: service_links.module:102
 msgid "Show Facebook link"
-msgstr "Zeige Facebook Verweis"
+msgstr "Facebook Verweis anzeigen"
 
 #: service_links.module:108
 msgid "Show Google link"
-msgstr "Zeige Google Verweis"
+msgstr "Google Verweis anzeigen"
 
 #: service_links.module:114
 msgid "Show Yahoo link"
-msgstr "Zeige Yahoo Verweis"
+msgstr "Yahoo Verweis anzeigen"
 
 #: service_links.module:121
 msgid "What search links to show"
@@ -86,11 +86,11 @@ msgstr "Welche Suche soll angezeigt werden"
 
 #: service_links.module:125
 msgid "Show Technorati link"
-msgstr "Zeige Technorati Verweis"
+msgstr "Technorati Verweis anzeigen"
 
 #: service_links.module:131
 msgid "Show IceRocket link"
-msgstr "Zeige IceRocket Verweis"
+msgstr "IceRocket Verweis anzeigen"
 
 #: service_links.module:138
 msgid "When and how to show the links"
@@ -130,7 +130,7 @@ msgstr "Serviceverweise in Beiträgen"
 
 #: service_links.module:152
 msgid "When to display the services after the node text."
-msgstr "Wann sollen die Dienste nach den Beitragstext angezeigt werden."
+msgstr "Wann sollen die Dienste nach dem Beitragstext angezeigt werden."
 
 #: service_links.module:156
 msgid "Service links style"
@@ -175,7 +175,7 @@ msgstr "Delicious"
 
 #: service_links.module:315
 msgid "Bookmark this post on del.icio.us."
-msgstr "Lesezeichen auf del.icio.us für diesen Beitrag erstellen."
+msgstr "Lesezeichen für diesen Beitrag bei del.icio.us erstellen."
 
 #: service_links.module:318
 msgid "Digg"
@@ -183,7 +183,7 @@ msgstr "Digg"
 
 #: service_links.module:318
 msgid "Digg this post on digg.com."
-msgstr "Lesezeichen auf digg.com für diesen Beitrag erstellen."
+msgstr "Lesezeichen für diesen Beitrag bei digg.com erstellen."
 
 #: service_links.module:324
 msgid "Reddit"
@@ -191,7 +191,7 @@ msgstr "Reddit"
 
 #: service_links.module:324
 msgid "Submit this post on reddit.com."
-msgstr "Diesen Beitrag auf reddit.com speichern."
+msgstr "Diesen Beitrag bei reddit.com speichern."
 
 #: service_links.module:327
 msgid "Magnoliacom"
@@ -199,7 +199,7 @@ msgstr "Magnoliacom"
 
 #: service_links.module:327
 msgid "Submit this post on ma.gnolia.com."
-msgstr "Diesen Beitrag auf ma.gnolia.com speichern."
+msgstr "Diesen Beitrag bei ma.gnolia.com speichern."
 
 #: service_links.module:330
 msgid "Newsvine"
@@ -207,7 +207,7 @@ msgstr "Newsvine"
 
 #: service_links.module:330
 msgid "Submit this post on newsvine.com."
-msgstr "Diesen Beitrag auf newsvine.com speichern."
+msgstr "Diesen Beitrag bei newsvine.com speichern."
 
 #: service_links.module:333
 msgid "Furl"
@@ -215,7 +215,7 @@ msgstr "Furl"
 
 #: service_links.module:333
 msgid "Submit this post on furl.net."
-msgstr "Diesen Beitrag auf furl.net speichern."
+msgstr "Diesen Beitrag bei furl.net speichern."
 
 #: service_links.module:336
 msgid "Facebook"
@@ -231,7 +231,7 @@ msgstr "Google"
 
 #: service_links.module:339
 msgid "Bookmark this post on Google."
-msgstr "Lesezeichen auf Google für diesen Beitrag erstellen."
+msgstr "Lesezeichen für diesen Beitrag bei Google erstellen."
 
 #: service_links.module:342
 msgid "Yahoo"
@@ -239,7 +239,7 @@ msgstr "Yahoo"
 
 #: service_links.module:342
 msgid "Bookmark this post on Yahoo."
-msgstr "Lesezeichen auf Yahoo für diesen Beitrag erstellen."
+msgstr "Lesezeichen für diesen Beitrag bei Yahoo erstellen."
 
 #: service_links.module:345
 msgid "Technorati"
@@ -247,7 +247,7 @@ msgstr "Technorati"
 
 #: service_links.module:345
 msgid "Search Technorati for links to this post."
-msgstr "Durchsuche Technorati nach Verweisen zu diesem Beitrag."
+msgstr "Technorati nach Verweisen zu diesem Beitrag durchsuchen."
 
 #: service_links.module:348
 msgid "Icerocket"
@@ -255,26 +255,21 @@ msgstr "Icerocket"
 
 #: service_links.module:348
 msgid "Search IceRocket for links to this post."
-msgstr "Durchsuche IceRocket nach Verweisen zu diesem Beitrag."
+msgstr "IceRocket nach Verweisen zu diesem Beitrag durchsuchen."
 
 #: service_links.module:405
 msgid "Bookmark/Search this post with: "
-msgstr "Lesezeichen erstellen / Beitrag suchen mit: "
+msgstr "Lesezeichen erstellen/Beitrag suchen mit: "
 
 #: service_links.module:25
 msgid "use service links"
 msgstr "Serviceverweise verwenden"
 
 #: service_links.module:0
-#: service_links.info:0
 msgid "service_links"
 msgstr "service_links"
 
 #: service_links.info:0
 msgid "Add Digg, del.icio.us, reddit, Technorati etc. links to nodes."
-msgstr "Verweise auf Digg, del.icio.us, reddit, Technorati, usw. zu den Beiträgen hinzufügen."
-
-#: service_links.info:0
-msgid "1180511705"
-msgstr ""
+msgstr "Verweise zu den Beiträgen bei Digg, del.icio.us, reddit, Technorati, usw. hinzufügen."
 
