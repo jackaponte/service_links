@@ -406,7 +406,7 @@ function theme_service_links_node_format($links) {
 }
 
 function theme_service_links_block_format($items) {
-  return theme('item_list', $items);
+  return '<div class="service-links">'. theme('item_list', $items) .'</div>';
 }
 
 /**
