@@ -67,6 +67,12 @@ function service_links_admin_settings() {
     '#return_value' => 1,
     '#default_value' => variable_get('service_links_show_digg', 1),
   );
+  $form['what_links_to_show']['service_links_show_stumbleupon'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Show StumbleUpon link'),
+    '#return_value' => 1,
+    '#default_value' => variable_get('service_links_show_stumbleupon', 0),
+  );
   /* $form['what_links_to_show']['service_links_show_vigillar'] = array(
     '#type' => 'checkbox',
     '#title' => t('Show vigillar.se link'),
@@ -304,8 +310,11 @@ function service_links_render($node, $nodelink = FALSE) {
   if (variable_get('service_links_agg2_link', 0) && $node->link) {
     $url = ($node->source_link ? $node->source_link : $node->link);
   }
-  else {
+  elseif (!empty($node)) {
     $url = url("node/$node->nid", NULL, NULL, TRUE);
+  }
+  else {
+    $url = url($_GET['q'], NULL, NULL, TRUE);
   }
 
   $url = urlencode($url);
@@ -316,6 +325,9 @@ function service_links_render($node, $nodelink = FALSE) {
   }
   if (variable_get('service_links_show_digg', 0)) {
     $links['service_links_digg'] = theme('service_links_build_link', t('Digg'), "http://digg.com/submit?phase=2&url=$url&title=$title", t('Digg this post on digg.com.'), 'digg.png', $nodelink);
+  }
+  if (variable_get('service_links_show_stumbleupon', 0)) {
+    $links['service_links_stumbleupon'] = theme('service_links_build_link', t('StumbleUpon'), "http://www.stumbleupon.com/submit?url=$url&title=$title", t('Thumb this up at StumbleUpon.'), 'stumbleit.png', $nodelink);
   }
   /* if (variable_get('service_links_show_vigillar', 0)) {
     $links['service_links_vigillar'] = theme('service_links_build_link', t('Add new commentigillar'), "http://vigillar.se/submit?edit[url]=$url&edit[title]=$title", t('Submit this post on vigillar.se.'), 'vigillar.png', $nodelink);
