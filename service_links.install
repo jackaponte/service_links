@@ -8,6 +8,7 @@ function service_links_uninstall() {
   variable_del('service_links_node_types');
   variable_del('service_links_show_delicious');
   variable_del('service_links_show_digg');
+  variable_del('service_links_show_stumbleupon');
   variable_del('service_links_show_vigillar');
   variable_del('service_links_show_reddit');
   variable_del('service_links_show_magnoliacom');
