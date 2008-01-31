@@ -1,7 +1,8 @@
 Drupal service_links module:
 ------------------------
-Author - Fredrik Jonsson fredrik at combonet dot se
-Requires - Drupal 5
+Current Maintainer: Sivanandhan, P. apsivam .at. apsivam .dot. in
+Original Author: Fredrik Jonsson fredrik at combonet dot se
+Requires - Drupal 4.7 or higher
 License - GPL (see LICENSE)
 
 
@@ -16,7 +17,6 @@ links to nodes:
 * IceRocket - Search IceRocket for links to this post
 * ma.gnolia.com - Bookmark this post on ma.gnolia.com
 * Newsvine - Submit this post on Newsvine
-* PubSub - Search PubSub for links to this post
 * Reddit - Submit this post on reddit.com
 * Technorati - Search Technorati for links to this post
 * Yahoo - Bookmark this post on Yahoo
@@ -40,8 +40,7 @@ Installation is as simple as creating a directory named
 copying the module and the images into it, then 
 enabling the module at 'administer >> modules'.
 
-For configuration options go to 'administer >> settings
->> service_links'.
+For configuration options go to 'administer >> settings >> service_links'.
 
 For permisson settings go to 'administer >> access control'.
 

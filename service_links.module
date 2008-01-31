@@ -3,18 +3,21 @@
 
 /**
  * @file
- * Author: Fredrik Jonsson fredrik at combonet dot se
+ * Current Maintainer: Sivanandhan, P. apsivam .at. apsivam .dot. in
+ * Original Author: Fredrik Jonsson fredrik at combonet dot se
  * A module that adds Digg, del.icio.us, reddit, Technorati etc. links to nodes.
  */
 
 /**
  * Implementation of hook_help().
  */
-function service_links_help($section) {
-  switch ($section) {
-    case 'admin/settings/service_links':
-      return '<p>'. t('Here you can configure the service links.') .'</p>';
+function service_links_help($path, $arg) {
+  switch ($path) {
+    case 'admin/help#service_links':
+      return '<p>'. t('Display links to social sharing websites like Digg, del.icio.us, reddit, Technorati etc.') .'</p>';
       break;
+    case "admin/modules#description":
+      return '<p>'. t('Control which and where service links should be active.') .'</p>';
   }
 }
 
@@ -22,12 +25,9 @@ function service_links_help($section) {
  * Implementation of hook_perm().
  */
 function service_links_perm() {
-  return array('use service links');
+  return array('access service links', 'administer service links');
 }
 
-/**
- * Implementation of hook_settings().
- */
 function service_links_admin_settings() {
 
   $form['where_to_show_the_links'] = array(
@@ -183,20 +183,17 @@ function service_links_admin_settings() {
 /**
  * Implementation of hook_menu().
  */
-function service_links_menu($may_cache) {
+function service_links_menu() {
   $items = array();
 
-  if ($may_cache) {
-    $items[] = array(
-      'path' => 'admin/settings/servicelinks',
-      'title' => t('Service links'),
-      'description' => t('Control which and where service links should be active.'),
-      'callback' => 'drupal_get_form',
-      'callback arguments' => 'service_links_admin_settings',
-      'access' => user_access('administer site configuration'),
-      'type' => MENU_NORMAL_ITEM
-    );
-  }
+  $items['admin/settings/servicelinks'] = array(
+  'title' => 'Service links',
+  'description' => 'Control which and where service links should be active.',
+  'page callback' => 'drupal_get_form',
+  'page arguments' => array('service_links_admin_settings'),
+  'access arguments' => array('administer service links'),
+  'type' => MENU_NORMAL_ITEM,
+  );
 
   return $items;
 }
@@ -207,8 +204,8 @@ function service_links_menu($may_cache) {
 function service_links_nodeapi(&$node, $op, $teaser, $page) {
   switch ($op) {
     case 'view':
-      $links_show = _service_links_show($node->type, $node->nid);
-      if ($links_show && user_access('use service links')) {
+      $links_show = _service_links_show($node);
+      if ($links_show && user_access('access service links')) {
         switch (variable_get('service_links_in_node', 0)) {
           case 1:
             if ($teaser) {
@@ -269,9 +266,9 @@ function service_links_link($type, $node = NULL, $teaser = FALSE) {
       $show_links = FALSE;
   }
 
-  $links_show = _service_links_show($node->type, $node->nid);
+  $links_show = _service_links_show($node);
 
-  if ($type == 'node' && $links_show && $show_links && user_access('use service links')) {
+  if ($type == 'node' && $links_show && $show_links && user_access('access service links')) {
     $links = service_links_render($node, TRUE);
   }
 
@@ -287,9 +284,9 @@ function service_links_block($op = 'list', $delta = 0, $edit = array()) {
     return $blocks;
   }
   else if ($op == 'view') {
-    if (user_access('use service links') && arg(0) == 'node' && is_numeric(arg(1))) {
+    if (user_access('access service links') && arg(0) == 'node' && is_numeric(arg(1))) {
       $node = node_load(arg(1));
-      $links_show = _service_links_show($node->type, $node->nid);
+      $links_show = _service_links_show($node);
       if ($links_show) {
         $block['subject'] = t('Bookmark/Search this post');
         $block['content'] = theme('service_links_block_format', service_links_render($node));
@@ -298,6 +295,29 @@ function service_links_block($op = 'list', $delta = 0, $edit = array()) {
       return $block;
     }
   }
+}
+
+/**
+ * Implementation of hook_theme().
+ */
+function service_links_theme() {
+  return array(
+    'service_links_build_link' => array(
+      'arguments' => array(
+        'text' => NULL,
+        'url' => NULL,
+        'title' => NULL,
+        'image' => NULL,
+        'nodelink' => NULL,
+      ),
+    ),
+    'service_links_node_format' => array(
+      'arguments' => array('links' => NULL),
+    ),
+    'service_links_block_format' => array(
+      'arguments' => array('items' => NULL),
+    ),
+  );
 }
 
 /**
@@ -310,54 +330,54 @@ function service_links_render($node, $nodelink = FALSE) {
   if (variable_get('service_links_agg2_link', 0) && $node->link) {
     $url = ($node->source_link ? $node->source_link : $node->link);
   }
-  elseif (!empty($node)) {
-    $url = url("node/$node->nid", NULL, NULL, TRUE);
+  else if (!empty($node)) {
+    $url = url("node/$node->nid", array('absolute' => TRUE));
   }
   else {
-    $url = url($_GET['q'], NULL, NULL, TRUE);
+    $url = url($_GET['q'], array('absolute' => TRUE));
   }
 
   $url = urlencode($url);
   $title = urlencode($node->title);
 
   if (variable_get('service_links_show_delicious', 0)) {
-    $links['service_links_delicious'] = theme('service_links_build_link', t('Delicious'), "http://del.icio.us/post?url=$url&title=$title", t('Bookmark this post on del.icio.us.'), 'delicious.png', $nodelink);
+    $links['service_links_delicious'] = theme('service_links_build_link', t('Delicious'), "http://del.icio.us/post?url=$url&title=$title", t('Bookmark this post on del.icio.us.'), 'images/delicious.png', $nodelink);
   }
   if (variable_get('service_links_show_digg', 0)) {
-    $links['service_links_digg'] = theme('service_links_build_link', t('Digg'), "http://digg.com/submit?phase=2&url=$url&title=$title", t('Digg this post on digg.com.'), 'digg.png', $nodelink);
+    $links['service_links_digg'] = theme('service_links_build_link', t('Digg'), "http://digg.com/submit?phase=2&url=$url&title=$title", t('Digg this post on digg.com.'), 'images/digg.png', $nodelink);
   }
   if (variable_get('service_links_show_stumbleupon', 0)) {
-    $links['service_links_stumbleupon'] = theme('service_links_build_link', t('StumbleUpon'), "http://www.stumbleupon.com/submit?url=$url&title=$title", t('Thumb this up at StumbleUpon.'), 'stumbleit.png', $nodelink);
+    $links['service_links_stumbleupon'] = theme('service_links_build_link', t('StumbleUpon'), "http://www.stumbleupon.com/submit?url=$url&title=$title", t('Thumb this up at StumbleUpon.'), 'images/stumbleit.png', $nodelink);
   }
   if (variable_get('service_links_show_propeller', 0)) {
-    $links['service_links_propeller'] = theme('service_links_build_link', t('Propeller'), "http://www.propeller.com/submit/?U=$url&T=$title", t('Submit to Propeller.'), 'propeller.png', $nodelink);
+    $links['service_links_propeller'] = theme('service_links_build_link', t('Propeller'), "http://www.propeller.com/submit/?U=$url&T=$title", t('Submit to Propeller.'), 'images/propeller.png', $nodelink);
   }
   if (variable_get('service_links_show_reddit', 0)) {
-    $links['service_links_reddit'] = theme('service_links_build_link', t('Reddit'), "http://reddit.com/submit?url=$url&title=$title", t('Submit this post on reddit.com.'), 'reddit.png', $nodelink);
+    $links['service_links_reddit'] = theme('service_links_build_link', t('Reddit'), "http://reddit.com/submit?url=$url&title=$title", t('Submit this post on reddit.com.'), 'images/reddit.png', $nodelink);
   }
   if (variable_get('service_links_show_magnoliacom', 0)) {
-    $links['service_links_magnoliacom'] = theme('service_links_build_link', t('Magnoliacom'), "http://ma.gnolia.com/bookmarklet/add?url=$url&title=$title", t('Submit this post on ma.gnolia.com.'), 'magnoliacom.png', $nodelink);
+    $links['service_links_magnoliacom'] = theme('service_links_build_link', t('Magnoliacom'), "http://ma.gnolia.com/bookmarklet/add?url=$url&title=$title", t('Submit this post on ma.gnolia.com.'), 'images/magnoliacom.png', $nodelink);
   }
   if (variable_get('service_links_show_newsvine', 0)) {
-    $links['service_links_newsvine'] = theme('service_links_build_link', t('Newsvine'), "http://www.newsvine.com/_tools/seed&save?u=$url&h=$title", t('Submit this post on newsvine.com.'), 'newsvine.png', $nodelink);
+    $links['service_links_newsvine'] = theme('service_links_build_link', t('Newsvine'), "http://www.newsvine.com/_tools/seed&save?u=$url&h=$title", t('Submit this post on newsvine.com.'), 'images/newsvine.png', $nodelink);
   }
   if (variable_get('service_links_show_furl', 0)) {
-    $links['service_links_furl'] = theme('service_links_build_link', t('Furl'), "http://www.furl.net/storeIt.jsp?u=$url&t=$title", t('Submit this post on furl.net.'), 'furl.png', $nodelink);
+    $links['service_links_furl'] = theme('service_links_build_link', t('Furl'), "http://www.furl.net/storeIt.jsp?u=$url&t=$title", t('Submit this post on furl.net.'), 'images/furl.png', $nodelink);
   }
   if (variable_get('service_links_show_facebook', 0)) {
-    $links['service_links_facebook'] = theme('service_links_build_link', t('Facebook'), "http://www.facebook.com/sharer.php?u=$url&t=$title", t('Share on Facebook.'), 'facebook.png', $nodelink);
+    $links['service_links_facebook'] = theme('service_links_build_link', t('Facebook'), "http://www.facebook.com/sharer.php?u=$url&t=$title", t('Share on Facebook.'), 'images/facebook.png', $nodelink);
   }
   if (variable_get('service_links_show_google', 0)) {
-    $links['service_links_google'] = theme('service_links_build_link', t('Google'), "http://www.google.com/bookmarks/mark?op=add&bkmk=$url&title=$title", t('Bookmark this post on Google.'), 'google.png', $nodelink);
+    $links['service_links_google'] = theme('service_links_build_link', t('Google'), "http://www.google.com/bookmarks/mark?op=add&bkmk=$url&title=$title", t('Bookmark this post on Google.'), 'images/google.png', $nodelink);
   }
   if (variable_get('service_links_show_yahoo', 0)) {
-    $links['service_links_yahoo'] = theme('service_links_build_link', t('Yahoo'), "http://myweb2.search.yahoo.com/myresults/bookmarklet?u=$url&t=$title", t('Bookmark this post on Yahoo.'), 'yahoo.png', $nodelink);
+    $links['service_links_yahoo'] = theme('service_links_build_link', t('Yahoo'), "http://myweb2.search.yahoo.com/myresults/bookmarklet?u=$url&t=$title", t('Bookmark this post on Yahoo.'), 'images/yahoo.png', $nodelink);
   }
   if (variable_get('service_links_show_technorati', 0)) {
-    $links['service_links_technorati'] = theme('service_links_build_link', t('Technorati'), "http://technorati.com/cosmos/search.html?url=$url", t('Search Technorati for links to this post.'), 'technorati.png', $nodelink);
+    $links['service_links_technorati'] = theme('service_links_build_link', t('Technorati'), "http://technorati.com/cosmos/search.html?url=$url", t('Search Technorati for links to this post.'), 'images/technorati.png', $nodelink);
   }
   if (variable_get('service_links_show_icerocket', 0)) {
-    $links['service_links_icerocket'] = theme('service_links_build_link', t('Icerocket'), "http://blogs.icerocket.com/search?q=$url", t('Search IceRocket for links to this post.'), 'icerocket.png', $nodelink);
+    $links['service_links_icerocket'] = theme('service_links_build_link', t('Icerocket'), "http://blogs.icerocket.com/search?q=$url", t('Search IceRocket for links to this post.'), 'images/icerocket.png', $nodelink);
   }
 
   // Add your own link by modifing the link below and uncomment it.
@@ -422,7 +442,7 @@ function theme_service_links_block_format($items) {
 }
 
 /**
- * Build a array of all taxonomy terms.
+ * Build an array of all taxonomy terms.
  */
 function _service_links_get_terms() {
   $types = array();
@@ -440,11 +460,11 @@ function _service_links_get_terms() {
 /**
  * Check if the service links should be displayed for the node type/category.
  */
-function _service_links_show($type, $nid) {
+function _service_links_show($node) {
   $links_show = FALSE;
-  $node_type = in_array($type, variable_get('service_links_node_types', array()), TRUE);
+  $node_type = in_array($node->type, variable_get('service_links_node_types', array()), TRUE);
   if (module_exists('taxonomy')) {
-    $terms = taxonomy_node_get_terms($nid);
+    $terms = taxonomy_node_get_terms($node);
     foreach ($terms as $term) {
       $category_type = in_array($term->tid, variable_get('service_links_category_types', array()), FALSE);
     }
