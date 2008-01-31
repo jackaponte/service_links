@@ -73,6 +73,12 @@ function service_links_admin_settings() {
     '#return_value' => 1,
     '#default_value' => variable_get('service_links_show_stumbleupon', 0),
   );
+  $form['what_links_to_show']['service_links_show_propeller'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Show Propeller link'),
+    '#return_value' => 1,
+    '#default_value' => variable_get('service_links_show_propeller', 0),
+  );
   /* $form['what_links_to_show']['service_links_show_vigillar'] = array(
     '#type' => 'checkbox',
     '#title' => t('Show vigillar.se link'),
@@ -328,6 +334,9 @@ function service_links_render($node, $nodelink = FALSE) {
   }
   if (variable_get('service_links_show_stumbleupon', 0)) {
     $links['service_links_stumbleupon'] = theme('service_links_build_link', t('StumbleUpon'), "http://www.stumbleupon.com/submit?url=$url&title=$title", t('Thumb this up at StumbleUpon.'), 'stumbleit.png', $nodelink);
+  }
+  if (variable_get('service_links_show_propeller', 0)) {
+    $links['service_links_propeller'] = theme('service_links_build_link', t('Propeller'), "http://www.propeller.com/submit/?U=$url&T=$title", t('Submit to Propeller.'), 'propeller.png', $nodelink);
   }
   /* if (variable_get('service_links_show_vigillar', 0)) {
     $links['service_links_vigillar'] = theme('service_links_build_link', t('Add new commentigillar'), "http://vigillar.se/submit?edit[url]=$url&edit[title]=$title", t('Submit this post on vigillar.se.'), 'vigillar.png', $nodelink);
