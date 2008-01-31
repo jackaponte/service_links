@@ -19,7 +19,6 @@ links to nodes:
 * PubSub - Search PubSub for links to this post
 * Reddit - Submit this post on reddit.com
 * Technorati - Search Technorati for links to this post
-* vigillar.se - Bookmark this post on vigillar.se
 * Yahoo - Bookmark this post on Yahoo
 
 The site owner can deside:
