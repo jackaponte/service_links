@@ -462,11 +462,12 @@ function _service_links_get_terms() {
  */
 function _service_links_show($node) {
   $links_show = FALSE;
+  $category_type = FALSE;
   $node_type = in_array($node->type, variable_get('service_links_node_types', array()), TRUE);
   if (module_exists('taxonomy')) {
     $terms = taxonomy_node_get_terms($node);
     foreach ($terms as $term) {
-      $category_type = in_array($term->tid, variable_get('service_links_category_types', array()), FALSE);
+      $category_type |= in_array($term->tid, variable_get('service_links_category_types', array()), FALSE);
     }
   }
   if ($node_type || $category_type) {
