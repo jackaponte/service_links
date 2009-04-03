@@ -1,4 +1,5 @@
 ; $Id$
-name = Service links
-description = Add Digg, del.icio.us, reddit, Technorati etc. links to nodes.
+name = "Service links"
+description = "Module engine for add various service links about sharing networks to nodes."
 core = 6.x
+package = Service Links

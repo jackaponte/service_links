@@ -8,7 +8,7 @@
  */
 
 function _phptemplate_variables($hook, $vars) {
-  switch($hook) {
+  switch ($hook) {
     case 'node':
     case 'page':
       if (module_exists('service_links')) {
