@@ -1,0 +1,8 @@
+; $Id$
+name = "Share Services"
+description = "Provide the integration with Share module"
+core = 6.x
+package = Share - tabs
+dependencies[] = service_links
+dependencies[] = share
+dependencies[] = share_plugin

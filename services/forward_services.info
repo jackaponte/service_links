@@ -1,0 +1,7 @@
+; $Id$
+name = "Forward Services"
+description = "Add the support for Forward module to Service Links with what send the link through email."
+core = 6.x
+package = Service Links
+dependencies[] = service_links 
+dependencies[] = forward
