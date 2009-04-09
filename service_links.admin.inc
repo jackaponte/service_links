@@ -19,6 +19,9 @@ function theme_service_links_drag_table(&$form) {
     $service['name'] = array('#value' => $service['#title']);
     $col[] = drupal_render($service['name']);
 
+    $service['service'] = array('#value' => $service['#service']);
+    $col[] = drupal_render($service['service']);
+
     $service['show'] = array('#type' => 'checkbox', 
       '#value' => $service['#default_value'],
       '#id' => $service['#id'],
@@ -38,7 +41,7 @@ function theme_service_links_drag_table(&$form) {
   }
   else array_multisort($table['weights'], $table['rows']);
 
-  $table['header'] = array(t('Service Name'), t('Show'), t('Weight'));
+  $table['header'] = array(t('Service Name'), t('Service Group'), t('Show'), t('Weight'));
   drupal_add_tabledrag('service_links', 'order', 'sibling', 'service-weight');
   return theme('table', $table['header'], $table['rows'], array('id' => 'service_links')); 
 }
@@ -164,7 +167,9 @@ function service_links_admin_services() {
   $settings = array();
 
   $images_path = drupal_get_path('module', 'service_links') .'/images/';
-  $services = module_invoke_all('service_links');
+  //$services = module_invoke_all('service_links');
+  $modules_services = _service_links_invoke_all();
+
   $settings['show'] = variable_get('service_links_show', NULL);
   $settings['weight'] = variable_get('service_links_weight', NULL);
 
@@ -172,25 +177,63 @@ function service_links_admin_services() {
   $form['service_links']['service_links_show'] = array('#tree' => TRUE);
   $form['service_links']['service_links_weight'] = array('#tree' => TRUE);
 
-  foreach ($services as $service_id => $service) {
-    $icon = isset($service['icon']) ? $images_path . $service['icon'] : $images_path . $service_id .'.png';
-    $weight = isset($settings['weight'][$service_id]) ? $settings['weight'][$service_id] : 0;
+  foreach ($modules_services as $modules => $services) {
+    foreach ($services as $service_id => $service) {
+      $icon = isset($service['icon']) ? $images_path . $service['icon'] : $images_path . $service_id .'.png';
+      $weight = isset($settings['weight'][$service_id]) ? $settings['weight'][$service_id] : 0;
 
-    $form['service_links']['service_links_show'][$service_id] = array (
-      '#weight' => $weight,
-      '#type' => 'checkbox',
-      '#title' => theme('image', $icon). " " . t('Show %name link', array('%name' => $service['name'])),
-      '#return_value' => 1,
-      '#default_value' => isset($settings['show'][$service_id]) ? $settings['show'][$service_id] : 0,
-    );
-    $form['service_links']['service_links_weight'][$service_id] = array(
-      '#type' => 'weight',
-      '#delta' => 100,
-      '#default_value' => $weight,
-    );
+      $form['service_links']['service_links_show'][$service_id] = array (
+        '#service' => $modules,
+        '#weight' => $weight,
+        '#type' => 'checkbox',
+        '#title' => theme('image', $icon). " " . t('Show %name link', array('%name' => $service['name'])),
+        '#return_value' => 1,
+        '#default_value' => isset($settings['show'][$service_id]) ? $settings['show'][$service_id] : 0,
+      );
+      $form['service_links']['service_links_weight'][$service_id] = array(
+        '#type' => 'weight',
+        '#delta' => 100,
+        '#default_value' => $weight,
+      );
+    }
+  }
+  return system_settings_form($form);
+}
+
+/**
+ * Invoke hook_service_links() associating the info about modules
+ */
+function _service_links_invoke_all() {
+  $modules = module_implements('service_links');
+  if (empty($modules)) return;
+
+  $return = array();
+  $args = func_get_args();
+  $names = _service_links_module_info($modules);
+  foreach ($modules as $module) {
+    $function = $module .'_service_links';
+    $result = call_user_func_array($function, $args);
+    $return[$names[$module]] = $result;
+  }
+  return $return;
+}
+
+/**
+ * Catch the module info
+ */
+function _service_links_module_info($modules = array()) {
+  if (empty($modules)) return;
+
+  $return = array();
+  $placeholders = implode(',', array_fill(0, count($modules), "'%s'"));
+  $result = db_query("SELECT name, info FROM {system} WHERE type = 'module' AND status = 1 AND name in ($placeholders)", $modules);
+
+  while ($modules = db_fetch_object($result)) {
+    $info = unserialize($modules->info);
+    $return[$modules->name] = $info['name'];
   }
 
-  return system_settings_form($form);
+  return $return;
 }
 
 ?>

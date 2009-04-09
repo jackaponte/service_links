@@ -373,7 +373,7 @@ function theme_service_links_node_format($links) {
 }
 
 function theme_service_links_block_format($items) {
-  return '<div class="service-links">'. theme('item_list', $items) .'</div>';
+  return '<div class="service-links">'. theme('item_list', array_values($items)) .'</div>';
 }
 
 function theme_service_links_fisheye_format($items) {
