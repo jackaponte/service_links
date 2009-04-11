@@ -5,4 +5,4 @@ core = 6.x
 package = Share - tabs
 dependencies[] = service_links
 dependencies[] = share
-dependencies[] = share_plugin
+dependencies[] = share_widget

@@ -25,10 +25,11 @@ function russian_services_service_links() {
     'description' => t('Bookmark this post on Ruspace'),
   );
   
-  $links['_ru_mistrwong'] = array(
+  $links['_ru_misterwong'] = array(
     'link' => 'http://www.mister-wong.ru/index.php?action=addurl&bm_url=<encoded-url>&bm_description=<encoded-title>',
-    'name' => 'MistrWong',
-    'description' => t('Bookmark this post on Mistr Wong'),
+    'name' => 'Mister Wong',
+    'description' => t('Bookmark this post on Mister Wong'),
+    'icon' => 'misterwong.png',
   );
 
   $links['_ru_memori'] = array(
@@ -71,6 +72,18 @@ function russian_services_service_links() {
     'link' => 'http://bobrdobr.ru/addext.html?url=<encoded-url>&amp;title=<encoded-title>',
     'name' => 'Bobrdobr',
     'description' => t('Bookmark this post on Bobrdobr'),
+  );
+
+  $links['_ru_lopas'] = array(
+    'link' => 'http://www.lopas.ru/add_story.php?story_url=<encoded-url>',
+    'name' => 'Lopas',
+    'description' => t('Bookmark this post on Lopas'),
+  );
+
+  $links['_ru_communizm'] = array(
+    'link' => 'http://communizm.ru/index.php?mode=addstory&title=<encoded-title>&link=<encoded-url>&description=<teaser>',
+    'name' => 'Communizm',
+    'description' => t('Bookmark this post on Communizm'),
   );
 
 /* news  todo

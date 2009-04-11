@@ -298,7 +298,8 @@ function service_links_render($node, $nodelink = FALSE, $style = 0) {
       
       $service['icon'] = isset($service['icon']) ? $service['icon'] : $service_id .'.png';
 
-      $links['link']['service_links_'. $service_id] = theme('service_links_build_link',
+      $service_id = str_replace('__', '_', 'service_links_'. $service_id);
+      $links['link'][$service_id] = theme('service_links_build_link',
         $service['name'], $service['url'],
         array(0 => $settings['images_path'], 1 => $service['icon']),
         $nodelink, $settings['style'], $service['attributes']);

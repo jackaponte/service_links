@@ -1,0 +1,6 @@
+; $Id$
+name = "German Services"
+description = "Provide the German Services: Alltagz, Colivia, Icio, InfoPirat, Linkarena, Mister Wong, Netselektor, Oneview, Readster, seekXL, SeoIGG, Weblinkr, Webnews, Yigg"
+core = 6.x
+package = Service Links
+dependencies[] = service_links
