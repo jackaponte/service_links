@@ -80,7 +80,7 @@ function general_services_service_links() {
   );
   $links['buzz'] = array(
     'name' => 'Buzz Up!',
-    'link' => 'http://buzz.yahoo.com/submit/?submitUrl=<encoded-url>&submitHeadline=<encoded-title>&submitSummary=<teaser>',
+    'link' => 'http://buzz.yahoo.com/buzz?targetUrl=<encoded-url>&headline=<encoded-title>&summary=<teaser>',
     'description' => t('Buzz up this post on Yahoo! Buzz.'),
   );
   $links['linkedin'] = array(
