@@ -177,24 +177,26 @@ function service_links_admin_services() {
   $form['service_links']['service_links_show'] = array('#tree' => TRUE);
   $form['service_links']['service_links_weight'] = array('#tree' => TRUE);
 
-  foreach ($modules_services as $modules => $services) {
-    foreach ($services as $service_id => $service) {
-      $icon = isset($service['icon']) ? $images_path . $service['icon'] : $images_path . $service_id .'.png';
-      $weight = isset($settings['weight'][$service_id]) ? $settings['weight'][$service_id] : 0;
+  if (!empty($modules_services)) {
+    foreach ($modules_services as $modules => $services) {
+      foreach ($services as $service_id => $service) {
+        $icon = isset($service['icon']) ? $images_path . $service['icon'] : $images_path . $service_id .'.png';
+        $weight = isset($settings['weight'][$service_id]) ? $settings['weight'][$service_id] : 0;
 
-      $form['service_links']['service_links_show'][$service_id] = array (
-        '#service' => $modules,
-        '#weight' => $weight,
-        '#type' => 'checkbox',
-        '#title' => theme('image', $icon). " " . t('Show %name link', array('%name' => $service['name'])),
-        '#return_value' => 1,
-        '#default_value' => isset($settings['show'][$service_id]) ? $settings['show'][$service_id] : 0,
-      );
-      $form['service_links']['service_links_weight'][$service_id] = array(
-        '#type' => 'weight',
-        '#delta' => 100,
-        '#default_value' => $weight,
-      );
+        $form['service_links']['service_links_show'][$service_id] = array (
+          '#service' => $modules,
+          '#weight' => $weight,
+          '#type' => 'checkbox',
+          '#title' => theme('image', $icon). " " . t('Show %name link', array('%name' => $service['name'])),
+          '#return_value' => 1,
+          '#default_value' => isset($settings['show'][$service_id]) ? $settings['show'][$service_id] : 0,
+        );
+        $form['service_links']['service_links_weight'][$service_id] = array(
+          '#type' => 'weight',
+          '#delta' => 100,
+          '#default_value' => $weight,
+        );
+      }
     }
   }
   return system_settings_form($form);
