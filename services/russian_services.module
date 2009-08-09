@@ -86,6 +86,12 @@ function russian_services_service_links() {
     'description' => t('Bookmark this post on Communizm'),
   );
 
+  $links['_ru_linksiua'] = array(
+    'link' => 'http://links.i.ua/mark/?url=<encoded-url>&ename=<encoded-title>',
+    'name' => 'Linksiua',
+    'description' => t('Bookmark this post on Links.i.ua'),
+  );
+
 /* news  todo
 
   $links['_ru_newsland'] = array(
