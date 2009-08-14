@@ -33,6 +33,11 @@ function general_services_service_links() {
     'description' => t('Share this on Twitter'),
     'link' => 'http://twitter.com/home/?status=<encoded-url>+--+<encoded-title>',
   );
+  $links['pingthis'] = array(
+    'name' => 'Ping This!',
+    'link' => 'http://ping.fm/ref/?link=<encoded-url>&title=<encoded-title>&body=<encoded-teaser>',
+    'description' => t('Submit to Ping.fm.'),
+  );
   $links['propeller'] = array(
     'name' => 'Propeller',
     'link' => 'http://www.propeller.com/submit/?U=<encoded-url>&T=<encoded-title>',
