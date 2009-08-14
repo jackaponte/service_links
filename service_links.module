@@ -151,8 +151,14 @@ function service_links_link($type, $node = NULL, $teaser = FALSE) {
  */
 function service_links_block($op = 'list', $delta = 0, $edit = array()) {
   if ($op == 'list') {
-    $blocks[0]['info'] = t('Service links');
-    $blocks[1]['info'] = t('Service links with FishEye effect');
+    $blocks['service_links'] = array(
+      'info' => t('Service links'),
+      'cache' => BLOCK_NO_CACHE,
+    );
+    $blocks['service_links_fisheye'] = array(
+      'info' => t('Service links with FishEye effect'),
+      'cache' => BLOCK_NO_CACHE,
+    );
     return $blocks;
   }
   elseif ($op == 'view') {
@@ -160,11 +166,12 @@ function service_links_block($op = 'list', $delta = 0, $edit = array()) {
       $links_show = _service_links_show($node);
       if ($links_show) {
         switch ($delta) {
-          case 0:
+          case 'service_links':
             $block['subject'] = t('Bookmark/Search this post');
-            $block['content'] = theme('service_links_block_format', service_links_render($node));
+            $style = variable_get('service_links_block_style', SERVICE_LINKS_STYLE_IMAGE_AND_TEXT);
+            $block['content'] = theme('service_links_block_format', service_links_render($node, FALSE, $style), $style);
             break;
-          case 1:
+          case 'service_links_fisheye':
             $block['subject'] = t('Bookmark/Search this post');
             $block['content'] = theme('service_links_fisheye_format', service_links_render($node, FALSE, SERVICE_LINKS_STYLE_FISHEYE));
             break;
@@ -175,20 +182,40 @@ function service_links_block($op = 'list', $delta = 0, $edit = array()) {
   }
   elseif ($op == 'configure') {
     $form = array();
-    if ($delta == 1) {
-      $form['service_links_fisheye_folder'] = array(
-        '#type' => 'textfield',
-        '#title' => t('Alternative icon folder'),
-        '#size' => 60,
-        '#description' => t('Subfolder under images/ containing icons for fisheye effect (b.e. big_icons/)'),
-        '#default_value' => variable_get('service_links_fisheye_folder', ''),
-      );
+    switch ($delta) {
+      case 'service_links':
+        $form['service_links_block_style'] = array(
+          '#type' => 'select',
+          '#title' => t('Style'),
+          '#description' => t('How the service links will appear in the block.'),
+          '#default_value' => variable_get('service_links_block_style', SERVICE_LINKS_STYLE_IMAGE_AND_TEXT),
+          '#options' => array(
+            SERVICE_LINKS_STYLE_TEXT => t('Text'),
+            SERVICE_LINKS_STYLE_IMAGE => t('Image'),
+            SERVICE_LINKS_STYLE_IMAGE_AND_TEXT => t('Image and Text'),
+          ),
+        );
+        break;
+      case 'service_links_fisheye':
+        $form['service_links_fisheye_folder'] = array(
+          '#type' => 'textfield',
+          '#title' => t('Alternative icon folder'),
+          '#size' => 60,
+          '#description' => t('Subfolder under images/ containing icons for fisheye effect (b.e. big_icons/)'),
+          '#default_value' => variable_get('service_links_fisheye_folder', ''),
+        );
+        break;
     }
     return $form;
   }
   elseif ($op == 'save') {
-    if ($delta == 1) {
-      variable_set('service_links_fisheye_folder', $edit['service_links_fisheye_folder']);
+    switch ($delta) {
+      case 'service_links':
+        variable_set('service_links_block_style', $edit['service_links_block_style']);
+        break;
+      case 'service_links_fisheye':
+        variable_set('service_links_fisheye_folder', $edit['service_links_fisheye_folder']);
+        break;
     }
   }
 }
@@ -449,7 +476,12 @@ function theme_service_links_node_format($links) {
   return '<div class="service-links"><div class="service-label">'. t('Bookmark/Search this post with:') .' </div>'. theme('links', $links) .'</div>';
 }
 
-function theme_service_links_block_format($items) {
+function theme_service_links_block_format($items, $style = SERVICE_LINKS_STYLE_IMAGE_AND_TEXT) {
+  switch ($style) {
+    case SERVICE_LINKS_STYLE_IMAGE:
+      return implode($items, ' ');
+      break;
+  }
   return '<div class="service-links">'. theme('item_list', array_values($items)) .'</div>';
 }
 
