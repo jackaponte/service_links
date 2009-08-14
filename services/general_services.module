@@ -48,6 +48,11 @@ function general_services_service_links() {
     'link' => 'http://reddit.com/submit?url=<encoded-url>&title=<encoded-title>',
     'description' => t('Submit this post on reddit.com.'),
   );
+  $links['slashdot'] = array(
+    'name' => 'SlashDot',
+    'link' => 'http://slashdot.org/bookmark.pl?url=<encoded-url>&title=<encoded-title>',
+    'description' => t('Bookmark this post on SlashDot'),
+  );
   $links['magnoliacom'] = array(
     'name' => 'Magnoliacom',
     'link' => 'http://ma.gnolia.com/bookmarklet/add?url=<encoded-url>&title=<encoded-title>',
