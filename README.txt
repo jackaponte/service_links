@@ -80,7 +80,7 @@ supported:
 
   Notes:
   i) be sure that 'myservice' (know as 'service-id') is unique;
-  ii) tags allowed: <encoded-url>, <encoded-title>, <source>, <teaser>, <node-id>, <short-url>
+  ii) tags allowed: <encoded-url>, <encoded-title>, <encoded-teaser>, <source>, <teaser>, <node-id>, <short-url>
 
 2) Put the related standard icon (myservice.png) under 'images/' folder .
 
@@ -89,12 +89,7 @@ supported:
   ii) for overwrite the standard filename just include the key 'icon':
     $links['myservice'] = array(
       ...
-      'icon' => 'anothername.gif',
-    );
-  iii) for better organize the icons under 'images/' folder use again 'icon' key:
-    $links['myservice'] = array(
-      ...
-      'icon' => 'mysubfolder/anothername.gif',
+      'icon' => drupal_get_path('module', 'myservice') .'/anothername.gif',
     );
 
 3) Enable the module under admin >> modules page and under settings >> service links >> services

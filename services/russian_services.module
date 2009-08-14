@@ -29,7 +29,7 @@ function russian_services_service_links() {
     'link' => 'http://www.mister-wong.ru/index.php?action=addurl&bm_url=<encoded-url>&bm_description=<encoded-title>',
     'name' => 'Mister Wong',
     'description' => t('Bookmark this post on Mister Wong'),
-    'icon' => 'misterwong.png',
+    'icon' => drupal_get_path('module', 'service_links') .'/images/misterwong.png',
   );
 
   $links['_ru_memori'] = array(
@@ -57,7 +57,7 @@ function russian_services_service_links() {
   );
 
   $links['_ru_yandex'] = array(
-    'link' => 'http://zakladki.yandex.ru/addlink.xml?create_link=&name=<encoded-title>&url=<encoded-url>&descr=<teaser>&tags=<tags>&folder_id=<source>&newfolder=0&create_link=0',
+    'link' => 'http://zakladki.yandex.ru/addlink.xml?create_link=&name=<encoded-title>&url=<encoded-url>&descr=<encoded-teaser>&tags=<tags>&folder_id=<source>&newfolder=0&create_link=0',
     'name' => 'Yandex',
     'description' => t('Bookmark this post on Yandex'),
   );
@@ -81,7 +81,7 @@ function russian_services_service_links() {
   );
 
   $links['_ru_communizm'] = array(
-    'link' => 'http://communizm.ru/index.php?mode=addstory&title=<encoded-title>&link=<encoded-url>&description=<teaser>',
+    'link' => 'http://communizm.ru/index.php?mode=addstory&title=<encoded-title>&link=<encoded-url>&description=<encoded-teaser>',
     'name' => 'Communizm',
     'description' => t('Bookmark this post on Communizm'),
   );

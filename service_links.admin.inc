@@ -94,7 +94,11 @@ function service_links_admin_settings() {
     '#type' => 'select',
     '#title' => t('Service links style'),
     '#default_value' => variable_get('service_links_style', 1),
-    '#options' => array(SERVICE_LINKS_STYLE_TEXT => t('Only Text'), SERVICE_LINKS_STYLE_IMAGE => t('Only Image'), SERVICE_LINKS_STYLE_IMAGE_AND_TEXT => t('Image and Text')),
+    '#options' => array(
+      SERVICE_LINKS_STYLE_TEXT => t('Only Text'),
+      SERVICE_LINKS_STYLE_IMAGE => t('Only Image'),
+      SERVICE_LINKS_STYLE_IMAGE_AND_TEXT => t('Image and Text')
+    ),
   );
   $form['how_to_show_the_links']['service_links_new_window'] = array(
     '#type' => 'select',
@@ -150,7 +154,7 @@ function service_links_admin_settings() {
  * Check if domain address textbox is empty
  */
 function service_links_admin_services_validate($form, &$form_state) {
-  if ((int) $form_state['values']['service_links_short_links_type'] > 2) {
+  if (isset($form_state['values']['service_links_short_links_type']) && (int) $form_state['values']['service_links_short_links_type'] > 2) {
     if (!$form_state['values']['service_links_domain_redirect']) {
       form_set_error('service_links_domain_redirect', t('Domain redirect address is not set.'));
     }
@@ -159,17 +163,14 @@ function service_links_admin_services_validate($form, &$form_state) {
     }
   }  
 }
-  
+
 /**
  * Menu callback administration settings for services links list.
  */
 function service_links_admin_services() {
   $settings = array();
 
-  $images_path = drupal_get_path('module', 'service_links') .'/images/';
-  //$services = module_invoke_all('service_links');
-  $modules_services = _service_links_invoke_all();
-
+  $services = service_links_get_links(NULL, TRUE);
   $settings['show'] = variable_get('service_links_show', NULL);
   $settings['weight'] = variable_get('service_links_weight', NULL);
 
@@ -177,65 +178,23 @@ function service_links_admin_services() {
   $form['service_links']['service_links_show'] = array('#tree' => TRUE);
   $form['service_links']['service_links_weight'] = array('#tree' => TRUE);
 
-  if (!empty($modules_services)) {
-    foreach ($modules_services as $modules => $services) {
-      foreach ($services as $service_id => $service) {
-        $icon = isset($service['icon']) ? $images_path . $service['icon'] : $images_path . $service_id .'.png';
-        $weight = isset($settings['weight'][$service_id]) ? $settings['weight'][$service_id] : 0;
+  foreach ($services as $service_id => $service) {
+    $icon = isset($service['icon']) ? $service['icon'] : drupal_get_path('module', 'service_links') ."/images/$service_id.png";
+    $weight = isset($settings['weight'][$service_id]) ? $settings['weight'][$service_id] : 0;
 
-        $form['service_links']['service_links_show'][$service_id] = array (
-          '#service' => $modules,
-          '#weight' => $weight,
-          '#type' => 'checkbox',
-          '#title' => theme('image', $icon). " " . t('Show %name link', array('%name' => $service['name'])),
-          '#return_value' => 1,
-          '#default_value' => isset($settings['show'][$service_id]) ? $settings['show'][$service_id] : 0,
-        );
-        $form['service_links']['service_links_weight'][$service_id] = array(
-          '#type' => 'weight',
-          '#delta' => 100,
-          '#default_value' => $weight,
-        );
-      }
-    }
+    $form['service_links']['service_links_show'][$service_id] = array (
+      '#service' => ucwords(str_replace('_', ' ', $service['module'])),
+      '#weight' => $weight,
+      '#type' => 'checkbox',
+      '#title' => theme('image', $icon). " " . t('Show %name link', array('%name' => $service['name'])),
+      '#return_value' => 1,
+      '#default_value' => isset($settings['show'][$service_id]) ? $settings['show'][$service_id] : 0,
+    );
+    $form['service_links']['service_links_weight'][$service_id] = array(
+      '#type' => 'weight',
+      '#delta' => 100,
+      '#default_value' => $weight,
+    );
   }
   return system_settings_form($form);
 }
-
-/**
- * Invoke hook_service_links() associating the info about modules
- */
-function _service_links_invoke_all() {
-  $modules = module_implements('service_links');
-  if (empty($modules)) return;
-
-  $return = array();
-  $args = func_get_args();
-  $names = _service_links_module_info($modules);
-  foreach ($modules as $module) {
-    $function = $module .'_service_links';
-    $result = call_user_func_array($function, $args);
-    $return[$names[$module]] = $result;
-  }
-  return $return;
-}
-
-/**
- * Catch the module info
- */
-function _service_links_module_info($modules = array()) {
-  if (empty($modules)) return;
-
-  $return = array();
-  $placeholders = implode(',', array_fill(0, count($modules), "'%s'"));
-  $result = db_query("SELECT name, info FROM {system} WHERE type = 'module' AND status = 1 AND name in ($placeholders)", $modules);
-
-  while ($modules = db_fetch_object($result)) {
-    $info = unserialize($modules->info);
-    $return[$modules->name] = $info['name'];
-  }
-
-  return $return;
-}
-
-?>

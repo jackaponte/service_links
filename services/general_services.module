@@ -26,7 +26,7 @@ function general_services_service_links() {
     'name' => 'StumbleUpon',
     'description' => t('Thumb this up at StumbleUpon'),
     'link' => 'http://www.stumbleupon.com/submit?url=<encoded-url>&title=<encoded-title>',
-    'icon' => 'stumbleit.png',
+    'icon' => drupal_get_path('module', 'service_links') . '/images/stumbleit.png',
   );
   $links['twitter'] = array(
     'name' => 'Twitter',
@@ -80,12 +80,12 @@ function general_services_service_links() {
   );
   $links['buzz'] = array(
     'name' => 'Buzz Up!',
-    'link' => 'http://buzz.yahoo.com/buzz?targetUrl=<encoded-url>&headline=<encoded-title>&summary=<teaser>',
+    'link' => 'http://buzz.yahoo.com/buzz?targetUrl=<encoded-url>&headline=<encoded-title>&summary=<encoded-teaser>',
     'description' => t('Buzz up this post on Yahoo! Buzz.'),
   );
   $links['linkedin'] = array(
     'name' => 'LinkedIn',
-    'link' => 'http://www.linkedin.com/shareArticle?mini=true&url=<encoded-url>&title=<encoded-title>&summary=<teaser>&source=<source>',
+    'link' => 'http://www.linkedin.com/shareArticle?mini=true&url=<encoded-url>&title=<encoded-title>&summary=<encoded-teaser>&source=<source>',
     'description' => t('Publish this post to LinkedIn'),
   );
   $links['technorati'] = array(

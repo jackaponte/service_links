@@ -22,7 +22,7 @@ function german_services_service_links() {
     'name' => 'Mister Wong',
     'description' => t('Bookmark this post on Mister Wong.'),
     'link' => 'http://www.mister-wong.de/index.php?action=addurl&bm_url=<encoded-url>&bm_description=<encoded-title>',
-    'icon' => 'misterwong.png',
+    'icon' => drupal_get_path('module', 'service_links') .'/images/misterwong.png',
   );
   $links['_de_seoigg'] = array(
     'name' => 'SeoIGG',
@@ -44,7 +44,7 @@ function german_services_service_links() {
     'description' => t('Add to Infopirat.'),
     'link' => 'http://infopirat.com/node/add/userlink?edit[url]=<encoded-url>&edit[title]=<encoded-title>',
   );
-  $links['_de_seekXL'] = array(
+  $links['_de_seekxl'] = array(
     'name' => 'seekXL',
     'description' => t('Bookmark this post on seekXL.'),
     'link' => 'http://social-bookmarking.seekxl.de/?add_url=<encoded-url>&title=<encoded-title>',
