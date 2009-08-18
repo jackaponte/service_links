@@ -87,7 +87,11 @@ function service_links_admin_settings() {
     '#type' => 'select',
     '#title' => t('Service links in nodes'),
     '#default_value' => variable_get('service_links_in_node', 2),
-    '#options' => array(0 => t('Disabled'), 1 => t('Teaser view'), 2 => t('Full-page view'), 3 => t('Teasers and full-page view')),
+    '#options' => array(
+      SERVICE_LINKS_DISABLED => t('Disabled'),
+      SERVICE_LINKS_IN_TEASER => t('Teaser view'),
+      SERVICE_LINKS_IN_FULL => t('Full-page view'),
+      SERVICE_LINKS_IN_BOTH => t('Teasers and full-page view')),
     '#description' => t('When to display the services after the node text.'),
   );
   $form['how_to_show_the_links']['service_links_style'] = array(

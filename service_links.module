@@ -14,6 +14,11 @@ define('SERVICE_LINKS_STYLE_IMAGE',2);
 define('SERVICE_LINKS_STYLE_IMAGE_AND_TEXT',3);
 define('SERVICE_LINKS_STYLE_FISHEYE',4);
 
+define('SERVICE_LINKS_DISABLED', 0);
+define('SERVICE_LINKS_IN_TEASER', 1);
+define('SERVICE_LINKS_IN_FULL', 2);
+define('SERVICE_LINKS_IN_BOTH', 3);
+
 /**
  * Implementation of hook_help().
  */
@@ -121,16 +126,16 @@ function service_links_link($type, $node = NULL, $teaser = FALSE) {
   $links = array();
 
   switch (variable_get('service_links_in_links', 0)) {
-    case 0:
+    case SERVICE_LINKS_DISABLED:
       $show_links = FALSE;
       break;
-    case 1:
+    case SERVICE_LINKS_IN_TEASER:
       $show_links = $teaser ? TRUE : FALSE;
       break;
-    case 2:
+    case SERVICE_LINKS_IN_FULL:
       $show_links = $teaser ? FALSE : TRUE;
       break;
-    case 3:
+    case SERVICE_LINKS_IN_BOTH:
       $show_links = TRUE;
       break;
     default:
@@ -428,7 +433,7 @@ function theme_service_links_build_link($text, $url = array(), $image = NULL, $n
         break;
       case SERVICE_LINKS_STYLE_IMAGE:
         $link = array(
-          'title' => theme('image', $icon, $text),
+          'title' => theme('image', $image, $text),
           'href' => $url[0],
           'query' => $url[1],
           'attributes' => $attributes,
