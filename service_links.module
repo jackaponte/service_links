@@ -79,14 +79,20 @@ function service_links_menu() {
  */
 function service_links_nodeapi(&$node, $op, $teaser, $page) {
   switch ($op) {
-    case 'view':
+    case 'load':
       $links_show = _service_links_show($node);
-      if ($links_show && user_access('access service links')) {
+      if ($links_show) {
+        $node->service_links = service_links_render($node, TRUE);
+        $node->service_links_rendered = theme('service_links_node_format', $node->service_links);
+      }
+      break;
+    case 'view':
+      if (isset($node->service_links) && user_access('access service links')) {
         switch (variable_get('service_links_in_node', 0)) {
           case 1:
             if ($teaser) {
               $node->content['service_links'] = array(
-                '#value' => theme('service_links_node_format', service_links_render($node, TRUE)),
+                '#value' => $node->service_links_rendered,
                 '#weight' => 10,
               );
             }
@@ -94,7 +100,7 @@ function service_links_nodeapi(&$node, $op, $teaser, $page) {
           case 2:
             if ($page) {
               $node->content['service_links'] = array(
-                '#value' => theme('service_links_node_format', service_links_render($node, TRUE)),
+                '#value' => $node->service_links_rendered,
                 '#weight' => 10,
               );
             }
@@ -102,13 +108,13 @@ function service_links_nodeapi(&$node, $op, $teaser, $page) {
           case 3:
             if ($teaser) {
               $node->content['service_links'] = array(
-                '#value' => theme('service_links_node_format', service_links_render($node, TRUE)),
+                '#value' => $node->service_links_rendered,
                 '#weight' => 10,
               );
             }
             else if ($page) {
               $node->content['service_links'] = array(
-                '#value' => theme('service_links_node_format', service_links_render($node, TRUE)),
+                '#value' => $node->service_links_rendered,
                 '#weight' => 10,
               );
             }
