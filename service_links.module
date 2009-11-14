@@ -80,10 +80,12 @@ function service_links_menu() {
 function service_links_nodeapi(&$node, $op, $teaser, $page) {
   switch ($op) {
     case 'load':
-      $links_show = _service_links_show($node);
-      if ($links_show) {
-        $node->service_links = service_links_render($node, TRUE);
-        $node->service_links_rendered = theme('service_links_node_format', $node->service_links);
+      if (arg(2) != 'edit') {
+        $links_show = _service_links_show($node);
+        if ($links_show) {
+          $node->service_links = service_links_render($node, TRUE);
+          $node->service_links_rendered = theme('service_links_node_format', $node->service_links);
+        }
       }
       break;
     case 'view':
