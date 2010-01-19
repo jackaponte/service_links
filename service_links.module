@@ -184,6 +184,7 @@ function service_links_block($op = 'list', $delta = 0, $edit = array()) {
             $style = variable_get('service_links_block_style', SERVICE_LINKS_STYLE_IMAGE_AND_TEXT);
             $block['content'] = theme('service_links_block_format', service_links_render($node, FALSE, $style), $style);
             break;
+
           case 'service_links_fisheye':
             $block['subject'] = t('Bookmark/Search this post');
             $block['content'] = theme('service_links_fisheye_format', service_links_render($node, FALSE, SERVICE_LINKS_STYLE_FISHEYE));
@@ -351,9 +352,11 @@ function service_links_render($node, $nodelink = FALSE, $style = 0) {
     case 0:
       $short_url = $url;
       break;
+
     case 1:
       $short_url = service_links_short_url($url, $node->nid);
       break;
+
     case 2:
       $short_url = service_links_short_url($url, $node->nid);
       $url = $short_url;
@@ -383,7 +386,9 @@ function service_links_render($node, $nodelink = FALSE, $style = 0) {
     'title' => $node->title,
   );
 
-  if ($style > 0) $settings['style'] = $style;
+  if ($style > 0) {
+    $settings['style'] = $style;
+  }
 
   foreach($services as $service_id => $service) {
     $links['weight'][] = isset($settings['link_weight'][$service_id]) ? $settings['link_weight'][$service_id] : 0;
@@ -424,8 +429,10 @@ function service_links_render($node, $nodelink = FALSE, $style = 0) {
     );
   }
 
-  if (!empty($links['link'])) array_multisort($links['weight'], $links['link']);
-  return $links['link'];
+  if (!empty($links['link'])) {
+    array_multisort($links['weight'], $links['link']);
+  }
+  return !empty($links['link']) ? $links['link'] : array();
 }
 
 function theme_service_links_build_link($text, $url = array(), $image = NULL, $nodelink, $style, $attributes = array()) {
@@ -490,12 +497,19 @@ function theme_service_links_node_format($links) {
 }
 
 function theme_service_links_block_format($items, $style = SERVICE_LINKS_STYLE_IMAGE_AND_TEXT) {
+  if (empty($items)) {
+    return;
+  }
   switch ($style) {
     case SERVICE_LINKS_STYLE_IMAGE:
-      return implode($items, ' ');
+      $output = implode($items, ' ');
+      break;
+
+    default:
+      $output = theme('item_list', array_values($items));
       break;
   }
-  return '<div class="service-links">'. theme('item_list', array_values($items)) .'</div>';
+  return '<div class="service-links">' . $output . '</div>';
 }
 
 function theme_service_links_fisheye_format($items) {
@@ -547,8 +561,6 @@ function _service_links_show($node) {
  * Load the static settings and keep clear the render function
  */
 function _service_links_load_settings() {
-  $settings = array();
-
   $settings['short_links_use'] = variable_get('service_links_short_links_use', 0);
 
   $settings['attributes'] = array('rel' => 'nofollow');
@@ -557,8 +569,8 @@ function _service_links_load_settings() {
   }
   $settings['style'] = variable_get('service_links_style', 1);
 
-  $settings['link_weight'] = variable_get('service_links_weight', NULL);
-  $settings['link_show'] = variable_get('service_links_show', NULL);
+  $settings['link_weight'] = variable_get('service_links_weight', array());
+  $settings['link_show'] = variable_get('service_links_show', array());
 
   $settings['agg2_link'] = variable_get('service_links_agg2_link', 0);
 
