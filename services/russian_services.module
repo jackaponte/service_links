@@ -24,7 +24,7 @@ function russian_services_service_links() {
     'name' => 'Ruspace',
     'description' => t('Bookmark this post on Ruspace'),
   );
-  
+
   $links['_ru_misterwong'] = array(
     'link' => 'http://www.mister-wong.ru/index.php?action=addurl&bm_url=<encoded-url>&bm_description=<encoded-title>',
     'name' => 'Mister Wong',
@@ -57,7 +57,7 @@ function russian_services_service_links() {
   );
 
   $links['_ru_yandex'] = array(
-    'link' => 'http://zakladki.yandex.ru/addlink.xml?create_link=&name=<encoded-title>&url=<encoded-url>&descr=<encoded-teaser>&tags=<tags>&folder_id=<source>&newfolder=0&create_link=0',
+    'link' => 'http://zakladki.yandex.ru/newlink.xml?url=<encoded-url>&name=<encoded-title>',
     'name' => 'Yandex',
     'description' => t('Bookmark this post on Yandex'),
   );
@@ -90,6 +90,12 @@ function russian_services_service_links() {
     'link' => 'http://links.i.ua/mark/?url=<encoded-url>&ename=<encoded-title>',
     'name' => 'Linksiua',
     'description' => t('Bookmark this post on Links.i.ua'),
+  );
+
+  $links['_ru_vkontakte'] = array(
+    'link' => 'http://vkontakte.ru/share.php?url=<encoded-url>&title=<encoded-title>',
+    'name' => 'VKontakte',
+    'description' => t('Share this on VKontakte'),
   );
 
 /* news  todo
