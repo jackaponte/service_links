@@ -9,11 +9,11 @@
 /**
  * Theming function for build a draggable service links table
  */
-function theme_service_links_drag_table(&$form) {
+function theme_service_links_drag_table($form) {
   $table = array();
 
   foreach (element_children($form['service_links_show']) as $service_id) {
-    $service = &$form['service_links_show'][$service_id]; 
+    $service = &$form['service_links_show'][$service_id];
     $col = array();
 
     $service['name'] = array('#value' => $service['#title']);
@@ -22,7 +22,7 @@ function theme_service_links_drag_table(&$form) {
     $service['service'] = array('#value' => $service['#service']);
     $col[] = drupal_render($service['service']);
 
-    $service['show'] = array('#type' => 'checkbox', 
+    $service['show'] = array('#type' => 'checkbox',
       '#value' => $service['#default_value'],
       '#id' => $service['#id'],
       '#name' => $service['#name']);
@@ -35,7 +35,7 @@ function theme_service_links_drag_table(&$form) {
     $table['weights'][] = $service['#weight'];
     $table['rows'][] = array('data' => $col, 'class' => 'draggable');
   }
-  
+
   if (empty($table['rows'])) {
     $table['rows'][] = array(array('data' => t('No service available.'), 'colspan' => '5'));
   }
@@ -43,7 +43,7 @@ function theme_service_links_drag_table(&$form) {
 
   $table['header'] = array(t('Service Name'), t('Service Group'), t('Show'), t('Weight'));
   drupal_add_tabledrag('service_links', 'order', 'sibling', 'service-weight');
-  return theme('table', $table['header'], $table['rows'], array('id' => 'service_links')); 
+  return theme('table', $table['header'], $table['rows'], array('id' => 'service_links'));
 }
 
 /**
@@ -165,7 +165,7 @@ function service_links_admin_services_validate($form, &$form_state) {
     if (preg_match("/\/$/", $form_state['values']['service_links_domain_redirect'])) {
       form_set_error('service_links_domain_redirect', t('No trailing slash!'));
     }
-  }  
+  }
 }
 
 /**
