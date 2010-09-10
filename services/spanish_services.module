@@ -1,0 +1,30 @@
+<?php
+
+// $Id$
+
+/**
+ * @file
+ * Spanish services that extend Service Links module
+ * Funded by ateneatech
+ */
+
+/**
+ * Implementation of hook_service_links()
+ */
+function spanish_services_service_links() {
+  $links = array();
+
+  $links['_es_meneame'] = array(
+    'name' => 'Meneame',
+    'description' => t('Add to Meneame.'),
+    'link' => 'http://www.meneame.net/submit.php?url=<encoded-url>',
+  );
+  $links['_es_latafanera'] = array(
+    'name' => 'La Tafanera',
+    'description' => t('Add to La Tafanera.'),
+    'link' => 'http://latafanera.cat/submit.php?url=<encoded-url>',
+  );
+
+  return $links;
+}
+?>
