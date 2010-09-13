@@ -367,6 +367,7 @@ function service_links_render($node, $nodelink = FALSE, $style = 0) {
     'encoded-title' => '<encoded-title>',
     'encoded-url' => '<encoded-url>',
     'encoded-teaser' => '<encoded-teaser>',
+    'encoded-short-url' => '<encoded-short-url>',
     'teaser' => '<teaser>',
     'short-url' => '<short-url>',
     'source' => '<source>',
@@ -378,8 +379,9 @@ function service_links_render($node, $nodelink = FALSE, $style = 0) {
     'encoded-title' => urlencode($node->title),
     'encoded-url' => urlencode($url),
     'encoded-teaser' => urlencode(strip_tags($node->teaser)),
+    'encoded-short-url' => urlencode($short_url),
     'teaser' => $node->teaser,
-    'short-url' => urlencode($short_url),
+    'short-url' => $short_url,
     'source' => urlencode(variable_get('site_name', 'Drupal')),
     'node-id' => $node->nid,
     'url' => $url,
@@ -410,7 +412,7 @@ function service_links_render($node, $nodelink = FALSE, $style = 0) {
       drupal_add_js($service['javascript']);
     }
     if (isset($service['css'])) {
-      drupal_add_js($service['css']);
+      drupal_add_css($service['css']);
     }
 
     // Invoke callback function.
