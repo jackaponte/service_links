@@ -405,6 +405,7 @@ function service_links_render($node, $nodelink = FALSE, $style = 0) {
 
     $service['attributes']['title'] = $service['description'];
     $service['attributes']['id'] = form_clean_id('service_links-'. $service_id);
+    $service['attributes']['class'] = str_replace(array('][', '_', ' '), '-', 'service_links-'. $service_id);
     $service['attributes'] += $settings['attributes'];
 
     $service['icon'] = isset($service['icon']) ? $service['icon'] : drupal_get_path('module', 'service_links') ."/images/$service_id.png";
