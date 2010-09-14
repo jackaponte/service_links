@@ -303,6 +303,10 @@ function service_links_get_links($services = NULL, $reset = FALSE) {
     }
   }
   // If desired, return only the given services.
+  if (isset($services) && is_numeric(key($services))) {
+    $services = array_combine($services, array_fill(0, count($services), 1));
+  }
+
   return isset($services) ? array_intersect_key($links, $services) : $links;
 }
 
@@ -394,9 +398,9 @@ function service_links_render($node, $nodelink = FALSE, $style = 0) {
 
   foreach($services as $service_id => $service) {
     $links['weight'][] = isset($settings['link_weight'][$service_id]) ? $settings['link_weight'][$service_id] : 0;
-    
+
     $service['url'] = split('\?', $service['link']);
-    $subst_id = isset($service['url'][1]) ? 1 : 0; 
+    $subst_id = isset($service['url'][1]) ? 1 : 0;
     $service['url'][$subst_id] = str_replace($settings['tag'], $settings['subst'], $service['url'][$subst_id]);
 
     $service['attributes']['title'] = $service['description'];
