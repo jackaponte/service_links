@@ -1,6 +1,6 @@
 ; $Id$
 name = "Spanish Services"
-description = "Provide the Spanish Services: Meneame, latafanera.cat"
+description = "Provide the Spanish Services: Barrapunto, Fresqui, Latafanera, Meneame"
 core = 6.x
 package = Service Links
 dependencies[] = service_links

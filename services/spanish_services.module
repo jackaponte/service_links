@@ -1,5 +1,4 @@
 <?php
-
 // $Id$
 
 /**
@@ -23,6 +22,16 @@ function spanish_services_service_links() {
     'name' => 'La Tafanera',
     'description' => t('Add to La Tafanera.'),
     'link' => 'http://latafanera.cat/submit.php?url=<encoded-url>',
+  );
+  $links['_es_fresqui'] = array(
+    'name' => 'Fresqui',
+    'description' => t('Submit this post on tec.fresqui.com.'),
+    'link' => 'http://tec.fresqui.com/post?url=<encoded-url>&title=<encoded-title>',
+  );
+  $links['_es_barrapunto'] = array(
+    'name' => 'Barrapunto',
+    'description' => t('Publish this post on Barrapunto.com'),
+    'link' => t('http://barrapunto.com/submit.pl?story=He+leido+en+<source>+el+articulo+<a href="<encoded-url>"><encoded-title></a>&subj=<encoded-title>'),
   );
 
   return $links;
