@@ -79,14 +79,18 @@ function service_links_admin_settings() {
   $form['how_to_show_the_links']['service_links_in_links'] = array(
     '#type' => 'select',
     '#title' => t('Service links in links'),
-    '#default_value' => variable_get('service_links_in_links', 0),
-    '#options' => array(0 => t('Disabled'), 1 => t('Teaser view'), 2 => t('Full-page view'), 3 => t('Teasers and full-page view')),
+    '#default_value' => variable_get('service_links_in_links', SERVICE_LINKS_IN_BOTH),
+    '#options' => array(
+      SERVICE_LINKS_DISABLED => t('Disabled'),
+      SERVICE_LINKS_IN_TEASER => t('Teaser view'),
+      SERVICE_LINKS_IN_FULL => t('Full-page view'),
+      SERVICE_LINKS_IN_BOTH => t('Teasers and full-page view')),
     '#description' => t('When to display the services in the links section.'),
   );
   $form['how_to_show_the_links']['service_links_in_node'] = array(
     '#type' => 'select',
     '#title' => t('Service links in nodes'),
-    '#default_value' => variable_get('service_links_in_node', 2),
+    '#default_value' => variable_get('service_links_in_node', SERVICE_LINKS_DISABLED),
     '#options' => array(
       SERVICE_LINKS_DISABLED => t('Disabled'),
       SERVICE_LINKS_IN_TEASER => t('Teaser view'),
@@ -97,7 +101,7 @@ function service_links_admin_settings() {
   $form['how_to_show_the_links']['service_links_style'] = array(
     '#type' => 'select',
     '#title' => t('Service links style'),
-    '#default_value' => variable_get('service_links_style', 1),
+    '#default_value' => variable_get('service_links_style', SERVICE_LINKS_STYLE_IMAGE),
     '#options' => array(
       SERVICE_LINKS_STYLE_TEXT => t('Only Text'),
       SERVICE_LINKS_STYLE_IMAGE => t('Only Image'),
@@ -119,14 +123,22 @@ function service_links_admin_settings() {
     '#type' => 'select',
     '#title' => t('Use short links'),
     '#default_value' => variable_get('service_links_short_links_use', 0),
-    '#options' => array(0 => t('Never'), 1 => t('Only when requested'), 2 => t('Always')),
+    '#options' => array(
+      SERVICE_LINKS_SHORT_URL_USE_NEVER => t('Never'),
+      SERVICE_LINKS_SHORT_URL_USE_WHEN_REQUESTED => t('Only when requested'),
+      SERVICE_LINKS_SHORT_URL_USE_ALWAYS => t('Always')),
   );
   if (variable_get('service_links_short_links_use', 0) > 0) {
     $form['short_links']['service_links_short_links_type'] = array(
       '#type' => 'select',
       '#title' => t('How generate short links'),
-      '#default_value' => variable_get('service_links_short_links_type', 1),
-      '#options' => array(1 => t('Use node/xxx alias'), 2 => t('Use TinyURL.com service'), 3 => t('Redirect only the Domain name'), 4 => t('Combo: domain redirect and node/xxx alias')),
+      '#default_value' => variable_get('service_links_short_links_type', SERVICE_LINKS_SHORT_URL_TYPE_NODE),
+      '#description' => t('If you select "Short URL," it will use the service selected with the <a href="@shorten">Shorten URLs module</a>. If you have not enabled the module, Service Links will default to TinyURL.', array('@shorten' => 'http://drupal.org/project/shorten')),
+      '#options' => array(
+        SERVICE_LINKS_SHORT_URL_TYPE_NODE => t('Use node/xxx alias'),
+        SERVICE_LINKS_SHORT_URL_TYPE_SERVICE => t('Use Short Url service'),
+        SERVICE_LINKS_SHORT_URL_TYPE_REDIRECT_DOMAIN => t('Redirect only the Domain name'),
+        SERVICE_LINKS_SHORT_URL_TYPE_REDIRECT_ALL => t('Combo: domain redirect and node/xxx alias')),
     );
     $form['short_links']['service_links_domain_redirect'] = array(
       '#type' => 'textfield',

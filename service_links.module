@@ -19,6 +19,15 @@ define('SERVICE_LINKS_IN_TEASER', 1);
 define('SERVICE_LINKS_IN_FULL', 2);
 define('SERVICE_LINKS_IN_BOTH', 3);
 
+define('SERVICE_LINKS_SHORT_URL_USE_NEVER', 0);
+define('SERVICE_LINKS_SHORT_URL_USE_WHEN_REQUESTED', 1);
+define('SERVICE_LINKS_SHORT_URL_USE_ALWAYS', 2);
+
+define('SERVICE_LINKS_SHORT_URL_TYPE_NODE', 1);
+define('SERVICE_LINKS_SHORT_URL_TYPE_SERVICE', 2);
+define('SERVICE_LINKS_SHORT_URL_TYPE_REDIRECT_DOMAIN', 3);
+define('SERVICE_LINKS_SHORT_URL_TYPE_REDIRECT_ALL', 4);
+
 /**
  * Implementation of hook_help().
  */
@@ -91,7 +100,7 @@ function service_links_nodeapi(&$node, $op, $teaser, $page) {
     case 'view':
       if (isset($node->service_links) && user_access('access service links')) {
         switch (variable_get('service_links_in_node', 0)) {
-          case 1:
+          case SERVICE_LINKS_IN_TEASER:
             if ($teaser) {
               $node->content['service_links'] = array(
                 '#value' => $node->service_links_rendered,
@@ -99,7 +108,7 @@ function service_links_nodeapi(&$node, $op, $teaser, $page) {
               );
             }
             break;
-          case 2:
+          case SERVICE_LINKS_IN_FULL:
             if ($page) {
               $node->content['service_links'] = array(
                 '#value' => $node->service_links_rendered,
@@ -107,7 +116,7 @@ function service_links_nodeapi(&$node, $op, $teaser, $page) {
               );
             }
             break;
-          case 3:
+          case SERVICE_LINKS_IN_BOTH:
             if ($teaser) {
               $node->content['service_links'] = array(
                 '#value' => $node->service_links_rendered,
@@ -315,17 +324,22 @@ function service_links_get_links($services = NULL, $reset = FALSE) {
  */
 function service_links_short_url($url, $nid) {
   switch (variable_get('service_links_short_links_type', 1)) {
-    case 1:
+    case SERVICE_LINKS_SHORT_URL_TYPE_NODE:
       //with alias = true dont transform with path
       return url("node/$nid", array('absolute' => TRUE, 'alias' => TRUE));
-    case 2:
-      $turl = drupal_http_request('http://tinyurl.com/api-create.php?url='. $url);
-      $turl = (isset($turl->data) && ($turl->code == 200)) ? $turl->data : $url;
+    case SERVICE_LINKS_SHORT_URL_TYPE_SERVICE:
+      if (module_exists('shorten')) {
+        $turl = shorten_url($url);
+      }
+      else {
+        $turl = drupal_http_request('http://tinyurl.com/api-create.php?url='. $url);
+        $turl = (isset($turl->data) && ($turl->code == 200)) ? $turl->data : $url;
+      }
       return $turl;
-    case 3:
+    case SERVICE_LINKS_SHORT_URL_TYPE_REDIRECT_DOMAIN:
       $burl = variable_get('service_links_domain_redirect', NULL);
       return url($url, array('absolute' => TRUE, 'base_url' => $burl));
-    case 4:
+    case SERVICE_LINKS_SHORT_URL_TYPE_REDIRECT_ALL:
       $burl = variable_get('service_links_domain_redirect', NULL);
       return url("node/$nid", array('absolute' => TRUE, 'alias' => TRUE, 'base_url' => $burl));
   }
@@ -353,15 +367,15 @@ function service_links_render($node, $nodelink = FALSE, $style = 0) {
   }
 
   switch ($settings['short_links_use']) {
-    case 0:
+    case SERVICE_LINKS_SHORT_URL_USE_NEVER:
       $short_url = $url;
       break;
 
-    case 1:
+    case SERVICE_LINKS_SHORT_URL_USE_WHEN_REQUESTED:
       $short_url = service_links_short_url($url, $node->nid);
       break;
 
-    case 2:
+    case SERVICE_LINKS_SHORT_URL_USE_ALWAYS:
       $short_url = service_links_short_url($url, $node->nid);
       $url = $short_url;
       break;
@@ -410,7 +424,7 @@ function service_links_render($node, $nodelink = FALSE, $style = 0) {
 
     $service['icon'] = isset($service['icon']) ? $service['icon'] : drupal_get_path('module', 'service_links') ."/images/$service_id.png";
 
-    $service_id = str_replace('__', '_', 'service_links_'. $service_id);
+    $service_id = str_replace('_', '-', 'service_links_'. $service_id);
 
     // Add the related JavaScript and CSS.
     if (isset($service['javascript'])) {
