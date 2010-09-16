@@ -118,6 +118,11 @@ function general_services_service_links() {
    'link' => 'http://www.google.com/buzz/post?url=<encoded-url>',
    'description' => t('Buzz this post on Google.'),
   );
+  $links['mixx'] = array(
+    'name' => 'Mixx',
+    'link' => 'http://www.mixx.com/submit?page_url=<encoded-url>&title=<encoded-title>',
+    'description' => t('Submit this post on mixx.com.'),
+  );
 
   return $links;
 }
