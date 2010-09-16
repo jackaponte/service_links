@@ -58,7 +58,7 @@ function german_services_service_links() {
     'name' => 'Netselektor',
     'description' => t('Bookmark this post on Netselektor.'),
     'link' => 'http://netselektor.de/speichern/neu?title=<encoded-title>&url=<encoded-url>',
-  ); 
+  );
   $links['_de_weblinkr'] = array(
     'name' => 'Weblinkr',
     'description' => t('Bookmark this post on Weblinkr.'),
@@ -84,7 +84,12 @@ function german_services_service_links() {
     'description' => t('Add to Yigg.de.'),
     'link' => 'http://yigg.de/neu?exturl=<encoded-url>&title=<encoded-title>',
   );
-    
+  $links['_de_meinvz'] = array(
+    'name' => 'MeinVZ',
+    'description' => t('Share on MeinVZ, StudiVZ or SchuelerVZ.'),
+    'link' => 'http://www.studivz.net/Link/Selection/Url/?u=<encoded-url>&desc=<encoded-title>',
+  );
+
   return $links;
 }
 ?>
