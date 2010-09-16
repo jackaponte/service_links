@@ -597,3 +597,13 @@ function _service_links_load_settings() {
 
   return $settings;
 }
+
+/**
+ * Implementation of hook_views_api().
+ */
+function service_links_views_api() {
+  return array(
+    'api' => 2,
+    'path' => drupal_get_path('module', 'service_links'),
+  );
+}
