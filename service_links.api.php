@@ -51,7 +51,7 @@ function hook_service_links() {
  *   An array containing all information about the item being shared.
  */
 function myservice_callback($service, $context) {
-  
+
 }
 
 /**

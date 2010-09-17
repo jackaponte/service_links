@@ -7,7 +7,7 @@
  */
 
 /**
- * Implementation of hook_service_links()
+ * Implementation of hook_service_links().
  */
 function general_services_service_links() {
   $links = array();
@@ -22,7 +22,7 @@ function general_services_service_links() {
     'description' => t('Digg this post on digg.com'),
     'link' => 'http://digg.com/submit?phase=2&url=<encoded-url>&title=<encoded-title>',
   );
-  $links['stumbleupon'] = array (
+  $links['stumbleupon'] = array(
     'name' => 'StumbleUpon',
     'description' => t('Thumb this up at StumbleUpon'),
     'link' => 'http://www.stumbleupon.com/submit?url=<encoded-url>&title=<encoded-title>',
@@ -126,5 +126,3 @@ function general_services_service_links() {
 
   return $links;
 }
-
-?>

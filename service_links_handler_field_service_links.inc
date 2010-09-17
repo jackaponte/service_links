@@ -2,6 +2,7 @@
 // $Id$
 
 /**
+ * @file
  * A handler to provide a service links field for a particular node.
  *
  * @ingroup views_field_handlers

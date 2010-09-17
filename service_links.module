@@ -9,10 +9,10 @@
  * A module that adds Digg, del.icio.us, reddit, Technorati etc. links to nodes.
  */
 
-define('SERVICE_LINKS_STYLE_TEXT',1);
-define('SERVICE_LINKS_STYLE_IMAGE',2);
-define('SERVICE_LINKS_STYLE_IMAGE_AND_TEXT',3);
-define('SERVICE_LINKS_STYLE_FISHEYE',4);
+define('SERVICE_LINKS_STYLE_TEXT', 1);
+define('SERVICE_LINKS_STYLE_IMAGE', 2);
+define('SERVICE_LINKS_STYLE_IMAGE_AND_TEXT', 3);
+define('SERVICE_LINKS_STYLE_FISHEYE', 4);
 
 define('SERVICE_LINKS_DISABLED', 0);
 define('SERVICE_LINKS_IN_TEASER', 1);
@@ -123,7 +123,7 @@ function service_links_nodeapi(&$node, $op, $teaser, $page) {
                 '#weight' => 10,
               );
             }
-            else if ($page) {
+            elseif ($page) {
               $node->content['service_links'] = array(
                 '#value' => $node->service_links_rendered,
                 '#weight' => 10,
@@ -352,13 +352,19 @@ function service_links_short_url($url, $nid) {
 function service_links_render($node, $nodelink = FALSE, $style = 0) {
   $links = array();
   $settings = _service_links_load_settings();
-  $services = service_links_get_links(array_filter($settings['link_show']));
+
+  if (empty($settings['link_show'])) {
+    return array();
+  }
+  else {
+    $services = service_links_get_links(array_filter($settings['link_show']));
+  }
 
   if ($settings['agg2_link'] && $node->link) {
     $url = ($node->source_link ? $node->source_link : $node->link);
     $settings['short_links_use'] = 0;
   }
-  else if (!empty($node)) {
+  elseif (!empty($node)) {
     $url = url("node/$node->nid", array('absolute' => TRUE));
   }
   else {
@@ -410,7 +416,7 @@ function service_links_render($node, $nodelink = FALSE, $style = 0) {
     $settings['style'] = $style;
   }
 
-  foreach($services as $service_id => $service) {
+  foreach ($services as $service_id => $service) {
     $links['weight'][] = isset($settings['link_weight'][$service_id]) ? $settings['link_weight'][$service_id] : 0;
 
     $service['url'] = split('\?', $service['link']);
@@ -419,7 +425,8 @@ function service_links_render($node, $nodelink = FALSE, $style = 0) {
 
     $service['attributes']['title'] = $service['description'];
     $service['attributes']['id'] = form_clean_id('service_links-'. $service_id);
-    $service['attributes']['class'] = str_replace(array('][', '_', ' '), '-', 'service_links-'. $service_id);
+    $class = str_replace(array('][', '_', ' '), '-', 'service_links-'. $service_id);
+    $service['attributes']['class'] = isset($service['attributes']['class']) ? $service['attributes']['class'] . " " . $class : $class;
     $service['attributes'] += $settings['attributes'];
 
     $service['icon'] = isset($service['icon']) ? $service['icon'] : drupal_get_path('module', 'service_links') ."/images/$service_id.png";

@@ -8,7 +8,7 @@
  */
 
 /**
- * Implementation of hook_service_links()
+ * Implementation of hook_service_links().
  */
 function german_services_service_links() {
   $links = array();
@@ -92,4 +92,3 @@ function german_services_service_links() {
 
   return $links;
 }
-?>

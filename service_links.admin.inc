@@ -53,6 +53,8 @@ function service_links_admin_settings() {
 
   $form['where_to_show_the_links'] = array(
     '#type' => 'fieldset',
+    '#collapsible' => TRUE,
+    '#collapsed' => FALSE,
     '#title' => t('Where to show the service links'),
     '#description' => t('Set the node types and categories you want to display links for.'),
   );
@@ -61,19 +63,25 @@ function service_links_admin_settings() {
     '#title' => t('Node types'),
     '#default_value' => variable_get('service_links_node_types', array()),
     '#options' => node_get_types('names'),
+    '#attributes' => array('class' => 'container-inline'),
   );
   if (module_exists('taxonomy')) {
+    $terms = _service_links_get_terms();
+    $count = count($terms);
     $form['where_to_show_the_links']['service_links_category_types'] = array(
       '#type' => 'select',
       '#multiple' => TRUE,
       '#title' => t('Categories'),
       '#default_value' => variable_get('service_links_category_types', array()),
-      '#options' => _service_links_get_terms(),
+      '#options' => $terms,
+      '#size' => ($count > 10 ? 10 : $count),
     );
   }
 
   $form['how_to_show_the_links'] = array(
     '#type' => 'fieldset',
+    '#collapsible' => TRUE,
+    '#collapsed' => FALSE,
     '#title' => t('When and how to show the links'),
   );
   $form['how_to_show_the_links']['service_links_in_links'] = array(
@@ -117,6 +125,8 @@ function service_links_admin_settings() {
 
   $form['short_links'] = array(
     '#type' => 'fieldset',
+    '#collapsible' => TRUE,
+    '#collapsed' => FALSE,
     '#title' => t('Short Links'),
   );
   $form['short_links']['service_links_short_links_use'] = array(
@@ -153,6 +163,8 @@ function service_links_admin_settings() {
   if (module_exists('aggregator2')) {
     $form['aggregator2_settings'] = array(
       '#type' => 'fieldset',
+      '#collapsible' => TRUE,
+      '#collapsed' => FALSE,
       '#title' => t('Aggregator2 settings'),
     );
     $form['aggregator2_settings']['service_links_agg2_link'] = array(
@@ -198,11 +210,11 @@ function service_links_admin_services() {
     $icon = isset($service['icon']) ? $service['icon'] : drupal_get_path('module', 'service_links') ."/images/$service_id.png";
     $weight = isset($settings['weight'][$service_id]) ? $settings['weight'][$service_id] : 0;
 
-    $form['service_links']['service_links_show'][$service_id] = array (
+    $form['service_links']['service_links_show'][$service_id] = array(
       '#service' => ucwords(str_replace('_', ' ', $service['module'])),
       '#weight' => $weight,
       '#type' => 'checkbox',
-      '#title' => theme('image', $icon). " " . t('Show %name link', array('%name' => $service['name'])),
+      '#title' => theme('image', $icon) . " " . t('Show %name link', array('%name' => $service['name'])),
       '#return_value' => 1,
       '#default_value' => isset($settings['show'][$service_id]) ? $settings['show'][$service_id] : 0,
     );

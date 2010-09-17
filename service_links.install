@@ -11,7 +11,7 @@
  */
 function service_links_uninstall() {
   $result = db_query('SELECT name FROM {variable} v WHERE LOCATE("service_links_",v.name) > 0');
-  while ($row = db_fetch_object($result)){
-     variable_del($row->name);
+  while ($row = db_fetch_object($result)) {
+    variable_del($row->name);
   }
 }

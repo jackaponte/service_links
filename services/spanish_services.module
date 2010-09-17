@@ -8,7 +8,7 @@
  */
 
 /**
- * Implementation of hook_service_links()
+ * Implementation of hook_service_links().
  */
 function spanish_services_service_links() {
   $links = array();
@@ -31,9 +31,8 @@ function spanish_services_service_links() {
   $links['_es_barrapunto'] = array(
     'name' => 'Barrapunto',
     'description' => t('Publish this post on Barrapunto.com'),
-    'link' => t('http://barrapunto.com/submit.pl?story=He+leido+en+<source>+el+articulo+<a href="<encoded-url>"><encoded-title></a>&subj=<encoded-title>'),
+    'link' => 'http://barrapunto.com/submit.pl?story=He+leido+en+<source>+el+articulo+<a href="<encoded-url>"><encoded-title></a>&subj=<encoded-title>',
   );
 
   return $links;
 }
-?>
