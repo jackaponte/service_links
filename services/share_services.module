@@ -32,5 +32,3 @@ function share_services_share_tab($op, $args, $node = NULL) {
       }
   }
 }
-
-?>

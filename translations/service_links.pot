@@ -8,6 +8,7 @@
 #  service_links.views.inc: n/a
 #  service_links.info,v 1.4.4.2 2009/04/03 11:21:03 thecrow
 #  services/basque_services.info: n/a
+#  services/dutch_services.info: n/a
 #  favorite_services.info,v 1.1.2.1 2009/04/03 11:22:13 thecrow
 #  forward_services.info,v 1.1.2.1 2009/04/03 11:22:13 thecrow
 #  general_services.info,v 1.1.2.2 2009/04/11 18:10:52 thecrow
@@ -16,6 +17,7 @@
 #  russian_services.info,v 1.1.2.2 2009/04/11 18:10:52 thecrow
 #  services/spanish_services.info: n/a
 #  services/basque_services.module: n/a
+#  services/dutch_services.module: n/a
 #  favorite_services.module,v 1.1.2.2 2009/08/14 00:36:27 robloach
 #  forward_services.module,v 1.1.2.1 2009/04/03 11:22:13 thecrow
 #  services/general_services.module: n/a
@@ -30,7 +32,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2010-09-17 12:45+0200\n"
+"POT-Creation-Date: 2010-09-18 13:07+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -59,155 +61,167 @@ msgstr ""
 msgid "Weight"
 msgstr ""
 
-#: service_links.admin.inc:56
+#: service_links.admin.inc:58
 msgid "Where to show the service links"
 msgstr ""
 
-#: service_links.admin.inc:57
+#: service_links.admin.inc:59
 msgid "Set the node types and categories you want to display links for."
 msgstr ""
 
-#: service_links.admin.inc:61
+#: service_links.admin.inc:63
 msgid "Node types"
 msgstr ""
 
-#: service_links.admin.inc:69
+#: service_links.admin.inc:74
 msgid "Categories"
 msgstr ""
 
-#: service_links.admin.inc:77
+#: service_links.admin.inc:85
 msgid "When and how to show the links"
 msgstr ""
 
-#: service_links.admin.inc:81
+#: service_links.admin.inc:89
 msgid "Service links in links"
 msgstr ""
 
-#: service_links.admin.inc:84;95
+#: service_links.admin.inc:92;103
 msgid "Disabled"
 msgstr ""
 
-#: service_links.admin.inc:85;96
+#: service_links.admin.inc:93;104
 msgid "Teaser view"
 msgstr ""
 
-#: service_links.admin.inc:86;97
+#: service_links.admin.inc:94;105
 msgid "Full-page view"
 msgstr ""
 
-#: service_links.admin.inc:87;98
+#: service_links.admin.inc:95;106
 msgid "Teasers and full-page view"
 msgstr ""
 
-#: service_links.admin.inc:88
+#: service_links.admin.inc:96
 msgid "When to display the services in the links section."
 msgstr ""
 
-#: service_links.admin.inc:92
+#: service_links.admin.inc:100
 msgid "Service links in nodes"
 msgstr ""
 
-#: service_links.admin.inc:99
+#: service_links.admin.inc:107
 msgid "When to display the services after the node text."
 msgstr ""
 
-#: service_links.admin.inc:103
+#: service_links.admin.inc:111
+msgid "Label of the section in node"
+msgstr ""
+
+#: service_links.admin.inc:112
+msgid "Bookmark/Search this post with"
+msgstr ""
+
+#: service_links.admin.inc:116
 msgid "Service links style"
 msgstr ""
 
-#: service_links.admin.inc:106
+#: service_links.admin.inc:119
 msgid "Only Text"
 msgstr ""
 
-#: service_links.admin.inc:107
+#: service_links.admin.inc:120
 msgid "Only Image"
 msgstr ""
 
-#: service_links.admin.inc:108 service_links.module:218
+#: service_links.admin.inc:121 service_links.module:218
 msgid "Image and Text"
 msgstr ""
 
-#: service_links.admin.inc:113
+#: service_links.admin.inc:126
 msgid "Open link in..."
 msgstr ""
 
-#: service_links.admin.inc:115
+#: service_links.admin.inc:128
 msgid "Same window"
 msgstr ""
 
-#: service_links.admin.inc:115
+#: service_links.admin.inc:128
 msgid "New window"
 msgstr ""
 
-#: service_links.admin.inc:120
-msgid "Short Links"
-msgstr ""
-
-#: service_links.admin.inc:124
-msgid "Use short links"
-msgstr ""
-
-#: service_links.admin.inc:127
-msgid "Never"
-msgstr ""
-
-#: service_links.admin.inc:128
-msgid "Only when requested"
-msgstr ""
-
-#: service_links.admin.inc:129
-msgid "Always"
-msgstr ""
-
-#: service_links.admin.inc:134
-msgid "How generate short links"
-msgstr ""
-
-#: service_links.admin.inc:136
-msgid "If you select \"Short URL,\" it will use the service selected with the <a href=\"@shorten\">Shorten URLs module</a>. If you have not enabled the module, Service Links will default to TinyURL."
-msgstr ""
-
-#: service_links.admin.inc:138
-msgid "Use node/xxx alias"
-msgstr ""
-
-#: service_links.admin.inc:139
-msgid "Use Short Url service"
+#: service_links.admin.inc:132
+msgid "Hide if node is unpublished"
 msgstr ""
 
 #: service_links.admin.inc:140
-msgid "Redirect only the Domain name"
+msgid "Short Links"
 msgstr ""
 
-#: service_links.admin.inc:141
-msgid "Combo: domain redirect and node/xxx alias"
+#: service_links.admin.inc:144
+msgid "Use short links"
 msgstr ""
 
-#: service_links.admin.inc:145
-msgid "Domain to redirect"
+#: service_links.admin.inc:147
+msgid "Never"
 msgstr ""
 
-#: service_links.admin.inc:146
-msgid "Write here the complete address without trailing slash %name"
+#: service_links.admin.inc:148
+msgid "Only when requested"
+msgstr ""
+
+#: service_links.admin.inc:149
+msgid "Always"
+msgstr ""
+
+#: service_links.admin.inc:154
+msgid "How generate short links"
 msgstr ""
 
 #: service_links.admin.inc:156
-msgid "Aggregator2 settings"
+msgid "If you select \"Short URL,\" it will use the service selected with the <a href=\"@shorten\">Shorten URLs module</a>. If you have not enabled the module, Service Links will default to TinyURL."
+msgstr ""
+
+#: service_links.admin.inc:158
+msgid "Use node/xxx alias"
+msgstr ""
+
+#: service_links.admin.inc:159
+msgid "Use Short Url service"
 msgstr ""
 
 #: service_links.admin.inc:160
-msgid "Use link to original article aggregated by aggregator2 module"
+msgid "Redirect only the Domain name"
 msgstr ""
 
-#: service_links.admin.inc:175
-msgid "Domain redirect address is not set."
+#: service_links.admin.inc:161
+msgid "Combo: domain redirect and node/xxx alias"
+msgstr ""
+
+#: service_links.admin.inc:165
+msgid "Domain to redirect"
+msgstr ""
+
+#: service_links.admin.inc:166
+msgid "Write here the complete address without trailing slash %name"
 msgstr ""
 
 #: service_links.admin.inc:178
+msgid "Aggregator2 settings"
+msgstr ""
+
+#: service_links.admin.inc:182
+msgid "Use link to original article aggregated by aggregator2 module"
+msgstr ""
+
+#: service_links.admin.inc:197
+msgid "Domain redirect address is not set."
+msgstr ""
+
+#: service_links.admin.inc:200
 msgid "No trailing slash!"
 msgstr ""
 
-#: service_links.admin.inc:205
+#: service_links.admin.inc:227
 msgid "Show %name link"
 msgstr ""
 
@@ -259,8 +273,8 @@ msgstr ""
 msgid "Subfolder under images/ containing icons for fisheye effect (b.e. big_icons/)"
 msgstr ""
 
-#: service_links.module:517
-msgid "Bookmark/Search this post with:"
+#: service_links.module:526
+msgid "@label"
 msgstr ""
 
 #: service_links.module:48
@@ -283,7 +297,7 @@ msgstr ""
 msgid "Module engine for add various service links about sharing networks to nodes."
 msgstr ""
 
-#: service_links.info:0 services/basque_services.info:0 services/favorite_services.info:0 services/forward_services.info:0 services/general_services.info:0 services/german_services.info:0 services/italian_services.info:0 services/russian_services.info:0 services/spanish_services.info:0
+#: service_links.info:0 services/basque_services.info:0 services/dutch_services.info:0 services/favorite_services.info:0 services/forward_services.info:0 services/general_services.info:0 services/german_services.info:0 services/italian_services.info:0 services/russian_services.info:0 services/spanish_services.info:0
 msgid "Service Links"
 msgstr ""
 
@@ -297,6 +311,18 @@ msgstr ""
 
 #: services/basque_services.module:28
 msgid "Add a new on Aupatu"
+msgstr ""
+
+#: services/dutch_services.module:18
+msgid "Add to nujij."
+msgstr ""
+
+#: services/dutch_services.module:23
+msgid "Bookmark this post on eKudos."
+msgstr ""
+
+#: services/dutch_services.module:28
+msgid "Tip this on Hyves."
 msgstr ""
 
 #: services/favorite_services.module:11
@@ -561,6 +587,14 @@ msgstr ""
 
 #: services/basque_services.info:0
 msgid "Provide the Basque Services: Zabaldu, Bildu, Aupatu"
+msgstr ""
+
+#: services/dutch_services.info:0
+msgid "Dutch Services"
+msgstr ""
+
+#: services/dutch_services.info:0
+msgid "Provide the Dutch Services: eKudos, Hyves, Nujij"
 msgstr ""
 
 #: services/favorite_services.info:0

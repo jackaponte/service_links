@@ -106,6 +106,11 @@ function service_links_admin_settings() {
       SERVICE_LINKS_IN_BOTH => t('Teasers and full-page view')),
     '#description' => t('When to display the services after the node text.'),
   );
+  $form['how_to_show_the_links']['service_links_label_in_node'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Label of the section in node'),
+    '#default_value' => variable_get('service_links_label_in_node', t('Bookmark/Search this post with')),
+  );
   $form['how_to_show_the_links']['service_links_style'] = array(
     '#type' => 'select',
     '#title' => t('Service links style'),
@@ -121,6 +126,11 @@ function service_links_admin_settings() {
     '#title' => t('Open link in...'),
     '#default_value' => variable_get('service_links_new_window', 0),
     '#options' => array(0 => t('Same window'), 1 => t('New window')),
+  );
+  $form['how_to_show_the_links']['service_links_hide_if_unpublished'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Hide if node is unpublished'),
+    '#default_value' => variable_get('service_links_hide_if_unpublished', 0),
   );
 
   $form['short_links'] = array(

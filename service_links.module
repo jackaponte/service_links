@@ -356,20 +356,19 @@ function service_links_render($node, $nodelink = FALSE, $style = 0) {
   if (empty($settings['link_show'])) {
     return array();
   }
-  else {
-    $services = service_links_get_links(array_filter($settings['link_show']));
-  }
+
+  $services = service_links_get_links(array_filter($settings['link_show']));
 
   if ($settings['agg2_link'] && $node->link) {
     $url = ($node->source_link ? $node->source_link : $node->link);
-    $settings['short_links_use'] = 0;
+    $settings['short_links_use'] = SERVICE_LINKS_SHORT_URL_USE_NEVER;
   }
   elseif (!empty($node)) {
     $url = url("node/$node->nid", array('absolute' => TRUE));
   }
   else {
     $url = url($_GET['q'], array('absolute' => TRUE));
-    $settings['short_links_use'] = 0;
+    $settings['short_links_use'] = SERVICE_LINKS_SHORT_URL_USE_NEVER;
   }
 
   switch ($settings['short_links_use']) {
@@ -521,7 +520,8 @@ function theme_service_links_build_link($text, $url = array(), $image = NULL, $n
 }
 
 function theme_service_links_node_format($links) {
-  return '<div class="service-links"><div class="service-label">'. t('Bookmark/Search this post with:') .' </div>'. theme('links', $links) .'</div>';
+  $label = variable_get('service_links_label_in_node', 'Bookmark/Search this post with');
+  return '<div class="service-links"><div class="service-label">'. t('@label', array('@label' => $label)) .' </div>'. theme('links', $links) .'</div>';
 }
 
 function theme_service_links_block_format($items, $style = SERVICE_LINKS_STYLE_IMAGE_AND_TEXT) {
@@ -571,6 +571,12 @@ function _service_links_get_terms() {
 function _service_links_show($node) {
   $links_show = FALSE;
   $category_type = FALSE;
+
+  $hide_if_unpub = variable_get('service_links_hide_if_unpublished', 0);
+  if ($node->status == '0' && $hide_if_unpub) {
+    return FALSE;
+  }
+  
   $node_type = in_array($node->type, variable_get('service_links_node_types', array()), TRUE);
   if (module_exists('taxonomy')) {
     $terms = taxonomy_node_get_terms($node);
