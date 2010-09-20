@@ -123,6 +123,16 @@ function general_services_service_links() {
     'link' => 'http://www.mixx.com/submit?page_url=<encoded-url>&title=<encoded-title>',
     'description' => t('Submit this post on mixx.com.'),
   );
+  $links['box'] = array(
+    'name' => 'Box',
+    'link' => 'https://www.box.net/api/1.0/import?url=<encoded-url>&name=<encoded-title>&description=<encoded-teaser>&import_as=link',
+    'description' => t('Box it!'),
+  );
+  $links['blinklist'] = array(
+    'name' => 'Blinklist',
+    'link' => 'http://www.blinklist.com/index.php?Action=Blink/addblink.php&Description=<encoded-teaser>&Url=<encoded-url>&Title=<encoded-title>&Pop=yes',
+    'description' => t('Add to Blinklist'),
+  );
 
   return $links;
 }

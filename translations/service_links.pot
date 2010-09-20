@@ -16,6 +16,7 @@
 #  italian_services.info,v 1.1.2.2 2009/04/11 18:10:52 thecrow
 #  russian_services.info,v 1.1.2.2 2009/04/11 18:10:52 thecrow
 #  services/spanish_services.info: n/a
+#  services/swedish_services.info: n/a
 #  services/basque_services.module: n/a
 #  services/dutch_services.module: n/a
 #  favorite_services.module,v 1.1.2.2 2009/08/14 00:36:27 robloach
@@ -26,13 +27,14 @@
 #  italian_services.module,v 1.1.2.2 2009/04/11 18:10:52 thecrow
 #  share_services.module,v 1.1.2.1 2009/04/03 11:22:13 thecrow
 #  services/spanish_services.module: n/a
+#  services/swedish_services.module: n/a
 #  share_services.info,v 1.1.2.2 2009/04/11 18:10:52 thecrow
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2010-09-18 13:07+0200\n"
+"POT-Creation-Date: 2010-09-20 11:47+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -133,7 +135,7 @@ msgstr ""
 msgid "Only Image"
 msgstr ""
 
-#: service_links.admin.inc:121 service_links.module:218
+#: service_links.admin.inc:121 service_links.module:234;256
 msgid "Image and Text"
 msgstr ""
 
@@ -245,35 +247,39 @@ msgstr ""
 msgid "Service links with FishEye effect"
 msgstr ""
 
-#: service_links.module:192;198
+#: service_links.module:185
+msgid "Service links block for not-node pages"
+msgstr ""
+
+#: service_links.module:197;203;213
 msgid "Bookmark/Search this post"
 msgstr ""
 
-#: service_links.module:212
+#: service_links.module:228;250
 msgid "Style"
 msgstr ""
 
-#: service_links.module:213
+#: service_links.module:229;251
 msgid "How the service links will appear in the block."
 msgstr ""
 
-#: service_links.module:216
+#: service_links.module:232;254
 msgid "Text"
 msgstr ""
 
-#: service_links.module:217
+#: service_links.module:233;255
 msgid "Image"
 msgstr ""
 
-#: service_links.module:225
+#: service_links.module:241
 msgid "Alternative icon folder"
 msgstr ""
 
-#: service_links.module:227
+#: service_links.module:243
 msgid "Subfolder under images/ containing icons for fisheye effect (b.e. big_icons/)"
 msgstr ""
 
-#: service_links.module:526
+#: service_links.module:560
 msgid "@label"
 msgstr ""
 
@@ -297,7 +303,7 @@ msgstr ""
 msgid "Module engine for add various service links about sharing networks to nodes."
 msgstr ""
 
-#: service_links.info:0 services/basque_services.info:0 services/dutch_services.info:0 services/favorite_services.info:0 services/forward_services.info:0 services/general_services.info:0 services/german_services.info:0 services/italian_services.info:0 services/russian_services.info:0 services/spanish_services.info:0
+#: service_links.info:0 services/basque_services.info:0 services/dutch_services.info:0 services/favorite_services.info:0 services/forward_services.info:0 services/general_services.info:0 services/german_services.info:0 services/italian_services.info:0 services/russian_services.info:0 services/spanish_services.info:0 services/swedish_services.info:0
 msgid "Service Links"
 msgstr ""
 
@@ -419,6 +425,14 @@ msgstr ""
 
 #: services/general_services.module:124
 msgid "Submit this post on mixx.com."
+msgstr ""
+
+#: services/general_services.module:129
+msgid "Box it!"
+msgstr ""
+
+#: services/general_services.module:134
+msgid "Add to Blinklist"
 msgstr ""
 
 #: services/german_services.module:18
@@ -581,6 +595,14 @@ msgstr ""
 msgid "Publish this post on Barrapunto.com"
 msgstr ""
 
+#: services/swedish_services.module:16
+msgid "Share this on Bloggy"
+msgstr ""
+
+#: services/swedish_services.module:21
+msgid "Share this on Pusha"
+msgstr ""
+
 #: services/basque_services.info:0
 msgid "Basque Services"
 msgstr ""
@@ -663,5 +685,13 @@ msgstr ""
 
 #: services/spanish_services.info:0
 msgid "Provide the Spanish Services: Barrapunto, Fresqui, Latafanera, Meneame"
+msgstr ""
+
+#: services/swedish_services.info:0
+msgid "Swedish Services"
+msgstr ""
+
+#: services/swedish_services.info:0
+msgid "Provide the Swedish Services: Bloggy, Pusha"
 msgstr ""
 
