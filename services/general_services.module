@@ -133,6 +133,11 @@ function general_services_service_links() {
     'link' => 'http://www.blinklist.com/index.php?Action=Blink/addblink.php&Description=<encoded-teaser>&Url=<encoded-url>&Title=<encoded-title>&Pop=yes',
     'description' => t('Add to Blinklist'),
   );
+  $links['identica'] = array(
+    'name' => 'identi.ca',
+    'link' => 'http://identi.ca/?action=newnotice&status_textarea=<encoded-title>+<encoded-url>',
+    'description' => t('Dent this on identi.ca.'),
+  );
 
   return $links;
 }

@@ -62,7 +62,7 @@ function service_links_admin_settings() {
     '#type' => 'checkboxes',
     '#title' => t('Node types'),
     '#default_value' => variable_get('service_links_node_types', array()),
-    '#options' => node_get_types('names'),
+    '#options' => array_map('check_plain', node_get_types('names')),
     '#attributes' => array('class' => 'container-inline'),
   );
   if (module_exists('taxonomy')) {

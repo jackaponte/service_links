@@ -4,8 +4,9 @@
 /**
  * @file
  * Original Author: Fredrik Jonsson fredrik at combonet dot se
- * Current Maintainer: Sivanandhan, P. apsivam .at. apsivam .dot. in
- * Co Maintainer and 2.x branch starter: Fabio Mucciante aka TheCrow
+ * Ex Maintainer: Sivanandhan, P. apsivam .at. apsivam .dot. in
+ * Current Maintainer and 2.x branch starter: Fabio Mucciante aka TheCrow
+ * Co Mantainer: Rob Loach
  * A module that adds Digg, del.icio.us, reddit, Technorati etc. links to nodes.
  */
 

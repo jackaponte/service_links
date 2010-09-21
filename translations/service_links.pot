@@ -34,7 +34,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2010-09-20 11:47+0200\n"
+"POT-Creation-Date: 2010-09-21 13:05+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -135,7 +135,7 @@ msgstr ""
 msgid "Only Image"
 msgstr ""
 
-#: service_links.admin.inc:121 service_links.module:234;256
+#: service_links.admin.inc:121 service_links.module:235;257
 msgid "Image and Text"
 msgstr ""
 
@@ -227,7 +227,7 @@ msgstr ""
 msgid "Show %name link"
 msgstr ""
 
-#: service_links.views.inc:15 service_links.module:177;58 service_links.info:0
+#: service_links.views.inc:15 service_links.module:178;59 service_links.info:0
 msgid "Service links"
 msgstr ""
 
@@ -235,47 +235,47 @@ msgstr ""
 msgid "Display links to social sharing websites like Digg, del.icio.us, reddit, Technorati etc.."
 msgstr ""
 
-#: service_links.module:37
+#: service_links.module:38
 msgid "Display links to social sharing websites like Digg, del.icio.us, reddit, Technorati etc."
 msgstr ""
 
-#: service_links.module:40;59
+#: service_links.module:41;60
 msgid "Control which and where service links should be active."
 msgstr ""
 
-#: service_links.module:181
+#: service_links.module:182
 msgid "Service links with FishEye effect"
 msgstr ""
 
-#: service_links.module:185
+#: service_links.module:186
 msgid "Service links block for not-node pages"
 msgstr ""
 
-#: service_links.module:197;203;213
+#: service_links.module:198;204;214
 msgid "Bookmark/Search this post"
 msgstr ""
 
-#: service_links.module:228;250
+#: service_links.module:229;251
 msgid "Style"
 msgstr ""
 
-#: service_links.module:229;251
+#: service_links.module:230;252
 msgid "How the service links will appear in the block."
 msgstr ""
 
-#: service_links.module:232;254
+#: service_links.module:233;255
 msgid "Text"
 msgstr ""
 
-#: service_links.module:233;255
+#: service_links.module:234;256
 msgid "Image"
 msgstr ""
 
-#: service_links.module:241
+#: service_links.module:242
 msgid "Alternative icon folder"
 msgstr ""
 
-#: service_links.module:243
+#: service_links.module:244
 msgid "Subfolder under images/ containing icons for fisheye effect (b.e. big_icons/)"
 msgstr ""
 
@@ -283,19 +283,19 @@ msgstr ""
 msgid "@label"
 msgstr ""
 
-#: service_links.module:48
+#: service_links.module:49
 msgid "access service links"
 msgstr ""
 
-#: service_links.module:48
+#: service_links.module:49
 msgid "administer service links"
 msgstr ""
 
-#: service_links.module:68
+#: service_links.module:69
 msgid "General Settings"
 msgstr ""
 
-#: service_links.module:74
+#: service_links.module:75
 msgid "Services"
 msgstr ""
 
@@ -433,6 +433,10 @@ msgstr ""
 
 #: services/general_services.module:134
 msgid "Add to Blinklist"
+msgstr ""
+
+#: services/general_services.module:139
+msgid "Dent this on identi.ca."
 msgstr ""
 
 #: services/german_services.module:18
@@ -595,11 +599,11 @@ msgstr ""
 msgid "Publish this post on Barrapunto.com"
 msgstr ""
 
-#: services/swedish_services.module:16
+#: services/swedish_services.module:18
 msgid "Share this on Bloggy"
 msgstr ""
 
-#: services/swedish_services.module:21
+#: services/swedish_services.module:23
 msgid "Share this on Pusha"
 msgstr ""
 
@@ -640,7 +644,7 @@ msgid "General Services"
 msgstr ""
 
 #: services/general_services.info:0
-msgid "Provide the Services: del.icio.us, Digg, Facebook, Furl, Google Bookmark, Google Buzz, Icerocket, Linkedin, Magnolia, Mister Wong, Mixx, MySpace, Newsvine, Phing this, Propeller, Reddit, StumbleUpon, Technorati, Twitter, Yahoo Bookmark, Yahoo Buzz"
+msgid "Provide the Services: Blinklist, Box, del.icio.us, Digg, Facebook, Furl, Google Bookmark, Google Buzz, Icerocket, Identi.ca, Linkedin, Magnolia, Mister Wong, Mixx, MySpace, Newsvine, Phing this, Propeller, Reddit, StumbleUpon, Technorati, Twitter, Yahoo Bookmark, Yahoo Buzz"
 msgstr ""
 
 #: services/german_services.info:0
