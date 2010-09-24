@@ -208,7 +208,7 @@ function service_links_block($op = 'list', $delta = 0, $edit = array()) {
       }
       return $block;
     }
-    elseif (user_access('access_service_links') && (!isset($node))) {
+    elseif (user_access('access service links') && (!isset($node))) {
       switch ($delta) {
         case 'service_links_not_node':
           $block['subject'] = t('Bookmark/Search this post');
