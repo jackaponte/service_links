@@ -110,6 +110,7 @@ function service_links_admin_settings() {
     '#type' => 'textfield',
     '#title' => t('Label of the section in node'),
     '#default_value' => variable_get('service_links_label_in_node', t('Bookmark/Search this post with')),
+    '#size' => '40',
   );
   $form['how_to_show_the_links']['service_links_style'] = array(
     '#type' => 'select',
@@ -131,6 +132,13 @@ function service_links_admin_settings() {
     '#type' => 'checkbox',
     '#title' => t('Hide if node is unpublished'),
     '#default_value' => variable_get('service_links_hide_if_unpublished', 0),
+  );
+  $form['how_to_show_the_links']['service_links_path_icons'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Alternative icon folder'),
+    '#description' => t('If you have alternative icons write here the path without trailing slash (b.e. %name)', array('%name' => 'files/newicons')),
+    '#default_value' => service_links_expand_path(NULL, 'icons'),
+    '#size' => 40,
   );
 
   $form['short_links'] = array(
@@ -163,7 +171,7 @@ function service_links_admin_settings() {
     $form['short_links']['service_links_domain_redirect'] = array(
       '#type' => 'textfield',
       '#title' => t('Domain to redirect'),
-      '#description' => t('Write here the complete address without trailing slash %name', array('%name' => '(http://www.example.com)') ),
+      '#description' => t('Write here the complete address without trailing slash (b.e. %name)', array('%name' => 'http://www.example.com') ),
       '#default_value' => variable_get('service_links_domain_redirect', ''),
       '#size' => 40,
     );
@@ -217,7 +225,7 @@ function service_links_admin_services() {
   $form['service_links']['service_links_weight'] = array('#tree' => TRUE);
 
   foreach ($services as $service_id => $service) {
-    $icon = isset($service['icon']) ? $service['icon'] : drupal_get_path('module', 'service_links') ."/images/$service_id.png";
+    $icon = isset($service['icon']) ? service_links_expand_path($service['icon'], 'preset') : service_links_expand_path("$service_id.png", 'preset');
     $weight = isset($settings['weight'][$service_id]) ? $settings['weight'][$service_id] : 0;
 
     $form['service_links']['service_links_show'][$service_id] = array(

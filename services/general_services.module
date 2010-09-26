@@ -26,7 +26,7 @@ function general_services_service_links() {
     'name' => 'StumbleUpon',
     'description' => t('Thumb this up at StumbleUpon'),
     'link' => 'http://www.stumbleupon.com/submit?url=<encoded-url>&title=<encoded-title>',
-    'icon' => drupal_get_path('module', 'service_links') . '/images/stumbleit.png',
+    'icon' => 'stumbleit.png',
   );
   $links['twitter'] = array(
     'name' => 'Twitter',

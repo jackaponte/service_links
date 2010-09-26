@@ -27,7 +27,7 @@ function russian_services_service_links() {
     'link' => 'http://www.mister-wong.ru/index.php?action=addurl&bm_url=<encoded-url>&bm_description=<encoded-title>',
     'name' => 'Mister Wong',
     'description' => t('Bookmark this post on Mister Wong'),
-    'icon' => drupal_get_path('module', 'service_links') .'/images/misterwong.png',
+    'icon' => 'misterwong.png',
   );
   $links['_ru_memori'] = array(
     'link' => 'http://memori.ru/link/?sm=1&u_data[url]=<encoded-url>&u_data[name]=<encoded-title>',

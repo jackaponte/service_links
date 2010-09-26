@@ -22,7 +22,7 @@ function german_services_service_links() {
     'name' => 'Mister Wong',
     'description' => t('Bookmark this post on Mister Wong.'),
     'link' => 'http://www.mister-wong.de/index.php?action=addurl&bm_url=<encoded-url>&bm_description=<encoded-title>',
-    'icon' => drupal_get_path('module', 'service_links') .'/images/misterwong.png',
+    'icon' => 'misterwong.png',
   );
   $links['_de_seoigg'] = array(
     'name' => 'SeoIGG',

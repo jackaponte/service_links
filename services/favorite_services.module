@@ -11,7 +11,7 @@ function favorite_services_service_links() {
     'description' => t('Add this page in your favorites'),
     'link' => url('', array('absolute' => TRUE, 'query' => '<encoded-url>#<encoded-title>')),
     'attributes' => array('style' => 'display:none;'),
-    'javascript' => drupal_get_path('module', 'service_links') .'/js/favorite_services.js',
+    'javascript' => 'favorite_services.js',
   );
   return $links;
 }
