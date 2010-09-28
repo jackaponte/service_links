@@ -391,18 +391,15 @@ function service_links_render($node, $nodelink = FALSE, $style = 0) {
 
   $services = service_links_get_links(array_filter($settings['link_show']));
 
-  if ($settings['agg2_link'] && $node->link) {
-    $title = $node->title;
-    $url = ($node->source_link ? $node->source_link : $node->link);
-    $settings['short_links_use'] = SERVICE_LINKS_SHORT_URL_USE_NEVER;
-  }
-  elseif (!empty($node)) {
-    $title = $node->title;
-    $url = url("node/$node->nid", array('absolute' => TRUE));
+  if (!empty($node)) {
+    $title = isset($node->title) ? $node->title : '';
+    $url = url("node/$node->nid", array('absolute' => TRUE, 'query' => $settings['text_to_append']));
+    $query = check_plain(arg(0)) . str_replace(url(arg(0)), '', url("node/$node->nid"));
   }
   else {
     $title = drupal_get_title();
-    $url = url($_GET['q'], array('absolute' => TRUE));
+    $url = url($_GET['q'], array('absolute' => TRUE, 'query' => $settings['text_to_append']));
+    $query = check_plain(arg(0)) . str_replace(url(arg(0)), '', url($_GET['q']));
     $settings['short_links_use'] = SERVICE_LINKS_SHORT_URL_USE_NEVER;
   }
 
@@ -424,6 +421,7 @@ function service_links_render($node, $nodelink = FALSE, $style = 0) {
     'encoded-url' => '<encoded-url>',
     'encoded-teaser' => '<encoded-teaser>',
     'encoded-short-url' => '<encoded-short-url>',
+    'encoded-query' => '<encoded-query>',
     'teaser' => '<teaser>',
     'short-url' => '<short-url>',
     'source' => '<source>',
@@ -436,10 +434,12 @@ function service_links_render($node, $nodelink = FALSE, $style = 0) {
     'encoded-url' => urlencode($url),
     'encoded-teaser' => urlencode(strip_tags($node->teaser)),
     'encoded-short-url' => urlencode($short_url),
+    'encoded-query' => urlencode($query),
     'teaser' => $node->teaser,
     'short-url' => $short_url,
     'source' => urlencode(variable_get('site_name', 'Drupal')),
     'node-id' => $node->nid,
+    'query' => $query,
     'url' => $url,
     'title' => $title,
   );
@@ -497,6 +497,7 @@ function service_links_render($node, $nodelink = FALSE, $style = 0) {
   if (!empty($links['link'])) {
     array_multisort($links['weight'], $links['link']);
   }
+
   return !empty($links['link']) ? $links['link'] : array();
 }
 
@@ -578,6 +579,7 @@ function theme_service_links_block_format($items, $style = SERVICE_LINKS_STYLE_I
       $output = theme('item_list', array_values($items));
       break;
   }
+
   return '<div class="service-links">' . $output . '</div>';
 }
 
@@ -646,7 +648,7 @@ function _service_links_load_settings() {
   $settings['link_weight'] = variable_get('service_links_weight', array());
   $settings['link_show'] = variable_get('service_links_show', array());
 
-  $settings['agg2_link'] = variable_get('service_links_agg2_link', 0);
+  $settings['text_to_append'] = check_plain(variable_get('service_links_append_to_url', ''));
 
   return $settings;
 }

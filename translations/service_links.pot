@@ -10,13 +10,14 @@
 #  services/basque_services.info: n/a
 #  services/dutch_services.info: n/a
 #  favorite_services.info,v 1.1.2.1 2009/04/03 11:22:13 thecrow
-#  forward_services.info,v 1.1.2.1 2009/04/03 11:22:13 thecrow
+#  services/forward_services.info: n/a
 #  general_services.info,v 1.1.2.2 2009/04/11 18:10:52 thecrow
 #  german_services.info,v 1.1.2.1 2009/04/11 18:10:52 thecrow
 #  italian_services.info,v 1.1.2.2 2009/04/11 18:10:52 thecrow
 #  russian_services.info,v 1.1.2.2 2009/04/11 18:10:52 thecrow
 #  services/spanish_services.info: n/a
 #  services/swedish_services.info: n/a
+#  services/widget_services.info: n/a
 #  services/basque_services.module: n/a
 #  services/dutch_services.module: n/a
 #  favorite_services.module,v 1.1.2.2 2009/08/14 00:36:27 robloach
@@ -28,13 +29,14 @@
 #  share_services.module,v 1.1.2.1 2009/04/03 11:22:13 thecrow
 #  services/spanish_services.module: n/a
 #  services/swedish_services.module: n/a
+#  services/widget_services.module: n/a
 #  share_services.info,v 1.1.2.2 2009/04/11 18:10:52 thecrow
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2010-09-21 13:05+0200\n"
+"POT-Creation-Date: 2010-09-28 16:19+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -123,96 +125,104 @@ msgstr ""
 msgid "Bookmark/Search this post with"
 msgstr ""
 
-#: service_links.admin.inc:116
+#: service_links.admin.inc:117
 msgid "Service links style"
 msgstr ""
 
-#: service_links.admin.inc:119
+#: service_links.admin.inc:120
 msgid "Only Text"
 msgstr ""
 
-#: service_links.admin.inc:120
+#: service_links.admin.inc:121
 msgid "Only Image"
 msgstr ""
 
-#: service_links.admin.inc:121 service_links.module:235;257
+#: service_links.admin.inc:122 service_links.module:234;256
 msgid "Image and Text"
 msgstr ""
 
-#: service_links.admin.inc:126
+#: service_links.admin.inc:127
 msgid "Open link in..."
 msgstr ""
 
-#: service_links.admin.inc:128
+#: service_links.admin.inc:129
 msgid "Same window"
 msgstr ""
 
-#: service_links.admin.inc:128
+#: service_links.admin.inc:129
 msgid "New window"
 msgstr ""
 
-#: service_links.admin.inc:132
+#: service_links.admin.inc:133
 msgid "Hide if node is unpublished"
 msgstr ""
 
-#: service_links.admin.inc:140
+#: service_links.admin.inc:138 service_links.module:241
+msgid "Alternative icon folder"
+msgstr ""
+
+#: service_links.admin.inc:139
+msgid "If you have alternative icons write here the path without trailing slash (b.e. %name)"
+msgstr ""
+
+#: service_links.admin.inc:145
+msgid "Append the following text to your URL page"
+msgstr ""
+
+#: service_links.admin.inc:146
+msgid "This text will be inserted at the end of the current URL (b.e. %param => %url)"
+msgstr ""
+
+#: service_links.admin.inc:155
 msgid "Short Links"
 msgstr ""
 
-#: service_links.admin.inc:144
+#: service_links.admin.inc:159
 msgid "Use short links"
 msgstr ""
 
-#: service_links.admin.inc:147
+#: service_links.admin.inc:162
 msgid "Never"
 msgstr ""
 
-#: service_links.admin.inc:148
+#: service_links.admin.inc:163
 msgid "Only when requested"
 msgstr ""
 
-#: service_links.admin.inc:149
+#: service_links.admin.inc:164
 msgid "Always"
 msgstr ""
 
-#: service_links.admin.inc:154
+#: service_links.admin.inc:169
 msgid "How generate short links"
 msgstr ""
 
-#: service_links.admin.inc:156
+#: service_links.admin.inc:171
 msgid "If you select \"Short URL,\" it will use the service selected with the <a href=\"@shorten\">Shorten URLs module</a>. If you have not enabled the module, Service Links will default to TinyURL."
 msgstr ""
 
-#: service_links.admin.inc:158
+#: service_links.admin.inc:173
 msgid "Use node/xxx alias"
 msgstr ""
 
-#: service_links.admin.inc:159
+#: service_links.admin.inc:174
 msgid "Use Short Url service"
 msgstr ""
 
-#: service_links.admin.inc:160
+#: service_links.admin.inc:175
 msgid "Redirect only the Domain name"
 msgstr ""
 
-#: service_links.admin.inc:161
+#: service_links.admin.inc:176
 msgid "Combo: domain redirect and node/xxx alias"
 msgstr ""
 
-#: service_links.admin.inc:165
+#: service_links.admin.inc:180
 msgid "Domain to redirect"
 msgstr ""
 
-#: service_links.admin.inc:166
-msgid "Write here the complete address without trailing slash %name"
-msgstr ""
-
-#: service_links.admin.inc:178
-msgid "Aggregator2 settings"
-msgstr ""
-
-#: service_links.admin.inc:182
-msgid "Use link to original article aggregated by aggregator2 module"
+#: service_links.admin.inc:181
+msgid "Write here the complete address without trailing slash (b.e. %name)"
 msgstr ""
 
 #: service_links.admin.inc:197
@@ -227,7 +237,7 @@ msgstr ""
 msgid "Show %name link"
 msgstr ""
 
-#: service_links.views.inc:15 service_links.module:178;59 service_links.info:0
+#: service_links.views.inc:15 service_links.module:179;59 service_links.info:0
 msgid "Service links"
 msgstr ""
 
@@ -243,43 +253,39 @@ msgstr ""
 msgid "Control which and where service links should be active."
 msgstr ""
 
-#: service_links.module:182
+#: service_links.module:183
 msgid "Service links with FishEye effect"
 msgstr ""
 
-#: service_links.module:186
+#: service_links.module:187
 msgid "Service links block for not-node pages"
 msgstr ""
 
-#: service_links.module:198;204;214
+#: service_links.module:199;204;214
 msgid "Bookmark/Search this post"
 msgstr ""
 
-#: service_links.module:229;251
+#: service_links.module:228;250
 msgid "Style"
 msgstr ""
 
-#: service_links.module:230;252
+#: service_links.module:229;251
 msgid "How the service links will appear in the block."
 msgstr ""
 
-#: service_links.module:233;255
+#: service_links.module:232;254
 msgid "Text"
 msgstr ""
 
-#: service_links.module:234;256
+#: service_links.module:233;255
 msgid "Image"
 msgstr ""
 
-#: service_links.module:242
-msgid "Alternative icon folder"
+#: service_links.module:243
+msgid "If you have alterative icons write here the path without trailing slash"
 msgstr ""
 
-#: service_links.module:244
-msgid "Subfolder under images/ containing icons for fisheye effect (b.e. big_icons/)"
-msgstr ""
-
-#: service_links.module:560
+#: service_links.module:562
 msgid "@label"
 msgstr ""
 
@@ -303,7 +309,7 @@ msgstr ""
 msgid "Module engine for add various service links about sharing networks to nodes."
 msgstr ""
 
-#: service_links.info:0 services/basque_services.info:0 services/dutch_services.info:0 services/favorite_services.info:0 services/forward_services.info:0 services/general_services.info:0 services/german_services.info:0 services/italian_services.info:0 services/russian_services.info:0 services/spanish_services.info:0 services/swedish_services.info:0
+#: service_links.info:0 services/basque_services.info:0 services/dutch_services.info:0 services/favorite_services.info:0 services/forward_services.info:0 services/general_services.info:0 services/german_services.info:0 services/italian_services.info:0 services/russian_services.info:0 services/spanish_services.info:0 services/swedish_services.info:0 services/widget_services.info:0
 msgid "Service Links"
 msgstr ""
 
@@ -335,7 +341,7 @@ msgstr ""
 msgid "Add this page in your favorites"
 msgstr ""
 
-#: services/forward_services.module:15
+#: services/forward_services.module:18
 msgid "Send to a friend"
 msgstr ""
 
@@ -607,6 +613,14 @@ msgstr ""
 msgid "Share this on Pusha"
 msgstr ""
 
+#: services/widget_services.module:18
+msgid "Add the Facebook widget"
+msgstr ""
+
+#: services/widget_services.module:23
+msgid "Share"
+msgstr ""
+
 #: services/basque_services.info:0
 msgid "Basque Services"
 msgstr ""
@@ -636,7 +650,7 @@ msgid "Forward Services"
 msgstr ""
 
 #: services/forward_services.info:0
-msgid "Add the support for Forward module to Service Links with what send the link through email."
+msgid "Add the support for Forward module which send the link through email."
 msgstr ""
 
 #: services/general_services.info:0
@@ -697,5 +711,13 @@ msgstr ""
 
 #: services/swedish_services.info:0
 msgid "Provide the Swedish Services: Bloggy, Pusha"
+msgstr ""
+
+#: services/widget_services.info:0
+msgid "Widget Services"
+msgstr ""
+
+#: services/widget_services.info:0
+msgid "Provide the Widget for Facebook"
 msgstr ""
 

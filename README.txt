@@ -31,14 +31,14 @@ social service links, an example's list could be:
 * Yahoo
 * ...
 
-And a lot more from around the World!
+And there are a lot more from around the World!
 
 Through plugin service links support too:
 * Favorite bookmark - it work for IE and Firefox
 
 The admin can decide:
 - To show the links as text, image or both.
-- To show only for certain node types/categories
+- To show only for certain node types or some categories
 - To show in teaser view or full page view or both.
 - If the links should be added after the body text or in the links
   section or in a block
@@ -53,6 +53,10 @@ The admin can decide:
 - support for browser bookmark
 - auto-hide for unpublished nodes (configurable)
 - configurable label for the block shown in the node
+- params can be stick to the url address
+
+And plus, the support for aggregator2 has been removed (obsolete) but it work
+well with aggregation
 
 Installation and configuration:
 ------------------------------
@@ -90,7 +94,7 @@ supported:
 
   Notes:
   i) be sure that 'myservice' (know as 'service-id') is unique;
-  ii) tags allowed: <encoded-url>, <encoded-title>, <encoded-teaser>, <encoded-short-url>, <source>, <teaser>, <node-id>, <short-url>
+  ii) tags allowed: <encoded-url>, <encoded-title>, <encoded-teaser>, <encoded-short-url>, <encoded-query>, <query>, <source>, <teaser>, <node-id>, <short-url>
 
 2) Put the related standard icon (myservice.png) under 'images/' folder .
 
@@ -107,10 +111,10 @@ supported:
 
 Include service links in your theme:
 -----------------------------------
-In the included template.php file there  an example how to insert
-the service links in to a PHPTemplate theme. Remember to place the
+In the included template.php file there are examples about how to insert
+service links into a PHPTemplate theme. Remember to place the
 template.php file in the folder of your theme or integrate it with
-the content of 'template.php' provided from your theme.
+the content of 'template.php' provided by your theme.
 
 
 Last updated:

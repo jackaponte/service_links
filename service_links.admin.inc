@@ -7,7 +7,7 @@
  */
 
 /**
- * Theming function for build a draggable service links table
+ * Theming function for build a draggable service links table.
  */
 function theme_service_links_drag_table($form) {
   $table = array();
@@ -140,6 +140,13 @@ function service_links_admin_settings() {
     '#default_value' => service_links_expand_path(NULL, 'icons'),
     '#size' => 40,
   );
+  $form['how_to_show_the_links']['service_links_append_to_url'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Append the following text to your URL page'),
+    '#description' => t('This text will be inserted at the end of the current URL (b.e. %param => %url)', array('%param' => 'param1=value1&param2=value2', '%url' => 'http://domain.com/current-page&param1=value1&param2=value2')),
+    '#default_value' => variable_get('service_links_append_to_url', ''),
+    '#size' => 40,
+  );
 
   $form['short_links'] = array(
     '#type' => 'fieldset',
@@ -176,21 +183,6 @@ function service_links_admin_settings() {
       '#size' => 40,
     );
     $form['#validate'][] = 'service_links_admin_services_validate';
-  }
-
-  if (module_exists('aggregator2')) {
-    $form['aggregator2_settings'] = array(
-      '#type' => 'fieldset',
-      '#collapsible' => TRUE,
-      '#collapsed' => FALSE,
-      '#title' => t('Aggregator2 settings'),
-    );
-    $form['aggregator2_settings']['service_links_agg2_link'] = array(
-      '#type' => 'checkbox',
-      '#title' => t('Use link to original article aggregated by aggregator2 module'),
-      '#return_value' => 1,
-      '#default_value' => variable_get('service_links_agg2_link', 0),
-    );
   }
 
   return system_settings_form($form);
