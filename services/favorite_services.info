@@ -1,6 +1,6 @@
 ; $Id$
 name = "Favorite Services"
-description = "Add the page in your favorite, work just for IE and  Firefox"
+description = "Add the page in your favorite, work with Chrome, Firefox, IE, Opera"
 core = 6.x
 package = Service Links
 dependencies[] = service_links

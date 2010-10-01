@@ -240,7 +240,7 @@ function service_links_block($op = 'list', $delta = 0, $edit = array()) {
           '#type' => 'textfield',
           '#title' => t('Alternative icon folder'),
           '#size' => 60,
-          '#description' => t('If you have alterative icons write here the path without trailing slash'),
+          '#description' => t('If you have alternative icons write here the path without trailing slash'),
           '#default_value' => service_links_expand_path(NULL, 'fisheye'),
         );
         break;

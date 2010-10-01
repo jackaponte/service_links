@@ -9,15 +9,17 @@
 #  service_links.info,v 1.4.4.2 2009/04/03 11:21:03 thecrow
 #  services/basque_services.info: n/a
 #  services/dutch_services.info: n/a
-#  favorite_services.info,v 1.1.2.1 2009/04/03 11:22:13 thecrow
+#  services/favorite_services.info: n/a
 #  services/forward_services.info: n/a
 #  general_services.info,v 1.1.2.2 2009/04/11 18:10:52 thecrow
 #  german_services.info,v 1.1.2.1 2009/04/11 18:10:52 thecrow
+#  services/hungarian_services.info: n/a
 #  italian_services.info,v 1.1.2.2 2009/04/11 18:10:52 thecrow
 #  russian_services.info,v 1.1.2.2 2009/04/11 18:10:52 thecrow
 #  services/spanish_services.info: n/a
 #  services/swedish_services.info: n/a
 #  services/widget_services.info: n/a
+#  js/favorite_services.js: n/a
 #  services/basque_services.module: n/a
 #  services/dutch_services.module: n/a
 #  favorite_services.module,v 1.1.2.2 2009/08/14 00:36:27 robloach
@@ -25,6 +27,7 @@
 #  services/general_services.module: n/a
 #  russian_services.module,v 1.1.2.4 2009/08/14 00:36:27 robloach
 #  german_services.module,v 1.1.2.2 2009/08/14 00:36:27 robloach
+#  services/hungarian_services.module: n/a
 #  italian_services.module,v 1.1.2.2 2009/04/11 18:10:52 thecrow
 #  share_services.module,v 1.1.2.1 2009/04/03 11:22:13 thecrow
 #  services/spanish_services.module: n/a
@@ -36,7 +39,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2010-09-28 16:19+0200\n"
+"POT-Creation-Date: 2010-10-01 09:55+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -282,7 +285,7 @@ msgid "Image"
 msgstr ""
 
 #: service_links.module:243
-msgid "If you have alterative icons write here the path without trailing slash"
+msgid "If you have alternative icons write here the path without trailing slash"
 msgstr ""
 
 #: service_links.module:562
@@ -309,8 +312,12 @@ msgstr ""
 msgid "Module engine for add various service links about sharing networks to nodes."
 msgstr ""
 
-#: service_links.info:0 services/basque_services.info:0 services/dutch_services.info:0 services/favorite_services.info:0 services/forward_services.info:0 services/general_services.info:0 services/german_services.info:0 services/italian_services.info:0 services/russian_services.info:0 services/spanish_services.info:0 services/swedish_services.info:0 services/widget_services.info:0
+#: service_links.info:0 services/basque_services.info:0 services/dutch_services.info:0 services/favorite_services.info:0 services/forward_services.info:0 services/general_services.info:0 services/german_services.info:0 services/hungarian_services.info:0 services/italian_services.info:0 services/russian_services.info:0 services/spanish_services.info:0 services/swedish_services.info:0 services/widget_services.info:0
 msgid "Service Links"
+msgstr ""
+
+#: js/favorite_services.js:0
+msgid "Use CTRL + D for add this in your Bookmark"
 msgstr ""
 
 #: services/basque_services.module:18
@@ -505,6 +512,10 @@ msgstr ""
 msgid "Share on MeinVZ, StudiVZ or SchuelerVZ."
 msgstr ""
 
+#: services/hungarian_services.module:18
+msgid "Add to iWiW."
+msgstr ""
+
 #: services/italian_services.module:18
 msgid "Add a news on Diggita"
 msgstr ""
@@ -605,6 +616,10 @@ msgstr ""
 msgid "Publish this post on Barrapunto.com"
 msgstr ""
 
+#: services/spanish_services.module:38
+msgid "Share on Tuenti."
+msgstr ""
+
 #: services/swedish_services.module:18
 msgid "Share this on Bloggy"
 msgstr ""
@@ -642,7 +657,7 @@ msgid "Favorite Services"
 msgstr ""
 
 #: services/favorite_services.info:0
-msgid "Add the page in your favorite, work just for IE and  Firefox"
+msgid "Add the page in your favorite, work with Chrome, Firefox, IE, Opera"
 msgstr ""
 
 #: services/forward_services.info:0
@@ -667,6 +682,14 @@ msgstr ""
 
 #: services/german_services.info:0
 msgid "Provide the German Services: Alltagz, Colivia, Icio, InfoPirat, Linkarena, MeinVZ, Mister Wong, Netselektor, Oneview, Readster, seekXL, SeoIGG, Weblinkr, Webnews, Yigg"
+msgstr ""
+
+#: services/hungarian_services.info:0
+msgid "Hungarian Services"
+msgstr ""
+
+#: services/hungarian_services.info:0
+msgid "Provide the Hungarian Service: iWiW"
 msgstr ""
 
 #: services/italian_services.info:0
@@ -702,7 +725,7 @@ msgid "Spanish Services"
 msgstr ""
 
 #: services/spanish_services.info:0
-msgid "Provide the Spanish Services: Barrapunto, Fresqui, Latafanera, Meneame"
+msgid "Provide the Spanish Services: Barrapunto, Fresqui, Latafanera, Meneame, Tuenti"
 msgstr ""
 
 #: services/swedish_services.info:0

@@ -33,6 +33,11 @@ function spanish_services_service_links() {
     'description' => t('Publish this post on Barrapunto.com'),
     'link' => 'http://barrapunto.com/submit.pl?story=He+leido+en+<source>+el+articulo+<a href="<encoded-url>"><encoded-title></a>&subj=<encoded-title>',
   );
+  $links['_es_tuenti'] = array(
+    'name' => 'Tuenti',
+    'description' => t('Share on Tuenti.'),
+    'link' => 'http://www.tuenti.com/share?url=<encoded-url>',
+  );
 
   return $links;
 }
