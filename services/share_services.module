@@ -3,7 +3,7 @@
 
 /**
  * @file
- * Provide the integration with Share module
+ * Provide the integration with Share module.
  */
 
 /**
@@ -15,7 +15,7 @@ function share_services_share_info() {
       'module' => 'share_services',
       'title' => t('Social web'),
       'enabled' => TRUE,
-      'weight' => 0
+      'weight' => 0,
     )
   );
   return $info;

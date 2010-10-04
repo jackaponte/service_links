@@ -91,8 +91,7 @@ function service_links_nodeapi(&$node, $op, $teaser, $page) {
   switch ($op) {
     case 'load':
       if (arg(2) != 'edit') {
-        $links_show = _service_links_show($node);
-        if ($links_show) {
+        if (service_links_show($node)) {
           $node->service_links = service_links_render($node, TRUE);
           $node->service_links_rendered = theme('service_links_node_format', $node->service_links, variable_get('service_links_label_in_node', 'Bookmark/Search this post with'));
         }
@@ -161,9 +160,7 @@ function service_links_link($type, $node = NULL, $teaser = FALSE) {
       break;
   }
 
-  $links_show = _service_links_show($node);
-
-  if ($type == 'node' && $links_show && $show_links && user_access('access service links')) {
+  if ($type == 'node' && service_links_show($node) && $show_links && user_access('access service links')) {
     $links = service_links_render($node, TRUE);
   }
 
@@ -192,8 +189,7 @@ function service_links_block($op = 'list', $delta = 0, $edit = array()) {
   elseif ($op == 'view') {
     $node = menu_get_object('node');
     if (user_access('access service links') && (isset($node))) {
-      $links_show = _service_links_show($node);
-      if ($links_show) {
+      if (service_links_show($node)) {
         switch ($delta) {
           case 'service_links':
             $block['subject'] = t('Bookmark/Search this post');
@@ -295,7 +291,7 @@ function service_links_theme() {
       'arguments' => array('links' => NULL, 'label' => NULL),
     ),
     'service_links_block_format' => array(
-      'arguments' => array('items' => NULL),
+      'arguments' => array('items' => NULL, 'style' => SERVICE_LINKS_STYLE_IMAGE_AND_TEXT),
     ),
     'service_links_fisheye_format' => array(
       'arguments' => array('items' => NULL),
@@ -352,7 +348,7 @@ function service_links_get_links($services = NULL, $reset = FALSE) {
 }
 
 /**
- * Create short links using predefined settings
+ * Create short links using predefined settings.
  */
 function service_links_short_url($url, $nid) {
   switch (variable_get('service_links_short_links_type', 1)) {
@@ -608,9 +604,9 @@ function _service_links_get_terms() {
 }
 
 /**
- * Check if the service links should be displayed for the node type/category.
+ * Check if the service links should be displayed for the content type or category.
  */
-function _service_links_show($node) {
+function service_links_show($node) {
   $links_show = FALSE;
   $category_type = FALSE;
 
