@@ -188,6 +188,8 @@ function service_links_block($op = 'list', $delta = 0, $edit = array()) {
   }
   elseif ($op == 'view') {
     $node = menu_get_object('node');
+    $block = array();
+
     if (user_access('access service links') && (isset($node))) {
       if (service_links_show($node)) {
         switch ($delta) {
@@ -205,6 +207,8 @@ function service_links_block($op = 'list', $delta = 0, $edit = array()) {
       return $block;
     }
     elseif (user_access('access service links') && (!isset($node))) {
+      $block = array();
+      
       switch ($delta) {
         case 'service_links_not_node':
           $block['subject'] = t('Bookmark/Search this post');
@@ -217,6 +221,7 @@ function service_links_block($op = 'list', $delta = 0, $edit = array()) {
   }
   elseif ($op == 'configure') {
     $form = array();
+
     switch ($delta) {
       case 'service_links':
         $form['service_links_block_style'] = array(
@@ -610,16 +615,17 @@ function service_links_show($node) {
   $links_show = FALSE;
   $category_type = FALSE;
 
-  $hide_if_unpub = variable_get('service_links_hide_if_unpublished', 0);
-  if ($node->status == '0' && $hide_if_unpub) {
+  if ($node->status == '0' && variable_get('service_links_hide_if_unpublished', FALSE)) {
     return FALSE;
   }
 
   $node_type = in_array($node->type, variable_get('service_links_node_types', array()), TRUE);
   if (module_exists('taxonomy')) {
     $terms = taxonomy_node_get_terms($node);
+    $categories_allowed = variable_get('service_links_category_types', array());
+
     foreach ($terms as $term) {
-      $category_type |= in_array($term->tid, variable_get('service_links_category_types', array()), FALSE);
+      $category_type |= in_array($term->tid, $categories_allowed, FALSE);
     }
   }
   if ($node_type || $category_type) {

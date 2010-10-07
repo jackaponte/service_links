@@ -253,5 +253,6 @@ function service_links_admin_services() {
       '#default_value' => $weight,
     );
   }
+
   return system_settings_form($form);
 }
