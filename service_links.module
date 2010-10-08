@@ -396,11 +396,15 @@ function service_links_render($node, $nodelink = FALSE, $style = 0) {
     $title = isset($node->title) ? $node->title : '';
     $url = url("node/$node->nid", array('absolute' => TRUE, 'query' => $settings['text_to_append']));
     $query = check_plain(arg(0)) . str_replace(url(arg(0)), '', url("node/$node->nid"));
+    $teaser = strip_tags($node->teaser);
+    $nid = $node->nid;
   }
   else {
     $title = drupal_get_title();
     $url = url($_GET['q'], array('absolute' => TRUE, 'query' => $settings['text_to_append']));
     $query = check_plain(arg(0)) . str_replace(url(arg(0)), '', url($_GET['q']));
+    $teaser = '';
+    $nid = '';
     $settings['short_links_use'] = SERVICE_LINKS_SHORT_URL_USE_NEVER;
   }
 
@@ -433,13 +437,13 @@ function service_links_render($node, $nodelink = FALSE, $style = 0) {
   $settings['subst'] = array(
     'encoded-title' => urlencode($title),
     'encoded-url' => urlencode($url),
-    'encoded-teaser' => urlencode(strip_tags($node->teaser)),
+    'encoded-teaser' => urlencode($teaser),
     'encoded-short-url' => urlencode($short_url),
     'encoded-query' => urlencode($query),
-    'teaser' => $node->teaser,
+    'teaser' => $teaser,
     'short-url' => $short_url,
     'source' => urlencode(variable_get('site_name', 'Drupal')),
-    'node-id' => $node->nid,
+    'node-id' => $nid,
     'query' => $query,
     'url' => $url,
     'title' => $title,
