@@ -1,6 +1,9 @@
 ; $Id$
-name = "Dutch Services"
-description = "Provide the Dutch Services: eKudos, Hyves, Nujij"
-core = 6.x
+name = Dutch Services
+description = Provide the Dutch Services: eKudos, Hyves, Nujij
+core = 7.x
 package = Service Links
 dependencies[] = service_links
+
+version = VERSION
+files[] = dutch_services.module

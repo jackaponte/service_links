@@ -9,17 +9,18 @@
 /**
  * Theming function for build a draggable service links table.
  */
-function theme_service_links_drag_table($form) {
-  $table = array();
+function theme_service_links_drag_table($variables) {
+  $table['rows'] = array();
+  $form = $variables['form'];
 
   foreach (element_children($form['service_links_show']) as $service_id) {
     $service = $form['service_links_show'][$service_id];
     $col = array();
 
-    $service['name'] = array('#value' => $service['#title']);
+    $service['name'] = array('#markup' => $service['#title']);
     $col[] = drupal_render($service['name']);
 
-    $service['service'] = array('#value' => $service['#service']);
+    $service['service'] = array('#markup' => $service['#service']);
     $col[] = drupal_render($service['service']);
 
     $service['show'] = array(
@@ -31,24 +32,29 @@ function theme_service_links_drag_table($form) {
     $col[] = drupal_render($service['show']);
 
     $service['weight'] = $form['service_links_weight'][$service_id];
-    $service['weight']['#attributes']['class'] = 'service-weight';
+    $service['weight']['#attributes']['class'] = array('service-weight');
     $col[] = drupal_render($service['weight']);
 
     $table['weights'][] = $service['#weight'];
-    $table['rows'][] = array('data' => $col, 'class' => 'draggable');
+    $table['rows'][] = array('data' => $col, 'class' => array('draggable'));
   }
 
-  if (empty($table['rows'])) {
-    $table['rows'][] = array(array('data' => t('No service available.'), 'colspan' => '5'));
-  }
-  else {
+  if (!empty($table['rows'])) {
     array_multisort($table['weights'], $table['rows']);
   }
 
   $table['header'] = array(t('Service Name'), t('Service Group'), t('Show'), t('Weight'));
   drupal_add_tabledrag('service_links', 'order', 'sibling', 'service-weight');
 
-  return theme('table', $table['header'], $table['rows'], array('id' => 'service_links'));
+  $params = array(
+    '#theme' => 'table',
+    '#header' => $table['header'],
+    '#rows' => $table['rows'],
+    '#attributes' => array('id' => 'service_links'),
+    '#empty' => t('No service available.'),
+  );
+
+  return theme('table', $params);
 }
 
 /**
@@ -67,8 +73,8 @@ function service_links_admin_settings() {
     '#type' => 'checkboxes',
     '#title' => t('Content types'),
     '#default_value' => variable_get('service_links_node_types', array()),
-    '#options' => array_map('check_plain', node_get_types('names')),
-    '#attributes' => array('class' => 'container-inline'),
+    '#options' => array_map('check_plain', node_type_get_names()),
+    '#attributes' => array('class' => array('container-inline')),
   );
   if (module_exists('taxonomy')) {
     $terms = _service_links_get_terms();
@@ -236,7 +242,9 @@ function service_links_admin_services() {
   $form['service_links']['service_links_weight'] = array('#tree' => TRUE);
 
   foreach ($services as $service_id => $service) {
-    $icon = isset($service['icon']) ? service_links_expand_path($service['icon'], 'preset') : service_links_expand_path("$service_id.png", 'preset');
+    $icon = array(
+      'path' => isset($service['icon']) ? service_links_expand_path($service['icon'], 'preset') : service_links_expand_path("$service_id.png", 'preset')
+    );
     $weight = isset($settings['weight'][$service_id]) ? $settings['weight'][$service_id] : 0;
 
     $form['service_links']['service_links_show'][$service_id] = array(

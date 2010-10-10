@@ -1,7 +1,10 @@
 ; $Id$
-name = "Forward Services"
-description = "Add the support for Forward module which send the link through email."
-core = 6.x
+name = Forward Services
+description = Add the support for Forward module which send the link through email.
+core = 7.x
 package = Service Links
 dependencies[] = service_links 
 dependencies[] = forward
+
+version = VERSION
+files[] = forward_services.module

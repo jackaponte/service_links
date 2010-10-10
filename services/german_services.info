@@ -1,6 +1,9 @@
 ; $Id$
-name = "German Services"
-description = "Provide the German Services: Alltagz, Colivia, Icio, InfoPirat, Linkarena, MeinVZ, Mister Wong, Netselektor, Oneview, Readster, seekXL, SeoIGG, Weblinkr, Webnews, Yigg"
-core = 6.x
+name = German Services
+description = Provide the German Services: Alltagz, Colivia, Icio, InfoPirat, Linkarena, MeinVZ, Mister Wong, Netselektor, Oneview, Readster, seekXL, SeoIGG, Weblinkr, Webnews, Yigg
+core = 7.x
 package = Service Links
 dependencies[] = service_links
+
+version = VERSION
+files[] = german_services.module

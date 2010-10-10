@@ -1,7 +1,9 @@
 ; $Id$
-name = "Spanish Services"
-description = "Provide the Spanish Services: Barrapunto, Fresqui, Latafanera, Meneame, Tuenti"
-core = 6.x
+name = Spanish Services
+description = Provide the Spanish Services: Barrapunto, Fresqui, Latafanera, Meneame, Tuenti
+core = 7.x
 package = Service Links
 dependencies[] = service_links
 
+version = VERSION
+files[] = spanish_services.module

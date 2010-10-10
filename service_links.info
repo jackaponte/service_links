@@ -1,6 +1,13 @@
 ; $Id$
-name = "Service links"
-description = "Module engine for add various service links about sharing networks to nodes."
-core = 6.x
-php = 5.1
+name = Service links
+description = Module engine for add various service links about sharing networks to nodes.
+core = 7.x
+version=VERSION
 package = Service Links
+
+files[]=service_links.module
+files[]=service_links.admin.inc
+files[]=service_links.install
+files[]=service_links.views.inc
+files[]=service_links_handler_field_service_links.inc
+configure=admin/config/service_links/general

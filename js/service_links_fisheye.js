@@ -1,5 +1,5 @@
 // $Id$
-if (Drupal.jsEnabled) {
+(function ($) {
   $(document).ready(function(){
     $('#fisheye').Fisheye({
       maxWidth: 32,
@@ -11,4 +11,4 @@ if (Drupal.jsEnabled) {
       halign : 'center'
     })
   });
-}
+})(jQuery);

@@ -1,5 +1,5 @@
 // $Id$
-if (Drupal.jsEnabled) {
+(function ($) {
   $(document).ready(function(){
     // work only for FF, IE, Opera, Chrome
     if (window.sidebar || window.external || window.opera) {
@@ -36,4 +36,4 @@ if (Drupal.jsEnabled) {
       $("a.service-links-favorite").hide();
     }
   });
-}
+})(jQuery);
