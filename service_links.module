@@ -283,7 +283,7 @@ function service_links_block_configure($delta = '') {
 /**
  * Implements hook_block_save().
  */
-function service_links_block($delta = '', $edit = array()) {
+function service_links_block_save($delta = '', $edit = array()) {
   switch ($delta) {
     case 'service_links':
       variable_set('service_links_block_style', $edit['service_links_block_style']);
@@ -656,8 +656,11 @@ function service_links_show($node) {
   $links_show = FALSE;
   $category_type = FALSE;
 
-  $hide_if_unpub = variable_get('service_links_hide_if_unpublished', 0);
-  if ($node->status == '0' && $hide_if_unpub) {
+  if (in_array(strtolower(arg(0)), array('print', 'printpdf', 'printmail'))) {
+    return FALSE;
+  }
+
+  if ($node->status == '0' && variable_get('service_links_hide_if_unpublished', 0)) {
     return FALSE;
   }
 
