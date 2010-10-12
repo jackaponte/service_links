@@ -262,5 +262,9 @@ function service_links_admin_services() {
     );
   }
 
+  if (empty($services)) {
+    drupal_set_message(t('You need to load at least one of XXX Services module, please enable them in <a href="@url">admin > modules</a> page', array('@url' => url('admin/modules'))), 'warning');
+  }
+
   return system_settings_form($form);
 }
