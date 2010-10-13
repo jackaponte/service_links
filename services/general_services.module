@@ -103,6 +103,12 @@ function general_services_service_links() {
     'link' => 'http://technorati.com/search/<encoded-url>',
     'description' => t('Search Technorati for links to this post.'),
   );
+  $links['technorati_favorite'] = array(
+    'name' => 'Favorite on Technorati',
+    'link' => 'http://technorati.com/faves?sub=addfavbtn&add=<encoded-url>',
+    'description' => t('Add this post to your Technorati Favorites.'),
+    'icon' => 'technorati.png',
+  );
   $links['icerocket'] = array(
     'name' => 'Icerocket',
     'link' => 'http://blogs.icerocket.com/search?q=<encoded-url>',
