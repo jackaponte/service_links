@@ -144,6 +144,11 @@ function general_services_service_links() {
     'link' => 'http://identi.ca/?action=newnotice&status_textarea=<encoded-title>+<encoded-url>',
     'description' => t('Dent this on identi.ca.'),
   );
+  $links['newskicks'] = array(
+    'name' => 'Newskicks',
+    'link' => 'http://newskicks.com/node/add/storylink?edit[url]=<encoded-url>&edit[title]=<encoded-title>;',
+    'description' => t('Kicks this post on NewsKicks.'),
+  );
 
   return $links;
 }

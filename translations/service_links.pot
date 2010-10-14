@@ -6,7 +6,7 @@
 #  service_links.admin.inc: n/a
 #  service_links.module: n/a
 #  service_links.views.inc: n/a
-#  service_links.info,v 1.4.4.2 2009/04/03 11:21:03 thecrow
+#  service_links.info: n/a
 #  services/basque_services.info: n/a
 #  services/dutch_services.info: n/a
 #  services/favorite_services.info: n/a
@@ -39,7 +39,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2010-10-04 16:53+0200\n"
+"POT-Creation-Date: 2010-10-14 10:36+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -48,207 +48,211 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#: service_links.admin.inc:42
-msgid "No service available."
-msgstr ""
-
-#: service_links.admin.inc:48
+#: service_links.admin.inc:46
 msgid "Service Name"
 msgstr ""
 
-#: service_links.admin.inc:48
+#: service_links.admin.inc:46
 msgid "Service Group"
 msgstr ""
 
-#: service_links.admin.inc:48
+#: service_links.admin.inc:46
 msgid "Show"
 msgstr ""
 
-#: service_links.admin.inc:48
+#: service_links.admin.inc:46
 msgid "Weight"
 msgstr ""
 
-#: service_links.admin.inc:63
+#: service_links.admin.inc:54
+msgid "No service available."
+msgstr ""
+
+#: service_links.admin.inc:69
 msgid "Show for content's type or category"
 msgstr ""
 
-#: service_links.admin.inc:64
+#: service_links.admin.inc:70
 msgid "Set the content's types or categories you want to display links for."
 msgstr ""
 
-#: service_links.admin.inc:68
+#: service_links.admin.inc:74
 msgid "Content types"
 msgstr ""
 
-#: service_links.admin.inc:79
+#: service_links.admin.inc:85
 msgid "Categories"
 msgstr ""
 
-#: service_links.admin.inc:90
+#: service_links.admin.inc:96
 msgid "Places where show Service Links"
 msgstr ""
 
-#: service_links.admin.inc:94
+#: service_links.admin.inc:100
 msgid "Service links in links"
 msgstr ""
 
-#: service_links.admin.inc:97;108
+#: service_links.admin.inc:103;114
 msgid "Disabled"
 msgstr ""
 
-#: service_links.admin.inc:98;109
+#: service_links.admin.inc:104;115
 msgid "Teaser view"
 msgstr ""
 
-#: service_links.admin.inc:99;110
+#: service_links.admin.inc:105;116
 msgid "Full-page view"
 msgstr ""
 
-#: service_links.admin.inc:100;111
+#: service_links.admin.inc:106;117
 msgid "Teasers and full-page view"
 msgstr ""
 
-#: service_links.admin.inc:101
+#: service_links.admin.inc:107
 msgid "When display the services in the links section."
 msgstr ""
 
-#: service_links.admin.inc:105
+#: service_links.admin.inc:111
 msgid "Service links in nodes"
 msgstr ""
 
-#: service_links.admin.inc:112
+#: service_links.admin.inc:118
 msgid "When display the services after the content text."
 msgstr ""
 
-#: service_links.admin.inc:119
+#: service_links.admin.inc:125
 msgid "How display Service Links"
 msgstr ""
 
-#: service_links.admin.inc:123
+#: service_links.admin.inc:129
 msgid "Choice a style"
 msgstr ""
 
-#: service_links.admin.inc:126
+#: service_links.admin.inc:132
 msgid "Only Text"
 msgstr ""
 
-#: service_links.admin.inc:127
+#: service_links.admin.inc:133
 msgid "Only Image"
 msgstr ""
 
-#: service_links.admin.inc:128 service_links.module:230;252
+#: service_links.admin.inc:134 service_links.module:252;274
 msgid "Image and Text"
 msgstr ""
 
-#: service_links.admin.inc:133
+#: service_links.admin.inc:139
 msgid "Don't show links if the content is unpublished"
 msgstr ""
 
-#: service_links.admin.inc:138
+#: service_links.admin.inc:144
 msgid "Alternative icon's folder"
 msgstr ""
 
-#: service_links.admin.inc:139
+#: service_links.admin.inc:145
 msgid "If you have alternative icons write here the path from your index.php without trailing slash (b.e. %path1 or %path2)"
 msgstr ""
 
-#: service_links.admin.inc:145
+#: service_links.admin.inc:151
 msgid "Set a label for the section into the node"
 msgstr ""
 
-#: service_links.admin.inc:146
+#: service_links.admin.inc:152
 msgid "Bookmark/Search this post with"
 msgstr ""
 
-#: service_links.admin.inc:154
+#: service_links.admin.inc:160
 msgid "Extra Options"
 msgstr ""
 
-#: service_links.admin.inc:158
+#: service_links.admin.inc:164
 msgid "Open link in..."
 msgstr ""
 
-#: service_links.admin.inc:160
+#: service_links.admin.inc:166
 msgid "Same window"
 msgstr ""
 
-#: service_links.admin.inc:160
+#: service_links.admin.inc:166
 msgid "New window"
 msgstr ""
 
-#: service_links.admin.inc:164
+#: service_links.admin.inc:170
 msgid "Append the following text to your URL"
 msgstr ""
 
-#: service_links.admin.inc:165
+#: service_links.admin.inc:171
 msgid "This text will be inserted at the end of the current URL (b.e. %param => %url)"
 msgstr ""
 
-#: service_links.admin.inc:174
+#: service_links.admin.inc:180
 msgid "Short Links"
 msgstr ""
 
-#: service_links.admin.inc:178
+#: service_links.admin.inc:184
 msgid "Use short links"
 msgstr ""
 
-#: service_links.admin.inc:181
+#: service_links.admin.inc:187
 msgid "Never"
 msgstr ""
 
-#: service_links.admin.inc:182
+#: service_links.admin.inc:188
 msgid "Only when requested"
 msgstr ""
 
-#: service_links.admin.inc:183
+#: service_links.admin.inc:189
 msgid "Always"
 msgstr ""
 
-#: service_links.admin.inc:188
+#: service_links.admin.inc:194
 msgid "How generate short links"
 msgstr ""
 
-#: service_links.admin.inc:190
+#: service_links.admin.inc:196
 msgid "If you select \"Short URL,\" it will use the service selected with the <a href=\"@shorten\">Shorten URLs module</a>. If you have not enabled the module, Service Links will default to TinyURL."
 msgstr ""
 
-#: service_links.admin.inc:192
+#: service_links.admin.inc:198
 msgid "Use node/xxx alias"
 msgstr ""
 
-#: service_links.admin.inc:193
+#: service_links.admin.inc:199
 msgid "Use Short Url service"
 msgstr ""
 
-#: service_links.admin.inc:194
+#: service_links.admin.inc:200
 msgid "Redirect only the Domain name"
 msgstr ""
 
-#: service_links.admin.inc:195
+#: service_links.admin.inc:201
 msgid "Combo: domain redirect and node/xxx alias"
 msgstr ""
 
-#: service_links.admin.inc:199
+#: service_links.admin.inc:205
 msgid "Domain to redirect"
 msgstr ""
 
-#: service_links.admin.inc:200
+#: service_links.admin.inc:206
 msgid "Write here the complete address without trailing slash (b.e. %name)"
 msgstr ""
 
-#: service_links.admin.inc:216
+#: service_links.admin.inc:222
 msgid "Domain redirect address is not set."
 msgstr ""
 
-#: service_links.admin.inc:219
+#: service_links.admin.inc:225
 msgid "No trailing slash!"
 msgstr ""
 
-#: service_links.admin.inc:246
+#: service_links.admin.inc:254
 msgid "Show %name link"
 msgstr ""
 
-#: service_links.views.inc:15 service_links.module:176;59 service_links.info:0
+#: service_links.admin.inc:266
+msgid "You need to load at least one of XXX Services module, please enable them in <a href=\"@url\">admin > modules</a> page"
+msgstr ""
+
+#: service_links.views.inc:15 service_links.module:187 service_links.info:0
 msgid "Service links"
 msgstr ""
 
@@ -260,72 +264,72 @@ msgstr ""
 msgid "Display links to social sharing websites like Digg, del.icio.us, reddit, Technorati etc."
 msgstr ""
 
-#: service_links.module:41;60
-msgid "Control which and where service links should be active."
+#: service_links.module:49
+msgid "Administer Service Links"
 msgstr ""
 
-#: service_links.module:180
+#: service_links.module:53
+msgid "Access to Service Links"
+msgstr ""
+
+#: service_links.module:191
 msgid "Service links with FishEye effect"
 msgstr ""
 
-#: service_links.module:184
-msgid "Service links block for not-node pages"
+#: service_links.module:195
+msgid "Service links for not-node pages"
 msgstr ""
 
-#: service_links.module:195;200;210
+#: service_links.module:213;218;228
 msgid "Bookmark/Search this post"
 msgstr ""
 
-#: service_links.module:224;246
+#: service_links.module:246;268
 msgid "Style"
 msgstr ""
 
-#: service_links.module:225;247
+#: service_links.module:247;269
 msgid "How the service links will appear in the block."
 msgstr ""
 
-#: service_links.module:228;250
+#: service_links.module:250;272
 msgid "Text"
 msgstr ""
 
-#: service_links.module:229;251
+#: service_links.module:251;273
 msgid "Image"
 msgstr ""
 
-#: service_links.module:237
+#: service_links.module:259
 msgid "Alternative icon folder"
 msgstr ""
 
-#: service_links.module:239
+#: service_links.module:261
 msgid "If you have alternative icons write here the path without trailing slash"
 msgstr ""
 
-#: service_links.module:558
+#: service_links.module:599
 msgid "@label"
 msgstr ""
 
-#: service_links.module:49
-msgid "access service links"
+#: service_links.module:66 service_links.info:0 services/basque_services.info:0 services/dutch_services.info:0 services/favorite_services.info:0 services/forward_services.info:0 services/general_services.info:0 services/german_services.info:0 services/hungarian_services.info:0 services/italian_services.info:0 services/russian_services.info:0 services/spanish_services.info:0 services/swedish_services.info:0 services/widget_services.info:0
+msgid "Service Links"
 msgstr ""
 
-#: service_links.module:49
-msgid "administer service links"
+#: service_links.module:67
+msgid "Control which and where service links should be active."
 msgstr ""
 
-#: service_links.module:69
+#: service_links.module:76
 msgid "General Settings"
 msgstr ""
 
-#: service_links.module:75
+#: service_links.module:82
 msgid "Services"
 msgstr ""
 
 #: service_links.info:0
 msgid "Module engine for add various service links about sharing networks to nodes."
-msgstr ""
-
-#: service_links.info:0 services/basque_services.info:0 services/dutch_services.info:0 services/favorite_services.info:0 services/forward_services.info:0 services/general_services.info:0 services/german_services.info:0 services/hungarian_services.info:0 services/italian_services.info:0 services/russian_services.info:0 services/spanish_services.info:0 services/swedish_services.info:0 services/widget_services.info:0
-msgid "Service Links"
 msgstr ""
 
 #: js/favorite_services.js:0
@@ -437,31 +441,39 @@ msgid "Search Technorati for links to this post."
 msgstr ""
 
 #: services/general_services.module:109
+msgid "Add this post to your Technorati Favorites."
+msgstr ""
+
+#: services/general_services.module:115
 msgid "Search IceRocket for links to this post."
 msgstr ""
 
-#: services/general_services.module:114 services/russian_services.module:29
+#: services/general_services.module:120 services/russian_services.module:29
 msgid "Bookmark this post on Mister Wong"
 msgstr ""
 
-#: services/general_services.module:119
+#: services/general_services.module:125
 msgid "Buzz this post on Google."
 msgstr ""
 
-#: services/general_services.module:124
+#: services/general_services.module:130
 msgid "Submit this post on mixx.com."
 msgstr ""
 
-#: services/general_services.module:129
+#: services/general_services.module:135
 msgid "Box it!"
 msgstr ""
 
-#: services/general_services.module:134
+#: services/general_services.module:140
 msgid "Add to Blinklist"
 msgstr ""
 
-#: services/general_services.module:139
+#: services/general_services.module:145
 msgid "Dent this on identi.ca."
+msgstr ""
+
+#: services/general_services.module:150
+msgid "Kicks this post on NewsKicks."
 msgstr ""
 
 #: services/german_services.module:18
@@ -685,7 +697,7 @@ msgid "General Services"
 msgstr ""
 
 #: services/general_services.info:0
-msgid "Provide the Services: Blinklist, Box, del.icio.us, Digg, Facebook, Furl, Google Bookmark, Google Buzz, Icerocket, Identi.ca, Linkedin, Magnolia, Mister Wong, Mixx, MySpace, Newsvine, Phing this, Propeller, Reddit, StumbleUpon, Technorati, Twitter, Yahoo Bookmark, Yahoo Buzz"
+msgid "Provide the Services: Blinklist, Box, del.icio.us, Digg, Facebook, Furl, Google Bookmark, Google Buzz, Icerocket, Identi.ca, Linkedin, Magnolia, Mister Wong, Mixx, MySpace, Newsvine, Newskicks, Phing this, Propeller, Reddit, StumbleUpon, Technorati, Technorati favorite, Twitter, Yahoo Bookmark, Yahoo Buzz"
 msgstr ""
 
 #: services/german_services.info:0
