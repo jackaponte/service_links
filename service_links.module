@@ -457,7 +457,7 @@ function service_links_render($node, $nodelink = FALSE, $style = 0) {
     'title' => '<title>',
   );
   $settings['subst'] = array(
-    'encoded-title' => urlencode($title),
+    'encoded-title' => rawurlencode($title),
     'encoded-url' => urlencode($url),
     'encoded-teaser' => urlencode($teaser),
     'encoded-short-url' => urlencode($short_url),
