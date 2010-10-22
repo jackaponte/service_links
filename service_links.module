@@ -630,23 +630,7 @@ function theme_service_links_fisheye_format($variables) {
   drupal_add_js(service_links_expand_path('service_links_fisheye.js', 'javascript'), array('weight' => 90));
   drupal_add_css(service_links_expand_path('service_links_fisheye.css', 'css'));
 
-  return "<div id=\"fisheye\" class=\"fisheye\"><div class=\"fisheyeContainer\">\r\n". implode("\r\n", $items) ."\r\n</div></div>";
-}
-
-/**
- * Build an array of all taxonomy terms.
- */
-function _service_links_get_terms() {
-  $types = array();
-  $vocabularies = taxonomy_get_vocabularies();
-  foreach ($vocabularies as $vocabulary) {
-    $tree = taxonomy_get_tree($vocabulary->vid);
-    foreach ($tree as $term) {
-      $types[$term->tid] = $term->name;
-    }
-  }
-
-  return $types;
+  return "<div class=\"fisheye\"><div class=\"fisheyeContainer\">\r\n". implode("\r\n", $items) ."\r\n</div></div>";
 }
 
 /**
@@ -655,12 +639,17 @@ function _service_links_get_terms() {
 function service_links_show($node) {
   $links_show = FALSE;
   $category_type = FALSE;
+  global $user;
 
   if (in_array(strtolower(arg(0)), array('print', 'printpdf', 'printmail'))) {
     return FALSE;
   }
 
-  if ($node->status == '0' && variable_get('service_links_hide_if_unpublished', 0)) {
+  if (variable_get('service_links_hide_for_author', FALSE) && ($user->uid == $node->uid)) {
+    return FALSE; 
+  }
+
+  if (variable_get('service_links_hide_if_unpublished', FALSE) && ($node->status == '0')) {
     return FALSE;
   }
 

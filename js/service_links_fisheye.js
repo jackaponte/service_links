@@ -1,7 +1,7 @@
 // $Id$
 (function ($) {
   $(document).ready(function(){
-    $('#fisheye').Fisheye({
+    $('.fisheye').Fisheye({
       maxWidth: 32,
       items: 'a',
       itemsText: 'span',
