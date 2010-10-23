@@ -242,7 +242,7 @@ function service_links_admin_services_validate($form, &$form_state) {
     }
   }
 
-  if (module_exists('taxonomy')) {
+  if (isset($form_state['values']['service_links_category_vocs']) && module_exists('taxonomy')) {
     $vocabularies = array_filter($form_state['values']['service_links_category_vocs']);
     if (empty($vocabularies)) {
       $form_state['values']['service_links_category_types'] = array();

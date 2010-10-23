@@ -654,7 +654,7 @@ function service_links_show($node) {
   }
 
   $node_type = in_array($node->type, variable_get('service_links_node_types', array()), TRUE);
-  if (module_exists('taxonomy') && isset($node->field_tags)) {
+  if (module_exists('taxonomy') && !empty($node->field_tags)) {
     $categories_allowed = variable_get('service_links_category_types', array());
     foreach ($node->field_tags[$node->language] as $term) {
       $category_type |= in_array($term['tid'], $categories_allowed, FALSE);
