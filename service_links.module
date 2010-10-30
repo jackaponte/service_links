@@ -45,10 +45,6 @@ function service_links_help($path, $arg) {
  */
 function service_links_permission() {
   return array(
-    'administer service links' => array(
-      'title' => t('Administer Service Links'),
-      //'description' => t('Allow users to change the default settings'),
-    ),
     'access service links' => array(
       'title' => t('Access to Service Links'),
       //'description' => t('Allow users to act with the services loaded'),
@@ -67,7 +63,7 @@ function service_links_menu() {
     'description' => 'Control which and where service links should be active.',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('service_links_admin_settings'),
-    'access arguments' => array('administer service links'),
+    'access arguments' => array('administer site configuration'),
     'type' => MENU_NORMAL_ITEM,
     'file' => 'service_links.admin.inc',
   );
@@ -82,9 +78,8 @@ function service_links_menu() {
     'title' => 'Services',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('service_links_admin_services'),
-    'access arguments' => array('administer service links'),
+    'access arguments' => array('administer site configuration'),
     'type' => MENU_LOCAL_TASK,
-    //'parent' => 'admin/config/servicelinks/service-links',
     'file' => 'service_links.admin.inc',
   );
 
@@ -323,8 +318,6 @@ function service_links_theme() {
       'variables' => array('items' => NULL),
     ),
     'service_links_drag_table' => array(
-      //'variables' => array('form' => array()),
-      //'file' => 'service_links.admin.inc',
       'render element' => 'form',
     ),
   );
@@ -377,11 +370,16 @@ function service_links_get_links($services = NULL, $reset = FALSE) {
 /**
  * Create short links using predefined settings.
  */
-function service_links_short_url($url, $nid) {
-  switch (variable_get('service_links_short_links_type', 1)) {
+function service_links_short_url($url, $nid = NULL) {
+  switch (variable_get('service_links_short_links_type', SERVICE_LINKS_SHORT_URL_TYPE_NODE)) {
     case SERVICE_LINKS_SHORT_URL_TYPE_NODE:
-      //with alias = true dont transform with path
-      return url("node/$nid", array('absolute' => TRUE, 'alias' => TRUE));
+      if (empty($nid)) {
+        return $url;
+      }
+      else {
+        //with alias = true dont transform with path
+        return url("node/$nid", array('absolute' => TRUE, 'alias' => TRUE));
+      }
     case SERVICE_LINKS_SHORT_URL_TYPE_SERVICE:
       if (module_exists('shorten')) {
         $turl = shorten_url($url);
@@ -396,38 +394,176 @@ function service_links_short_url($url, $nid) {
       return url($url, array('absolute' => TRUE, 'base_url' => $burl));
     case SERVICE_LINKS_SHORT_URL_TYPE_REDIRECT_ALL:
       $burl = variable_get('service_links_domain_redirect', NULL);
-      return url("node/$nid", array('absolute' => TRUE, 'alias' => TRUE, 'base_url' => $burl));
+      if (empty($nid)) {
+        return url($url, array('absolute' => TRUE, 'base_url' => $burl));
+      }
+      else {
+        return url("node/$nid", array('absolute' => TRUE, 'alias' => TRUE, 'base_url' => $burl));
+      }
   }
 }
 
 /**
- * Function that renders the service links.
- * This is the function themers want to call to insert the service links.
+ * Function that render the service links.
+ * This is the function themers have to call for insert all the
+ * Service Links selected in the admin page.
+ *
+ * @param $node
+ *   Contain the current node object.
+ *   If NULL will be considered a not-node page.
+ * @param $nodelink
+ *   (optional) Decide how to render the services. Default is FALSE.
+ *   If TRUE the final render will be an array compatible 
+ *   with the standard Drupal link section.
+ * @param $style
+ *   (optional) When specified, overwrite the style.
+ *
+ * @return
+ *   An Array of themed Service Links.
  */
 function service_links_render($node, $nodelink = FALSE, $style = 0) {
-  $links = array();
+  $links = array('weight' => array(), 'link' => array());
   $settings = _service_links_load_settings();
 
   if (empty($settings['link_show'])) {
     return array();
   }
 
-  $services = service_links_get_links(array_filter($settings['link_show']));
+  _service_links_get_tags($node, $settings);
 
+  // Services are filtered in _service_links_load_settings().
+  $services = service_links_get_links($settings['link_show']);
+
+  if ($style > 0) {
+    $settings['style'] = $style;
+  }
+
+  foreach ($services as $service_id => $service) {
+    // Load the position.
+    $links['weight'][] = isset($settings['link_weight'][$service_id]) ? $settings['link_weight'][$service_id] : 0;
+
+    // Render the Service. 
+    $links['link'] += _service_links_render($service_id, $service, $settings, $nodelink);
+  }
+
+  if (!empty($links['link'])) {
+    array_multisort($links['weight'], $links['link']);
+  }
+
+  return !empty($links['link']) ? $links['link'] : array();
+}
+
+/**
+ * This function render only the services requested
+ * by their id.
+ *
+ * @param $service_ids
+ *   The id of the needed service, can be just a string or an array of ids.
+ * @param $node
+ *   the current node (optional).
+ * @param $nodelink
+ *   Boolean, if TRUE render the service for use as a link into the node,
+ *   default FALSE.
+ * @param $style
+ *   Overwrite the default style (optional).
+ *
+ * @return
+ *   An Array of HTML links
+ */
+function service_links_render_some($service_ids, $node = NULL, $nodelink = FALSE, $style = 0) {
+  if (is_array($service_ids)) {
+    $services = service_links_get_links($service_ids);
+  }
+  else {
+    $services = service_links_get_links(array($service_ids));
+  }
+
+  if (empty($services)) {
+    return;
+  }
+
+  $settings = _service_links_load_settings();
+  _service_links_get_tags($node, $settings);
+
+  if ($style > 0) {
+    $settings['style'] = $style;
+  }
+
+  $links = array();
+  foreach ($services as $service_id => $service) {
+    $links += _service_links_render($service_id, $service, $settings, $nodelink);
+  }
+
+  return $links;
+}
+
+/**
+ * The common render function.
+ */
+function _service_links_render($service_id, $service, $settings, $nodelink) {
+  $service['url'] = preg_split('/\?/', $service['link']);
+  $subst_id = isset($service['url'][1]) ? 1 : 0;
+  $service['url'][$subst_id] = service_links_get_query($service['url'][$subst_id]);
+  $service['url'][$subst_id] = str_replace($settings['tag'], $settings['subst'], $service['url'][$subst_id]);
+
+  $service['attributes']['title'] = $service['description'];
+  //$service['attributes']['id'] = drupal_clean_css_identifier('service_links-'. $service_id);
+  $class = str_replace(array('][', '_', ' '), '-', 'service_links-'. $service_id);
+  $service['attributes']['class'] = isset($service['attributes']['class']) ? array_merge($service['attributes']['class'], array($class)) : array($class);
+  $service['attributes'] += $settings['attributes'];
+
+  $service['icon'] = isset($service['icon']) ? $service['icon'] : "$service_id.png";
+
+  $service_id = str_replace('_', '-', 'service_links_'. $service_id);
+
+  // Add the related JavaScript and CSS.
+  if (isset($service['javascript'])) {
+    if (strpos($service['javascript'], '://') !== FALSE) {
+      drupal_add_js(service_links_expand_path($service['javascript'], 'javascript'), array('type' => 'external'));
+    }
+    else {
+      drupal_add_js(service_links_expand_path($service['javascript'], 'javascript'));
+    }
+  }
+  if (isset($service['css'])) {
+    drupal_add_css(service_links_expand_path($service['css'], 'css'));
+  }
+
+  // Invoke callback function.
+  if (isset($service['callback'])) {
+    call_user_func($service['callback'], $service, $settings['subst']);
+  }
+
+  // Create the HTML.
+  $link = theme('service_links_build_link', array(
+    'text' => $service['name'],
+    'url' => $service['url'],
+    'image' => $service['icon'],
+    'nodelink' => $nodelink,
+    'style' => $settings['style'],
+    'attributes' => $service['attributes'],
+  ));
+
+  return array($service_id => $link);
+}
+
+/**
+ * Fill an array with tags and the content to substitute.
+ */
+function _service_links_get_tags($node, &$settings) {
   if (!empty($node)) {
     $title = isset($node->title) ? $node->title : '';
-    $url = url("node/$node->nid", array('absolute' => TRUE, 'query' => array($settings['text_to_append'])));
+    $url = url("node/$node->nid", array('absolute' => TRUE, 'query' => service_links_get_query($settings['text_to_append'])));
     $query = check_plain(arg(0)) . str_replace(url(arg(0)), '', url("node/$node->nid"));
     $teaser = strip_tags(text_summary($node->body[$node->language][0]['value']));
     $nid = $node->nid;
   }
   else {
     $title = drupal_get_title();
-    $url = url($_GET['q'], array('absolute' => TRUE, 'query' => array($settings['text_to_append'])));
+    $url = url($_GET['q'], array('absolute' => TRUE, 'query' => service_links_get_query($settings['text_to_append'])));
     $query = check_plain(arg(0)) . str_replace(url(arg(0)), '', url($_GET['q']));
-    $settings['short_links_use'] = SERVICE_LINKS_SHORT_URL_USE_NEVER;
     $teaser = '';
-    $nid = '';
+    $nid = NULL;
   }
 
   switch ($settings['short_links_use']) {
@@ -435,10 +571,10 @@ function service_links_render($node, $nodelink = FALSE, $style = 0) {
       $short_url = $url;
       break;
     case SERVICE_LINKS_SHORT_URL_USE_WHEN_REQUESTED:
-      $short_url = service_links_short_url($url, $node->nid);
+      $short_url = service_links_short_url($url, $nid);
       break;
     case SERVICE_LINKS_SHORT_URL_USE_ALWAYS:
-      $short_url = service_links_short_url($url, $node->nid);
+      $short_url = service_links_short_url($url, $nid);
       $url = $short_url;
       break;
   }
@@ -457,77 +593,32 @@ function service_links_render($node, $nodelink = FALSE, $style = 0) {
     'title' => '<title>',
   );
   $settings['subst'] = array(
-    'encoded-title' => rawurlencode($title),
-    'encoded-url' => urlencode($url),
-    'encoded-teaser' => urlencode($teaser),
-    'encoded-short-url' => urlencode($short_url),
-    'encoded-query' => urlencode($query),
+    //'encoded-title' => rawurlencode($title),
+    'encoded-title' => $title,
+    //'encoded-url' => urlencode($url),
+    'encoded-url' => $url,
+    //'encoded-teaser' => rawurlencode($teaser),
+    'encoded-teaser' => $teaser,
+    //'encoded-short-url' => urlencode($short_url),
+    'encoded-short-url' => $short_url,
+    //'encoded-query' => urlencode($query),
+    'encoded-query' => $query,
+    //'encoded-source' => rawurlencode(variable_get('site_name', 'Drupal')),
+    'encoded-source' => variable_get('site_name', 'Drupal'),
+    //Not needed
     'teaser' => $teaser,
     'short-url' => $short_url,
-    'source' => urlencode(variable_get('site_name', 'Drupal')),
+    'source' => variable_get('site_name', 'Drupal'),
     'node-id' => $nid,
     'query' => $query,
     'url' => $url,
     'title' => $title,
   );
-
-  if ($style > 0) {
-    $settings['style'] = $style;
-  }
-
-  foreach ($services as $service_id => $service) {
-    $links['weight'][] = isset($settings['link_weight'][$service_id]) ? $settings['link_weight'][$service_id] : 0;
-
-    $service['url'] = preg_split('/\?/', $service['link']);
-    $subst_id = isset($service['url'][1]) ? 1 : 0;
-    $service['url'][$subst_id] = str_replace($settings['tag'], $settings['subst'], $service['url'][$subst_id]);
-
-    $service['attributes']['title'] = $service['description'];
-    $service['attributes']['id'] = drupal_clean_css_identifier('service_links-'. $service_id);
-    $class = str_replace(array('][', '_', ' '), '-', 'service_links-'. $service_id);
-    $service['attributes']['class'] = isset($service['attributes']['class']) ? array_merge($service['attributes']['class'], array($class)) : array($class);
-    $service['attributes'] += $settings['attributes'];
-
-    $service['icon'] = isset($service['icon']) ? $service['icon'] : "$service_id.png";
-
-    $service_id = str_replace('_', '-', 'service_links_'. $service_id);
-
-    // Add the related JavaScript and CSS.
-    if (isset($service['javascript'])) {
-      if (strpos($service['javascript'], '://') !== FALSE) {
-        drupal_add_js(service_links_expand_path($service['javascript'], 'javascript'), array('type' => 'external'));
-      }
-      else {
-        drupal_add_js(service_links_expand_path($service['javascript'], 'javascript'));
-      }
-    }
-    if (isset($service['css'])) {
-      drupal_add_css(service_links_expand_path($service['css'], 'css'));
-    }
-
-    // Invoke callback function.
-    if (isset($service['callback'])) {
-      call_user_func($service['callback'], $service, $settings['subst']);
-    }
-
-    // Create the HTML.
-    $links['link'][$service_id] = theme('service_links_build_link', array(
-      'text' => $service['name'],
-      'url' => $service['url'],
-      'image' => $service['icon'],
-      'nodelink' => $nodelink,
-      'style' => $settings['style'],
-      'attributes' => $service['attributes'],
-    ));
-  }
-
-  if (!empty($links['link'])) {
-    array_multisort($links['weight'], $links['link']);
-  }
-
-  return !empty($links['link']) ? $links['link'] : array();
 }
 
+/**
+ * Build a single link following the style rules.
+ */
 function theme_service_links_build_link($variables) {
   $text = $variables['text'];
   $url = $variables['url'];
@@ -634,7 +725,8 @@ function theme_service_links_fisheye_format($variables) {
 }
 
 /**
- * Check if the service links should be displayed for the node type/category.
+ * Check if the service links should be displayed for the content type,
+ * for category or one of other options selected.
  */
 function service_links_show($node) {
   $links_show = FALSE;
@@ -671,18 +763,22 @@ function service_links_show($node) {
  * Load the static settings and keep clear the render function.
  */
 function _service_links_load_settings() {
-  $settings['short_links_use'] = variable_get('service_links_short_links_use', SERVICE_LINKS_SHORT_URL_USE_NEVER);
+  static $settings = NULL;
 
-  $settings['attributes'] = array('rel' => 'nofollow');
-  if (variable_get('service_links_new_window', 0)) {
-    $settings['attributes'] += array('target' => '_blank');
+  if (!isset($settings)) {
+    $settings['short_links_use'] = variable_get('service_links_short_links_use', SERVICE_LINKS_SHORT_URL_USE_NEVER);
+
+    $settings['attributes'] = array('rel' => 'nofollow');
+    if (variable_get('service_links_new_window', 0)) {
+      $settings['attributes'] += array('target' => '_blank');
+    }
+    $settings['style'] = variable_get('service_links_style', SERVICE_LINKS_STYLE_TEXT);
+
+    $settings['link_weight'] = variable_get('service_links_weight', array());
+    $settings['link_show'] = array_filter(variable_get('service_links_show', array()));
+
+    $settings['text_to_append'] = check_plain(variable_get('service_links_append_to_url', ''));
   }
-  $settings['style'] = variable_get('service_links_style', SERVICE_LINKS_STYLE_TEXT);
-
-  $settings['link_weight'] = variable_get('service_links_weight', array());
-  $settings['link_show'] = variable_get('service_links_show', array());
-
-  $settings['text_to_append'] = check_plain(variable_get('service_links_append_to_url', ''));
 
   return $settings;
 }
@@ -737,6 +833,23 @@ function service_links_expand_path($filename = NULL, $context = 'icons') {
   else {
     return $path;
   }
+}
+
+/**
+ * Split a query string in the properly array.
+ */
+function service_links_get_query($query_str) {
+  if (empty($query_str)) {
+    return NULL;
+  }
+  $result = array();
+  $params = preg_split('/\&/', $query_str);
+  foreach ($params as $k => $v) {
+    $values = preg_split('/\=/', $v);
+    $result[$values[0]] = $values[1];
+  }
+
+  return $result;
 }
 
 /**

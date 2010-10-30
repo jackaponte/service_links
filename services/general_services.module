@@ -31,7 +31,7 @@ function general_services_service_links() {
   $links['twitter'] = array(
     'name' => 'Twitter',
     'description' => t('Share this on Twitter'),
-    'link' => 'http://twitter.com/?status=<encoded-short-url>%20--%20<encoded-title>',
+    'link' => 'http://twitter.com/?status=<encoded-short-url> -- <encoded-title>',
   );
   $links['pingthis'] = array(
     'name' => 'Ping This!',
@@ -95,7 +95,7 @@ function general_services_service_links() {
   );
   $links['linkedin'] = array(
     'name' => 'LinkedIn',
-    'link' => 'http://www.linkedin.com/shareArticle?mini=true&url=<encoded-url>&title=<encoded-title>&summary=<encoded-teaser>&source=<source>',
+    'link' => 'http://www.linkedin.com/shareArticle?mini=true&url=<encoded-url>&title=<encoded-title>&summary=<encoded-teaser>&source=<encoded-source>',
     'description' => t('Publish this post to LinkedIn'),
   );
   $links['technorati'] = array(

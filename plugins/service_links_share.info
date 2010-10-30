@@ -1,6 +1,6 @@
 ; $Id$
-name = Share Services
-description = Provide the integration with Share module
+name = Service Links Share
+description = Provide the integration between Service Links and Share module
 core = 7.x
 package = Share - tabs
 dependencies[] = service_links
@@ -8,4 +8,4 @@ dependencies[] = share
 dependencies[] = share_widget
 
 version = VERSION
-files[] = share_services.module
+files[] = service_links_share.module

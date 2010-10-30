@@ -3,7 +3,7 @@
 
 /**
  * @file
- * Administrative page callbacks for service links module.
+ * Administrative page callbacks for Service Links module.
  */
 
 /**
@@ -39,11 +39,14 @@ function theme_service_links_drag_table($variables) {
     $table['rows'][] = array('data' => $col, 'class' => array('draggable'));
   }
 
+  $table['header'] = array(t('Service Name'), t('Group'), t('Show'), t('Weight'));
+
+  drupal_alter('sl_servicestable', $table, $form);
+
   if (!empty($table['rows'])) {
     array_multisort($table['weights'], $table['rows']);
   }
 
-  $table['header'] = array(t('Service Name'), t('Service Group'), t('Show'), t('Weight'));
   drupal_add_tabledrag('service_links', 'order', 'sibling', 'service-weight');
 
   $params = array(
@@ -77,26 +80,42 @@ function service_links_admin_settings() {
     '#attributes' => array('class' => array('container-inline')),
   );
   if (module_exists('taxonomy')) {
-    $vocabularies = variable_get('service_links_category_vocs', array());
+    $selected_vocs = variable_get('service_links_category_vocs', array());
+    $vocabularies = _service_links_get_vocabularies();
     $form['where_to_show_the_links']['service_links_category_vocs'] = array(
       '#type' => 'checkboxes',
-      '#title' => t('Show terms from vocabularies'),
-      '#default_value' => $vocabularies,
-      '#options' => _service_links_get_vocabularies(),
+      '#title' => t('Show terms from the selected vocabularies'),
+      '#default_value' => $selected_vocs,
+      '#options' => $vocabularies,
       '#attributes' => array('class' => array('container-inline')),
     );
 
-    $terms = _service_links_get_terms(array_values(array_filter($vocabularies)));
+    $terms = _service_links_get_terms(array_values(array_filter($selected_vocs)));
     $count = count($terms);
+    $selected_types = variable_get('service_links_category_types', array());
     if ($count > 0) {
       $form['where_to_show_the_links']['service_links_category_types'] = array(
         '#type' => 'select',
         '#multiple' => TRUE,
-        '#title' => t('Categories'),
-        '#default_value' => variable_get('service_links_category_types', array()),
+        //'#title' => t('Categories'),
+        '#default_value' => $selected_types,
         '#options' => $terms,
-        '#size' => ($count > 10 ? 10 : $count),
+        //'#size' => ($count > 10 ? 10 : $count),
+        '#attributes' => array('style' => 'display: none;'),
       );
+      foreach ($vocabularies as $vid => $vocabulary) {
+        if (in_array($vid, $selected_vocs)) {
+          $terms = _service_links_get_terms(array($vid));
+          $form['where_to_show_the_links']['service_links_category_by_voc_' . $vid] = array(
+            '#type' => 'select',
+            '#multiple' => TRUE,
+            '#title' => t('@voc', array('@voc' => $vocabulary)),
+            '#default_value' => $selected_types,
+            '#options' => $terms,
+            '#size' => ($count > 10 ? 10 : $count),
+          );
+        }
+      }
     }
   }
 
@@ -198,13 +217,13 @@ function service_links_admin_settings() {
   $form['short_links']['service_links_short_links_use'] = array(
     '#type' => 'select',
     '#title' => t('Use short links'),
-    '#default_value' => variable_get('service_links_short_links_use', 0),
+    '#default_value' => variable_get('service_links_short_links_use', SERVICE_LINKS_SHORT_URL_USE_NEVER),
     '#options' => array(
       SERVICE_LINKS_SHORT_URL_USE_NEVER => t('Never'),
       SERVICE_LINKS_SHORT_URL_USE_WHEN_REQUESTED => t('Only when requested'),
       SERVICE_LINKS_SHORT_URL_USE_ALWAYS => t('Always')),
   );
-  if (variable_get('service_links_short_links_use', 0) > 0) {
+  if (variable_get('service_links_short_links_use', SERVICE_LINKS_SHORT_URL_USE_NEVER) > 0) {
     $form['short_links']['service_links_short_links_type'] = array(
       '#type' => 'select',
       '#title' => t('How generate short links'),
@@ -230,7 +249,9 @@ function service_links_admin_settings() {
 }
 
 /**
- * Check if domain address textbox is empty
+ * Check if domain address textbox is empty when should be not,
+ * copy the selected terms into a unique list,
+ * check the path of custom'icons.
  */
 function service_links_admin_services_validate($form, &$form_state) {
   if (isset($form_state['values']['service_links_short_links_type']) && (int) $form_state['values']['service_links_short_links_type'] > 2) {
@@ -243,9 +264,19 @@ function service_links_admin_services_validate($form, &$form_state) {
   }
 
   if (isset($form_state['values']['service_links_category_vocs']) && module_exists('taxonomy')) {
-    $vocabularies = array_filter($form_state['values']['service_links_category_vocs']);
-    if (empty($vocabularies)) {
+    $selected_vocs = array_filter($form_state['values']['service_links_category_vocs']);
+    if (empty($selected_vocs)) {
       $form_state['values']['service_links_category_types'] = array();
+    }
+    else {
+      $vocabularies = _service_links_get_vocabularies();
+      $form_state['values']['service_links_category_types'] = array();
+      foreach ($vocabularies as $vid => $vocabulary) {
+        if (isset($form_state['values']['service_links_category_by_voc_' . $vid])) {
+          $form_state['values']['service_links_category_types'] += $form_state['values']['service_links_category_by_voc_' . $vid]; 
+        }
+
+      }
     }
   }
 
@@ -257,7 +288,6 @@ function service_links_admin_services_validate($form, &$form_state) {
       form_set_error('service_links_path_icons', t('No trailing slash!'));
     }
   }
-
 }
 
 /**

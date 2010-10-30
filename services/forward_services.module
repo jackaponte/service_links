@@ -8,7 +8,7 @@
 
 /**
  * Implements hook_service_links().
- **/
+ */
 function forward_services_service_links() {
   $links = array();
 
