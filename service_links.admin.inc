@@ -10,8 +10,8 @@
  * Theming function for build a draggable service links table.
  */
 function theme_service_links_drag_table($variables) {
-  $table['rows'] = array();
   $form = $variables['form'];
+  $table['rows'] = array();
 
   foreach (element_children($form['service_links_show']) as $service_id) {
     $service = $form['service_links_show'][$service_id];
