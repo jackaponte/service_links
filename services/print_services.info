@@ -1,0 +1,10 @@
+; $Id$
+name = Print Services
+description = Add the support for Print module which render the page as PDF or printable HTML
+core = 7.x
+package = Service Links
+dependencies[] = service_links
+dependencies[] = print
+
+version = VERSION
+files[] = print_services.module

@@ -3,7 +3,7 @@
 
 /**
  * @file
- * Provide a field for Node Displays (Display Suite)
+ * Provide a field for Node Displays (Display Suite).
  */
 
 /**
@@ -216,7 +216,7 @@ function service_links_displays_sl_servicestable_alter(&$table, $form) {
 
     $service['displays'] = array(
       '#type' => 'checkbox',
-      '#value' => $service['#default_value'],
+      '#checked' => $service['#default_value'],
       '#id' => $service['#id'],
       '#name' => $service['#name'],
       '#attributes' => $service['#attributes'],

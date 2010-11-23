@@ -25,7 +25,7 @@ function theme_service_links_drag_table($variables) {
 
     $service['show'] = array(
       '#type' => 'checkbox',
-      '#value' => $service['#default_value'],
+      '#checked' => $service['#default_value'],
       '#id' => $service['#id'],
       '#name' => $service['#name'],
     );
@@ -154,16 +154,22 @@ function service_links_admin_settings() {
     '#collapsed' => FALSE,
     '#title' => t('How display Service Links'),
   );
- $form['how_to_show_the_links']['service_links_style'] = array(
+  $form['how_to_show_the_links']['service_links_style'] = array(
     '#type' => 'select',
     '#title' => t('Choice a style'),
     '#default_value' => variable_get('service_links_style', SERVICE_LINKS_STYLE_IMAGE),
     '#options' => array(
       SERVICE_LINKS_STYLE_TEXT => t('Only Text'),
       SERVICE_LINKS_STYLE_IMAGE => t('Only Image'),
-      SERVICE_LINKS_STYLE_IMAGE_AND_TEXT => t('Image and Text')
+      SERVICE_LINKS_STYLE_IMAGE_AND_TEXT => t('Image and Text'),
     ),
   );
+
+  $styles = module_invoke_all('sl_styles', FALSE);
+  if (!empty($styles)) {
+    $form['how_to_show_the_links']['service_links_style']['#options'] += $styles;
+  }
+
   $form['how_to_show_the_links']['service_links_hide_if_unpublished'] = array(
     '#type' => 'checkbox',
     '#title' => t("Don't show links if the content is unpublished"),

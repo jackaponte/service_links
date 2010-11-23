@@ -31,7 +31,7 @@ function general_services_service_links() {
   $links['twitter'] = array(
     'name' => 'Twitter',
     'description' => t('Share this on Twitter'),
-    'link' => 'http://twitter.com/?status=<encoded-short-url> -- <encoded-title>',
+    'link' => 'http://twitter.com/?status=<raw-encoded-short-url> -- <raw-encoded-title>',
   );
   $links['pingthis'] = array(
     'name' => 'Ping This!',
