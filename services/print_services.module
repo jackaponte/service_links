@@ -15,19 +15,19 @@ function print_services_service_links() {
 
   $links['print'] = array(
     'name' => 'Print HTML',
-    'link' => url('print', array('absolute' => TRUE)) . '/<encoded-query>',
+    'link' => url('print', array('absolute' => TRUE)) . '/<query>',
     'description' => t('Printable version'),
     'icon' => drupal_get_path('module', 'print') . '/icons/print_icon.gif',
   );
   $links['printpdf'] = array(
     'name' => 'Print Pdf',
-    'link' => url('printpdf', array('absolute' => TRUE)) . '/<encoded-query>',
+    'link' => url('printpdf', array('absolute' => TRUE)) . '/<query>',
     'description' => t('PDF version'),
     'icon' => drupal_get_path('module', 'print') . '/icons/pdf_icon.gif',
   );
   $links['printmail'] = array(
     'name' => 'Print Mail',
-    'link' => url('printmail', array('absolute' => TRUE)) . '/<encoded-query>',
+    'link' => url('printmail', array('absolute' => TRUE)) . '/<query>',
     'description' => t('Send to a friend'),
     'icon' => drupal_get_path('module', 'print') . '/icons/mail_icon.gif',
   );

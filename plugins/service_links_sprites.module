@@ -34,11 +34,21 @@ function sls_build_sprites($files = array()) {
   foreach ($files as $service_id => $file) {
     if (is_file($file)) {
       $img_details = getimagesize($file);
+
+      if (!isset($images[$img_details[SLS_GD_WIDTH]])) {
+        $images[$img_details[SLS_GD_WIDTH]] = array();
+      }
+
       $images[$img_details[SLS_GD_WIDTH]][$service_id] = array(
         'height' => $img_details[SLS_GD_HEIGHT],
         'file' => $file,
         'mime' => $img_details[SLS_GD_MIME],
       );
+
+      if (!isset($tot_height[$img_details[SLS_GD_WIDTH]])) {
+        $tot_height[$img_details[SLS_GD_WIDTH]] = 0;
+      }
+
       $tot_height[$img_details[SLS_GD_WIDTH]] += (int)$img_details[SLS_GD_HEIGHT];
     }
   } 
@@ -54,7 +64,7 @@ function sls_build_sprites($files = array()) {
     $padding = $width + 2;
     $css_str .= ".sprites.service-links.w$width {padding-left: {$padding}px; background-image:url(\"" . SLS_FILENAME . "$width.png\");}\n";
 
-    foreach ($image as $service_id => $img_details) {
+    foreach ((array)$image as $service_id => $img_details) {
       switch ($img_details['mime']) {
       case 'image/png':
         $img_src = @imagecreatefrompng($img_details['file']);
@@ -72,8 +82,8 @@ function sls_build_sprites($files = array()) {
       $class = str_replace('_', '-', $service_id);
       $sign = ($y > 0) ? '-' : '';
       $css_str .= ".sprites.service-links-$class {background-position: 0 {$sign}{$y}px; height:{$img_details['height']}px}\n";
-      imagecopy($img_dest, $img_src, 0, $y, 0, 0, $width, $img_details['height']);
-      imagedestroy($img_src);
+      @imagecopy($img_dest, $img_src, 0, $y, 0, 0, $width, $img_details['height']);
+      @imagedestroy($img_src);
       $y += $img_details['height'];
       $sizes[$img_details['file']] = $width;
     }
@@ -174,16 +184,22 @@ function theme_sls_style_image($variables) {
   $attributes['class'][] = "sprites service-links w$width";
 
   if ($nodelink) {
+    $query = isset($url[1]) ? $url[1] : NULL;
+
     return array(
       'title' => '<span class="hide">' . $text . '</span>',
       'href' => $url[0],
-      'query' => $url[1],
+      'query' => $query,
       'attributes' => $attributes,
       'html' => TRUE,
     );
   }
   else {
     $attributes = array_merge($attributes, array('html' => TRUE));
+    if (isset($url[1])) {
+      $attributes['query'] = $url[1];
+    }
+
     return l('<span class="hide">' . $text . '</span>', $url[0], $attributes);
   }
 }
@@ -199,14 +215,19 @@ function theme_sls_style_image_and_text($variables) {
   $attributes['class'][] = "sprites service-links w$width";
 
   if ($nodelink) {
+    $query = isset($url[1]) ? $url[1] : NULL;
+    
     return array(
       'title' => $text,
       'href' => $url[0],
-      'query' => $url[1],
+      'query' => $query,
       'attributes' => $attributes,
     );
   }
   else {
+    if (isset($url[1])) {
+      $attributes['query'] = $url[1];
+    }
     return l($text, $url[0], $attributes);
   }
 }

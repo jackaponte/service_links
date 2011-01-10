@@ -10,6 +10,7 @@
  * A module that adds Digg, del.icio.us, reddit, Technorati etc. links to nodes.
  */
 
+define('SERVICE_LINKS_STYLE_NONE', 0);
 define('SERVICE_LINKS_STYLE_TEXT', 1);
 define('SERVICE_LINKS_STYLE_IMAGE', 2);
 define('SERVICE_LINKS_STYLE_IMAGE_AND_TEXT', 3);
@@ -502,9 +503,13 @@ function service_links_render_some($service_ids, $node = NULL, $nodelink = FALSE
  */
 function _service_links_render($service_id, $service, $settings, $nodelink) {
   $service['url'] = preg_split('/\?/', $service['link']);
-  $subst_id = isset($service['url'][1]) ? 1 : 0;
-  $service['url'][$subst_id] = service_links_get_query($service['url'][$subst_id]);
-  $service['url'][$subst_id] = str_replace($settings['tag'], $settings['subst'], $service['url'][$subst_id]);
+  if (count($service['url']) > 1) {
+    $service['url'][1] = service_links_get_query($service['url'][1]);
+    $service['url'][1] = str_replace($settings['tag'], $settings['subst'], $service['url'][1]);
+  }
+  else {
+    $service['url'][0] = str_replace($settings['tag'], $settings['subst'], $service['url'][0]);
+  }
 
   $service['attributes']['title'] = $service['description'];
   $class = str_replace(array('][', '_', ' '), '-', 'service_links-'. $service_id);
@@ -565,9 +570,16 @@ function _service_links_get_tags($node, &$settings) {
     else {
       $title = isset($node->title) ? $node->title : '';
     }
-    $url = url("node/$node->nid", array('absolute' => TRUE, 'query' => service_links_get_query($settings['text_to_append'])));
-    $query = check_plain(arg(0)) . str_replace(url(arg(0)), '', url("node/$node->nid"));
-    $teaser = isset($node->body) ? strip_tags(text_summary($node->body[$node->language][0]['value'])) : '';
+
+    $path = _service_links_get_node_path($node);
+    $url = url("$path", array('absolute' => TRUE, 'query' => service_links_get_query($settings['text_to_append'])));
+    //$url = url("node/$node->nid", array('absolute' => TRUE, 'query' => service_links_get_query($settings['text_to_append'])));
+
+    //The choice of front_page shouldn't  affect the query which should point the original page
+    $query = preg_replace('/^\//', '', str_replace(preg_replace('/\/\/|(\?q\=)\/+/', '\1', url('/')), '', url("node/$node->nid")));
+
+    $teaser = (isset($node->body) && isset($node->language)) ? strip_tags(text_summary($node->body[$node->language][0]['value'])) : '';
+
     $nid = $node->nid;
   }
   else {
@@ -605,10 +617,12 @@ function _service_links_get_tags($node, &$settings) {
     'encoded-teaser' => '<encoded-teaser>',
     'encoded-short-url' => '<encoded-short-url>',
     'encoded-query' => '<encoded-query>',
+    'encoded-source' => '<encoded-source>',
     'teaser' => '<teaser>',
     'short-url' => '<short-url>',
     'source' => '<source>',
     'node-id' => '<node-id>',
+    'query' => '<query>',
     'url' => '<url>',
     'title' => '<title>',
   );
@@ -649,6 +663,27 @@ function _service_links_get_tags($node, &$settings) {
 }
 
 /**
+ * Detect if the node is used as front page and provide
+ * the path to use.
+ */
+function _service_links_get_node_path($node) {
+  static $front_page;
+
+  if (!isset($front_page)) {
+    $front_page = variable_get('site_frontpage', 'node');
+  }
+
+  $path = "node/$node->nid";
+  if (isset($node->uri)) {
+    if (((object)$node->uri['path'] == $front_page) || ($path == $front_page)) {
+      $path = '<front>';
+    }
+  }
+
+  return $path;
+}
+
+/**
  * Build a single link following the style rules.
  */
 function theme_service_links_build_link($variables) {
@@ -660,12 +695,15 @@ function theme_service_links_build_link($variables) {
   $attributes = $variables['attributes'];
 
   if ($nodelink) {
+    $query = isset($url[1]) ? $url[1] : NULL;
+    
     switch ($style) {
       case SERVICE_LINKS_STYLE_TEXT:
         $link = array(
           'title' => $text,
           'href' => $url[0],
-          'query' => array($url[1]),
+          //'query' => array($url[1]),
+          'query' => $query,
           'attributes' => $attributes,
         );
         break;
@@ -673,7 +711,7 @@ function theme_service_links_build_link($variables) {
         $link = array(
           'title' => theme('image', array('path' => service_links_expand_path($image), 'attributes' => array('title' => $text))),
           'href' => $url[0],
-          'query' => array($url[1]),
+          'query' => $query,
           'attributes' => $attributes,
           'html' => TRUE,
         );
@@ -682,7 +720,7 @@ function theme_service_links_build_link($variables) {
         $link = array(
           'title' => theme('image', array('path' => service_links_expand_path($image), 'attributes' => array('title' => $text))) .' '. $text,
           'href' => $url[0],
-          'query' => array($url[1]),
+          'query' => $query,
           'attributes' => $attributes,
           'html' => TRUE,
         );
@@ -691,7 +729,7 @@ function theme_service_links_build_link($variables) {
         $link = array(
           'title' => '',
           'href' => $url[0],
-          'query' => $url[1],
+          'query' => $query,
           'attributes' => $attributes,
         );
         break;
@@ -700,7 +738,11 @@ function theme_service_links_build_link($variables) {
     }
   }
   else {
-    $attributes = array('query' => array($url[1]), 'attributes' => $attributes);
+    $attributes = array('attributes' => $attributes);
+    if (isset($url[1])) {
+      $attributes['query'] = $url[1]; 
+    }
+
     switch ($style) {
       case SERVICE_LINKS_STYLE_TEXT:
         $link = l($text, $url[0], $attributes);
@@ -773,7 +815,7 @@ function theme_service_links_fisheye_format($variables) {
 
 /**
  * Check if the service links should be displayed for the content type,
- * for category or one of other options selected.
+ * for category or one of the other selected options.
  */
 function service_links_show($node) {
   $links_show = FALSE;
@@ -878,11 +920,7 @@ function service_links_get_query($query_str) {
     return NULL;
   }
   $result = array();
-  $params = preg_split('/\&/', $query_str);
-  foreach ($params as $k => $v) {
-    $values = preg_split('/\=/', $v);
-    $result[$values[0]] = $values[1];
-  }
+  parse_str($query_str, $result);
 
   return $result;
 }
