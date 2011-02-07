@@ -89,6 +89,11 @@ function german_services_service_links() {
     'description' => t('Share on MeinVZ, StudiVZ or SchuelerVZ.'),
     'link' => 'http://www.studivz.net/Link/Selection/Url/?u=<encoded-url>&desc=<encoded-title>',
   );
+  $links['_de_xing'] = array(
+    'name' => 'Xing',
+    'description' => t('Share on Xing.'),
+    'link' => 'http://www.xing.com/app/user?op=share;url=<encoded-url>?wtmc=XING;title=<encoded-title>',
+  );
 
   return $links;
 }

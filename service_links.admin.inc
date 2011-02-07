@@ -54,7 +54,7 @@ function theme_service_links_drag_table($variables) {
     '#header' => $table['header'],
     '#rows' => $table['rows'],
     '#attributes' => array('id' => 'service_links'),
-    '#empty' => t('No service available.'),
+    '#empty' => t('No services available.'),
   );
 
   return theme('table', $params);
@@ -69,8 +69,8 @@ function service_links_admin_settings() {
     '#type' => 'fieldset',
     '#collapsible' => TRUE,
     '#collapsed' => FALSE,
-    '#title' => t("Show for content's type or category"),
-    '#description' => t("Set the content's types or categories you want to display links for."),
+    '#title' => t("Show for content types or categories"),
+    '#description' => t("Set the content types or categories you want to display links for."),
   );
   $form['where_to_show_the_links']['service_links_node_types'] = array(
     '#type' => 'checkboxes',
@@ -123,7 +123,7 @@ function service_links_admin_settings() {
     '#type' => 'fieldset',
     '#collapsible' => TRUE,
     '#collapsed' => FALSE,
-    '#title' => t('Places where show Service Links'),
+    '#title' => t('Where to show service links'),
   );
   $form['places_to_show_the_links']['service_links_in_links'] = array(
     '#type' => 'select',
@@ -134,7 +134,7 @@ function service_links_admin_settings() {
       SERVICE_LINKS_IN_TEASER => t('Teaser view'),
       SERVICE_LINKS_IN_FULL => t('Full-page view'),
       SERVICE_LINKS_IN_BOTH => t('Teasers and full-page view')),
-    '#description' => t('When display the services in the links section.'),
+    '#description' => t('When to display the services in the links section.'),
   );
   $form['places_to_show_the_links']['service_links_in_node'] = array(
     '#type' => 'select',
@@ -145,18 +145,18 @@ function service_links_admin_settings() {
       SERVICE_LINKS_IN_TEASER => t('Teaser view'),
       SERVICE_LINKS_IN_FULL => t('Full-page view'),
       SERVICE_LINKS_IN_BOTH => t('Teasers and full-page view')),
-    '#description' => t('When display the services after the content text.'),
+    '#description' => t('When to display the services after the content text.'),
   );
 
   $form['how_to_show_the_links'] = array(
     '#type' => 'fieldset',
     '#collapsible' => TRUE,
     '#collapsed' => FALSE,
-    '#title' => t('How display Service Links'),
+    '#title' => t('How to display Service Links'),
   );
   $form['how_to_show_the_links']['service_links_style'] = array(
     '#type' => 'select',
-    '#title' => t('Choice a style'),
+    '#title' => t('Choose a style'),
     '#default_value' => variable_get('service_links_style', SERVICE_LINKS_STYLE_IMAGE),
     '#options' => array(
       SERVICE_LINKS_STYLE_TEXT => t('Only Text'),
@@ -180,18 +180,28 @@ function service_links_admin_settings() {
     '#title' => t("Don't show links if the actual user is the author of the node"),
     '#default_value' => variable_get('service_links_hide_for_author', 0),
   );
-  $form['how_to_show_the_links']['service_links_path_icons'] = array(
+  $form['how_to_show_the_links']['service_links_label_in_node'] = array(
     '#type' => 'textfield',
-    '#title' => t("Alternative icon's folder"),
-    '#description' => t('If you have alternative icons write here the path from your index.php without trailing slash (b.e. %path1 or %path2)', array('%path1' => 'files/newicons', '%path2' => 'sites/all/files/newicons')),
+    '#title' => t('Label for service links in nodes'),
+    '#default_value' => variable_get('service_links_label_in_node', t('Bookmark/Search this post with')),
+    '#size' => '40',
+  );
+
+  $form['how_to_show_the_links']['icons'] = array(
+    '#type' => 'fieldset',
+  );
+  $form['how_to_show_the_links']['icons']['service_links_path_icons'] = array(
+    '#type' => 'textfield',
+    '#title' => t("Icon's folder"),
+    '#description' => t('If you have alternative icons enter here the relative path from your index.php without trailing slash (i.e. %path1 or %path2)', array('%path1' => 'files/newicons', '%path2' => 'sites/all/files/newicons')),
     '#default_value' => service_links_expand_path(NULL, 'icons'),
     '#size' => 40,
   );
-  $form['how_to_show_the_links']['service_links_label_in_node'] = array(
-    '#type' => 'textfield',
-    '#title' => t('Set a label for the section into the node'),
-    '#default_value' => variable_get('service_links_label_in_node', t('Bookmark/Search this post with')),
-    '#size' => '40',
+  $form['how_to_show_the_links']['icons']['service_links_check_icons'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Use the default icons if missing'),
+    '#description' => t('Check every icon under the selected path and if not available, consider the default path %path', array('%path' => service_links_expand_path(NULL, 'preset'))),
+    '#default_value' => variable_get('service_links_check_icons', FALSE),
   );
 
   $form['extra_options'] = array(
@@ -209,10 +219,42 @@ function service_links_admin_settings() {
   $form['extra_options']['service_links_append_to_url'] = array(
     '#type' => 'textfield',
     '#title' => t('Append the following text to your URL'),
-    '#description' => t('This text will be inserted at the end of the current URL (b.e. %param => %url)', array('%param' => 'param1=value1&param2=value2', '%url' => 'http://domain.com/current-page&param1=value1&param2=value2')),
+    '#description' => t('This text will be inserted at the end of the current URL (i.e. %param => %url)', array('%param' => 'param1=value1&param2=value2', '%url' => 'http://domain.com/current-page&param1=value1&param2=value2')),
     '#default_value' => variable_get('service_links_append_to_url', ''),
     '#size' => 40,
   );
+  $form['extra_options']['title'] = array(
+    '#type' => 'fieldset',
+  );
+  $form['extra_options']['title']['service_links_override_title'] = array(
+    '#type' => 'select',
+    '#title' => t('How to fill the title tag'),
+    '#default_value' => variable_get('service_links_override_title', SERVICE_LINKS_TAG_TITLE_NODE),
+    '#options' => array(
+      SERVICE_LINKS_TAG_TITLE_NODE => t('Use the original node title'),
+      SERVICE_LINKS_TAG_TITLE_OVERRIDE => t('Override the original title'),
+    ),
+  );
+  $form['extra_options']['title']['service_links_override_title_text'] = array(
+    '#type' => 'textfield',
+    '#description' => t("Enter the text that override the title: use @title for referrer the original title, either the various tokens offered by <a href='@url'>Token</a> if it's enabled and the related option actived.", array('@url' => 'http://www.drupal.org/project/token', '@title' => '<title>')),
+    '#default_value' => variable_get('service_links_override_title_text', '<title>'),
+    '#size' => 40,
+  );
+
+  if (module_exists('token')) {
+    $form['extra_options']['title']['service_links_override_title']['#options'] += array(
+      SERVICE_LINKS_TAG_TITLE_TOKEN => t('Parse the string with Token'),
+    );
+    $form['extra_options']['title']['token_help'] = array(
+      '#type' => 'fieldset',
+      '#collapsible' => TRUE,
+      '#collapsed' => TRUE,
+      '#title' => t('Token help'),
+      '#theme' => 'token_tree',
+      '#token_types' => array('node'),
+    );
+  }
 
   $form['short_links'] = array(
     '#type' => 'fieldset',
@@ -244,7 +286,7 @@ function service_links_admin_settings() {
     $form['short_links']['service_links_domain_redirect'] = array(
       '#type' => 'textfield',
       '#title' => t('Domain to redirect'),
-      '#description' => t('Write here the complete address without trailing slash (b.e. %name)', array('%name' => 'http://www.example.com') ),
+      '#description' => t('Write here the complete address without trailing slash (i.e. %name)', array('%name' => 'http://www.example.com') ),
       '#default_value' => variable_get('service_links_domain_redirect', ''),
       '#size' => 40,
     );
@@ -279,7 +321,7 @@ function service_links_admin_services_validate($form, &$form_state) {
       $form_state['values']['service_links_category_types'] = array();
       foreach ($vocabularies as $vid => $vocabulary) {
         if (isset($form_state['values']['service_links_category_by_voc_' . $vid])) {
-          $form_state['values']['service_links_category_types'] += $form_state['values']['service_links_category_by_voc_' . $vid]; 
+          $form_state['values']['service_links_category_types'] += $form_state['values']['service_links_category_by_voc_' . $vid];
         }
 
       }
@@ -312,7 +354,7 @@ function service_links_admin_services() {
 
   foreach ($services as $service_id => $service) {
     $icon = array(
-      'path' => isset($service['icon']) ? service_links_expand_path($service['icon'], 'preset') : service_links_expand_path("$service_id.png", 'preset')
+      'path' => isset($service['icon']) ? service_links_expand_path($service['icon'], 'preset') : service_links_expand_path("$service_id.png", 'preset'),
     );
     $weight = isset($settings['weight'][$service_id]) ? $settings['weight'][$service_id] : 0;
 

@@ -7,6 +7,7 @@ package = Service Links
 
 files[] = service_links.module
 files[] = service_links.admin.inc
+files[] = service_links.theme.inc
 files[] = service_links.install
 files[] = service_links.views.inc
 files[] = service_links_handler_field_service_links.inc

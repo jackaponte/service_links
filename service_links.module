@@ -31,6 +31,10 @@ define('SERVICE_LINKS_SHORT_URL_TYPE_SERVICE', 2);
 define('SERVICE_LINKS_SHORT_URL_TYPE_REDIRECT_DOMAIN', 3);
 define('SERVICE_LINKS_SHORT_URL_TYPE_REDIRECT_ALL', 4);
 
+define('SERVICE_LINKS_TAG_TITLE_NODE', 0);
+define('SERVICE_LINKS_TAG_TITLE_OVERRIDE', 1);
+define('SERVICE_LINKS_TAG_TITLE_TOKEN', 2);
+
 /**
  * Implements hook_help().
  */
@@ -304,19 +308,23 @@ function service_links_theme() {
         'text' => NULL,
         'url' => array(),
         'image' => NULL,
-        'nodelink' => NULL,
+        'nodelink' => FALSE,
         'style' => NULL,
         'attributes' => array(),
       ),
+      'file' => 'service_links.theme.inc',
     ),
     'service_links_node_format' => array(
       'variables' => array('links' => NULL, 'label' => NULL),
+      'file' => 'service_links.theme.inc',
     ),
     'service_links_block_format' => array(
       'variables' => array('items' => NULL, 'style' => SERVICE_LINKS_STYLE_IMAGE_AND_TEXT),
+      'file' => 'service_links.theme.inc',
     ),
     'service_links_fisheye_format' => array(
       'variables' => array('items' => NULL),
+      'file' => 'service_links.theme.inc',
     ),
     'service_links_drag_table' => array(
       'render element' => 'form',
@@ -414,7 +422,7 @@ function service_links_short_url($url, $nid = NULL) {
  *   If NULL will be considered a not-node page.
  * @param $nodelink
  *   (optional) Decide how to render the services. Default is FALSE.
- *   If TRUE the final render will be an array compatible 
+ *   If TRUE the final render will be an array compatible
  *   with the standard Drupal link section.
  * @param $style
  *   (optional) When specified, overwrite the style.
@@ -443,7 +451,7 @@ function service_links_render($node, $nodelink = FALSE, $style = 0) {
     // Load the position.
     $links['weight'][] = isset($settings['link_weight'][$service_id]) ? $settings['link_weight'][$service_id] : 0;
 
-    // Render the Service. 
+    // Render the Service.
     $links['link'] += _service_links_render($service_id, $service, $settings, $nodelink);
   }
 
@@ -564,13 +572,7 @@ function _service_links_render($service_id, $service, $settings, $nodelink) {
  */
 function _service_links_get_tags($node, &$settings) {
   if (!empty($node)) {
-    if (!empty($node->page_title)) {
-      $title = $node->page_title;
-    }
-    else {
-      $title = isset($node->title) ? $node->title : '';
-    }
-
+    $title = _service_links_get_node_title($node, $settings); 
     $path = _service_links_get_node_path($node);
     $url = url("$path", array('absolute' => TRUE, 'query' => service_links_get_query($settings['text_to_append'])));
     //$url = url("node/$node->nid", array('absolute' => TRUE, 'query' => service_links_get_query($settings['text_to_append'])));
@@ -578,7 +580,7 @@ function _service_links_get_tags($node, &$settings) {
     //The choice of front_page shouldn't  affect the query which should point the original page
     $query = preg_replace('/^\//', '', str_replace(preg_replace('/\/\/|(\?q\=)\/+/', '\1', url('/')), '', url("node/$node->nid")));
 
-    $teaser = (isset($node->body) && isset($node->language)) ? strip_tags(text_summary($node->body[$node->language][0]['value'])) : '';
+    $teaser = (isset($node->body) && isset($node->language) && isset($node->body[$node->language])) ? strip_tags(text_summary($node->body[$node->language][0]['value'])) : '';
 
     $nid = $node->nid;
   }
@@ -663,6 +665,26 @@ function _service_links_get_tags($node, &$settings) {
 }
 
 /**
+ * Return the properly title.
+ */
+function _service_links_get_node_title($node, $settings) {
+  $title = isset($node->title) ? $node->title : '';
+
+  switch ($settings['title_override']) {
+    case SERVICE_LINKS_TAG_TITLE_NODE:
+      break;
+    case SERVICE_LINKS_TAG_TITLE_OVERRIDE:
+      $title = str_replace('<title>', $title, $settings['title_text']);
+      break;
+    case SERVICE_LINKS_TAG_TITLE_TOKEN:
+      $title = token_replace($settings['title_text'], 'node', $node);
+      break;
+  }
+
+  return check_plain($title);
+}
+
+/**
  * Detect if the node is used as front page and provide
  * the path to use.
  */
@@ -684,136 +706,6 @@ function _service_links_get_node_path($node) {
 }
 
 /**
- * Build a single link following the style rules.
- */
-function theme_service_links_build_link($variables) {
-  $text = $variables['text'];
-  $url = $variables['url'];
-  $image = $variables['image'];
-  $nodelink = $variables['nodelink'];
-  $style = $variables['style'];
-  $attributes = $variables['attributes'];
-
-  if ($nodelink) {
-    $query = isset($url[1]) ? $url[1] : NULL;
-    
-    switch ($style) {
-      case SERVICE_LINKS_STYLE_TEXT:
-        $link = array(
-          'title' => $text,
-          'href' => $url[0],
-          //'query' => array($url[1]),
-          'query' => $query,
-          'attributes' => $attributes,
-        );
-        break;
-      case SERVICE_LINKS_STYLE_IMAGE:
-        $link = array(
-          'title' => theme('image', array('path' => service_links_expand_path($image), 'attributes' => array('title' => $text))),
-          'href' => $url[0],
-          'query' => $query,
-          'attributes' => $attributes,
-          'html' => TRUE,
-        );
-        break;
-      case SERVICE_LINKS_STYLE_IMAGE_AND_TEXT:
-        $link = array(
-          'title' => theme('image', array('path' => service_links_expand_path($image), 'attributes' => array('title' => $text))) .' '. $text,
-          'href' => $url[0],
-          'query' => $query,
-          'attributes' => $attributes,
-          'html' => TRUE,
-        );
-        break;
-      case SERVICE_LINKS_STYLE_EMPTY:
-        $link = array(
-          'title' => '',
-          'href' => $url[0],
-          'query' => $query,
-          'attributes' => $attributes,
-        );
-        break;
-      default:
-        $link = theme($style, $variables);
-    }
-  }
-  else {
-    $attributes = array('attributes' => $attributes);
-    if (isset($url[1])) {
-      $attributes['query'] = $url[1]; 
-    }
-
-    switch ($style) {
-      case SERVICE_LINKS_STYLE_TEXT:
-        $link = l($text, $url[0], $attributes);
-        break;
-      case SERVICE_LINKS_STYLE_IMAGE:
-        $attributes = array_merge($attributes, array('html' => TRUE));
-        $link = l(theme('image', array('path' => service_links_expand_path($image), 'attributes' => array('alt' => $text))), $url[0], $attributes);
-        break;
-      case SERVICE_LINKS_STYLE_IMAGE_AND_TEXT:
-        $attributes = array_merge($attributes, array('html' => TRUE));
-        $link = l(theme('image', array('path' => service_links_expand_path($image), 'attributes' => array('alt' => $text))) .' '. $text, $url[0], $attributes);
-        break;
-      case SERVICE_LINKS_STYLE_EMPTY:
-        $link = l('', $url[0], $attributes);
-        break;
-      case SERVICE_LINKS_STYLE_FISHEYE:
-        $attributes['attributes']['class'] = isset($attributes['attributes']['class']) ? array_merge($attributes['attributes']['class'], array('fisheyeItem')) : array('fisheyeItem');
-        $attributes = array_merge($attributes, array('html' => TRUE));
-        $link = l(theme('image', array('path' => service_links_expand_path($image, 'fisheye'), 'attributes' => array('alt' => $text), 'getsize' => FALSE)) .'<span>'. $text .'</span>', $url[0], $attributes);
-        break;
-      default:
-        $link = theme($style, $variables);
-    }
-  }
-
-  return $link;
-}
-
-function theme_service_links_node_format($variables) {
-  $links = $variables['links'];
-  $label = $variables['label'];
-
-  if (isset($label) && !empty($label)) {
-    return '<div class="service-links"><div class="service-label">'. t('@label', array('@label' => $label)) .' </div>'. theme('links', array('links' => $links)) .'</div>';
-  }
-  else {
-    return '<div class="service-links">'. theme('links', array('links' => $links)) .'</div>';
-  }
-}
-
-function theme_service_links_block_format($variables) {
-  $items = $variables['items'];
-  $style = $variables['style'];
-
-  if (empty($items)) {
-    return;
-  }
-
-  switch ($style) {
-    case SERVICE_LINKS_STYLE_IMAGE:
-      $output = implode(' ', $items);
-      break;
-    default:
-      $output = theme('item_list', array('items' => array_values($items)));
-      break;
-  }
-
-  return '<div class="service-links">' . $output . '</div>';
-}
-
-function theme_service_links_fisheye_format($variables) {
-  $items = $variables['items'];
-
-  drupal_add_js(service_links_expand_path('interface.js', 'javascript'), array('weight' => 90));
-  drupal_add_js(service_links_expand_path('service_links_fisheye.js', 'javascript'), array('weight' => 90));
-  drupal_add_css(service_links_expand_path('service_links_fisheye.css', 'css'));
-
-  return "<div class=\"fisheye\"><div class=\"fisheyeContainer\">\r\n". implode("\r\n", $items) ."\r\n</div></div>";
-}
-
-/**
  * Check if the service links should be displayed for the content type,
  * for category or one of the other selected options.
  */
@@ -827,7 +719,7 @@ function service_links_show($node) {
   }
 
   if (variable_get('service_links_hide_for_author', FALSE) && ($user->uid == $node->uid)) {
-    return FALSE; 
+    return FALSE;
   }
 
   if (variable_get('service_links_hide_if_unpublished', FALSE) && ($node->status == '0')) {
@@ -837,7 +729,9 @@ function service_links_show($node) {
   $node_type = in_array($node->type, variable_get('service_links_node_types', array()), TRUE);
   if (module_exists('taxonomy') && !empty($node->field_tags)) {
     $categories_allowed = variable_get('service_links_category_types', array());
-    foreach ($node->field_tags[$node->language] as $term) {
+    $language = isset($node->field_tags[$node->language]) ? $node->language : 'und';
+
+    foreach ($node->field_tags[$language] as $term) {
       $category_type |= in_array($term['tid'], $categories_allowed, FALSE);
     }
   }
@@ -866,17 +760,32 @@ function _service_links_load_settings() {
     $settings['link_weight'] = variable_get('service_links_weight', array());
     $settings['link_show'] = array_filter(variable_get('service_links_show', array()));
 
-    $settings['text_to_append'] = check_plain(variable_get('service_links_append_to_url', ''));
+    $settings['text_to_append'] = strip_tags(variable_get('service_links_append_to_url', ''));
+
+    $settings['title_override'] = variable_get('service_links_override_title', SERVICE_LINKS_TAG_TITLE_NODE);
+    $settings['title_text'] = variable_get('service_links_override_title_text', '<title>');
   }
 
   return $settings;
 }
 
 /**
- * Expand the path around a filename depending from the context.
+  * Expand the path around a filename depending from the context.
+ *
+ * @param $filename
+ *   If NULL the function return only the path with trailing slash.
+ * @param $context
+ *   Define what path should consider this function.
+ * @param $default
+ *   Concerning the image path is useful define a default path if
+ *   the alternative is not set up.
+ *
+ * @return
+ *   A string with the full filename or the path.
  */
-function service_links_expand_path($filename = NULL, $context = 'icons', $default = 'icons') {
+function service_links_expand_path($filename = NULL, $context = 'icons', $default = 'preset') {
   static $sl_paths;
+  static $sl_checkpath;
 
   if (strpos($filename, '/') !== FALSE) {
     return $filename;
@@ -891,21 +800,34 @@ function service_links_expand_path($filename = NULL, $context = 'icons', $defaul
       'css' => $sl_paths['base'] .'/css',
     );
 
-    $sl_paths['icons'] = variable_get('service_links_path_icons', $sl_paths['preset']);
-    if (empty($sl_paths['icons'])) {
-      $sl_paths['icons'] = $sl_paths['preset'];
-    }
+    $sl_checkpath = array(
+      'preset' => FALSE,
+      'javascript' => FALSE,
+      'css' => FALSE,
+    );
   }
 
   if (!isset($sl_paths[$context])) {
-    $sl_paths[$context] = variable_get("service_links_path_{$context}", $sl_paths[$default]);
+    $sl_paths[$context] = variable_get("service_links_path_{$context}", '');
     if (empty($sl_paths[$context])) {
       $sl_paths[$context] = $sl_paths[$default];
     }
+
+    $sl_checkpath[$context] = variable_get("service_links_check_{$context}", FALSE);
   }
 
   if (isset($filename)) {
-    return $sl_paths[$context] .'/'. $filename;
+    if ($sl_checkpath[$context]) {
+      if (file_exists($sl_paths[$context] .'/'. $filename)) {
+        return $sl_paths[$context] .'/'. $filename;
+      }
+      else {
+        return $sl_paths[$default] .'/'. $filename;
+      }
+    }
+    else {
+      return $sl_paths[$context] .'/'. $filename;
+    }
   }
   else {
     return $sl_paths[$context];
