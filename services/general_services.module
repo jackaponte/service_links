@@ -53,11 +53,6 @@ function general_services_service_links() {
     'link' => 'http://slashdot.org/bookmark.pl?url=<encoded-url>&title=<encoded-title>',
     'description' => t('Bookmark this post on SlashDot'),
   );
-  $links['magnoliacom'] = array(
-    'name' => 'Magnoliacom',
-    'link' => 'http://ma.gnolia.com/bookmarklet/add?url=<encoded-url>&title=<encoded-title>',
-    'description' => t('Submit this post on ma.gnolia.com.'),
-  );
   $links['newsvine'] = array(
     'name' => 'Newsvine',
     'link' => 'http://www.newsvine.com/_tools/seed&save?u=<encoded-url>&h=<encoded-title>',
@@ -146,7 +141,7 @@ function general_services_service_links() {
   );
   $links['newskicks'] = array(
     'name' => 'Newskicks',
-    'link' => 'http://newskicks.com/node/add/storylink?edit[url]=<encoded-url>&edit[title]=<encoded-title>;',
+    'link' => 'http://newskicks.com/submit.php?url=<encoded-url>',
     'description' => t('Kicks this post on NewsKicks.'),
   );
 
