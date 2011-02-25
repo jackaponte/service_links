@@ -64,4 +64,3 @@ template.php file in the folder of your theme.
 
 Last updated:
 ------------
-$Id$
