@@ -1,4 +1,3 @@
-; $Id$
 name = Widget Services
 description = Provide the Widgets: Facebook Like, Facebook Share, Twitter
 core = 7.x

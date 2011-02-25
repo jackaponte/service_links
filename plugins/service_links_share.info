@@ -1,4 +1,3 @@
-; $Id$
 name = Service Links Share
 description = Provide the integration between Service Links and Share module
 core = 7.x

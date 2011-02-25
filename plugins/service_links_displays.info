@@ -1,4 +1,3 @@
-; $Id$
 name = Service Links Displays
 description = Provide the integration between Service Links and Node Displays (Display Suite)
 core = 7.x

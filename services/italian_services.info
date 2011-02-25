@@ -1,4 +1,3 @@
-; $Id$
 name = Italian Services
 description = Provide the Italian Services: Diggita, Meemi, OkNotizie, Segnalo.com, TechNotizie, Wikio, ZicZac
 core = 7.x

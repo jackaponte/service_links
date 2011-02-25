@@ -1,4 +1,3 @@
-; $Id$
 name = Dutch Services
 description = Provide the Dutch Services: eKudos, Hyves, Nujij
 core = 7.x

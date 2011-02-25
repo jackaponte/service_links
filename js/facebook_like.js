@@ -1,4 +1,3 @@
-// $Id$
 (function ($) {
   $(document).ready(function(){
     $('a.service-links-facebook-like').each(function(){

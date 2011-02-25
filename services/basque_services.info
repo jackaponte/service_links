@@ -1,4 +1,3 @@
-; $Id$
 name = Basque Services
 description = Provide the Basque Services: Zabaldu, Bildu, Aupatu
 core = 7.x

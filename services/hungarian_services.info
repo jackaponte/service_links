@@ -1,4 +1,3 @@
-; $Id$
 name = Hungarian Services
 description = Provide the Hungarian Service: iWiW
 core = 7.x

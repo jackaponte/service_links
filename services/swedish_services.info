@@ -1,4 +1,3 @@
-; $Id$
 name = Swedish Services
 description = Provide the Swedish Services: Bloggy, Pusha
 core = 7.x

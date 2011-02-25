@@ -126,4 +126,3 @@ Themeable functions that could be useful to overwrite:
 
 Last updated:
 ------------
-$Id$

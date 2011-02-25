@@ -1,4 +1,3 @@
-; $Id$
 name = Service Links Sprites
 description = Add the ability to handle sprites with Service Links
 core = 7.x
