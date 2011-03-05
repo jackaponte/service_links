@@ -708,7 +708,7 @@ function _service_links_get_node_title($node, $settings) {
       $title = str_replace('<title>', $title, $settings['title_text']);
       break;
     case SERVICE_LINKS_TAG_TITLE_TOKEN:
-      $title = token_replace($settings['title_text'], 'node', $node);
+      $title = token_replace($settings['title_text'], array('node' => $node));
       break;
   }
 
