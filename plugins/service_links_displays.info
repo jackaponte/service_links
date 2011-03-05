@@ -3,7 +3,7 @@ description = Provide the integration between Service Links and Node Displays (D
 core = 7.x
 package = Display suite
 dependencies[] = service_links
-dependencies[] = nd
+dependencies[] = ds
 
 version = VERSION
 files[] = service_links_displays.module
