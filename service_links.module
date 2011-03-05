@@ -280,6 +280,13 @@ function service_links_block_configure($delta = '') {
           SERVICE_LINKS_STYLE_IMAGE_AND_TEXT => t('Image and Text'),
         ),
       );
+
+      $form['service_links_block_not_node_front'] = array(
+        '#type' => 'checkbox',
+        '#title' => t('Link always to the front page'),
+        '#description' => t('If selected the services will link always to the front page %front.', array('%front' => url('<front>', array('absolute' => TRUE)))),
+        '#default_value' => variable_get('service_links_block_not_node_front', FALSE),
+      );
       break;
   }
 
@@ -299,6 +306,7 @@ function service_links_block_save($delta = '', $edit = array()) {
       break;
     case 'service_links_not_node':
       variable_set('service_links_block_not_node_style', $edit['service_links_block_not_node_style']);
+      variable_set('service_links_block_not_node_front', $edit['service_links_block_not_node_front']);
       break;
   }
 }
@@ -590,7 +598,10 @@ function _service_links_get_tags($node, &$settings) {
   }
   else {
     $title = drupal_get_title();
-    $url = url($_GET['q'], array('absolute' => TRUE, 'query' => service_links_get_query($settings['text_to_append'])));
+    //$url = url($_GET['q'], array('absolute' => TRUE, 'query' => service_links_get_query($settings['text_to_append'])));
+    $url = _service_links_get_page_url(NULL, $settings);
+
+    //The choice of front_page shouldn't  affect the query which should point the original page
     $query = check_plain(arg(0)) . str_replace(url(arg(0)), '', url($_GET['q']));
     $teaser = '';
     $nid = NULL;
@@ -666,6 +677,22 @@ function _service_links_get_tags($node, &$settings) {
     'url' => $url,
     'title' => $title,
   );
+}
+
+/**
+ * Return the url for not-node pages.
+ */
+function _service_links_get_page_url($node, $settings) {
+  $use_front = variable_get('service_links_block_not_node_front', FALSE);
+
+  if ($use_front) {
+    $url = url('<front>', array('absolute' => TRUE, 'query' => service_links_get_query($settings['text_to_append'])));
+  }
+  else {
+    $url = url($_GET['q'], array('absolute' => TRUE, 'query' => service_links_get_query($settings['text_to_append'])));
+  }
+
+  return $url; 
 }
 
 /**
