@@ -49,10 +49,11 @@ function theme_service_links_build_link($variables) {
         break;
       case SERVICE_LINKS_STYLE_EMPTY:
         $link = array(
-          'title' => '',
+          'title' => '<span class="element-invisible">' . $text . '</span>',
           'href' => $url[0],
           'query' => $query,
           'attributes' => $attributes,
+          'html' => TRUE,
         );
         break;
       default:
@@ -78,7 +79,8 @@ function theme_service_links_build_link($variables) {
         $link = l(theme('image', array('path' => service_links_expand_path($image), 'attributes' => array('alt' => $text))) .' '. $text, $url[0], $attributes);
         break;
       case SERVICE_LINKS_STYLE_EMPTY:
-        $link = l('', $url[0], $attributes);
+        $attributes = array_merge($attributes, array('html' => TRUE));
+        $link = l('<span class="element-invisible">' . $text . '</span>', $url[0], $attributes);
         break;
       case SERVICE_LINKS_STYLE_FISHEYE:
         $attributes['attributes']['class'] = isset($attributes['attributes']['class']) ? array_merge($attributes['attributes']['class'], array('fisheyeItem')) : array('fisheyeItem');
