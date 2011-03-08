@@ -14,7 +14,7 @@ function polish_services_service_links() {
   $links['_pl_wykop'] = array(
     'name' => 'Wykop',
     'description' => t('Add to Wykop'),
-    'link' => 'http://www.wykop.pl/add2/link/url,<raw-encoded-url>,title,<raw-encoded-title>,desc,<raw-encoded-teaser>',
+    'link' => 'http://www.wykop.pl/dodaj?url=<raw-encoded-url>&title=<raw-encoded-title>',
   );
   $links['_pl_blip'] = array(
     'name' => 'Blip',
