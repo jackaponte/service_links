@@ -407,7 +407,7 @@ function service_links_short_url($url, $nid = NULL) {
         $turl = shorten_url($url);
       }
       else {
-        $turl = drupal_http_request('http://tinyurl.com/api-create.php?url='. $url);
+        $turl = drupal_http_request('http://tinyurl.com/api-create.php?url=' . urlencode($url));
         $turl = (isset($turl->data) && ($turl->code == 200)) ? $turl->data : $url;
       }
       return $turl;
