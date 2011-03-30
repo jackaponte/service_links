@@ -15,7 +15,10 @@ function widget_services_service_links() {
     'name' => 'Share on Facebook',
     'link' => 'http://www.facebook.com/sharer.php',
     'description' => t('Share on Facebook'),
-    'javascript' => 'http://static.ak.fbcdn.net/connect.php/js/FB.Share',
+    'javascript' => array(
+      'http://static.ak.fbcdn.net/connect.php/js/FB.Share',
+      'facebook_share.js',
+    ),
     'icon' => 'facebook.png',
     'style' => SERVICE_LINKS_STYLE_TEXT,
     'callback' => 'ws_facebook_widget_share',
@@ -71,7 +74,6 @@ function ws_facebook_widget_share(&$service, $subst) {
     );
 
     drupal_add_js(array('ws_fs' => $fs_settings), 'setting');
-    drupal_add_js(service_links_expand_path('facebook_share.js', 'javascript'));
   }
 
   $service['attributes']['rel'] = $subst['url'];
