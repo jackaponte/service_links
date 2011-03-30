@@ -6,7 +6,7 @@
  */
 function favorite_services_service_links() {
   $links['favorite'] = array(
-    'name' => 'Favorite',
+    'name' => t('Favorite'),
     'description' => t('Add this page in your favorites'),
     'link' => url('', array('absolute' => TRUE, 'query' => array('q' => '<encoded-url>#<encoded-title>'))),
     'attributes' => array('style' => 'display:none;'),
