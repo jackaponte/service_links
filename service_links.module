@@ -108,7 +108,7 @@ function service_links_menu() {
 /**
  * Implements hook_node_view().
  */
-function service_links_node_view($node, $view_mode, $langcode) {
+function service_links_node_view($node, $view_mode) {
   //if (isset($node->service_links) && user_access('access service links')) {
   if ((arg(2) != 'edit') && service_links_show($node) && user_access('access service links')) {
     $node->service_links = service_links_render($node, TRUE);
