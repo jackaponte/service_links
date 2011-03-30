@@ -17,7 +17,7 @@ function widget_services_service_links() {
     'description' => t('Share on Facebook'),
     'javascript' => 'http://static.ak.fbcdn.net/connect.php/js/FB.Share',
     'icon' => 'facebook.png',
-    'style' => SERVICE_LINKS_STYLE_EMPTY,
+    'style' => SERVICE_LINKS_STYLE_TEXT,
     'callback' => 'ws_facebook_widget_share',
   );
   $links['twitter_widget'] = array(
