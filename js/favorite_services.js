@@ -19,8 +19,7 @@
       } else if (window.sidebar || window.external.AddFavourite) {
         $("a.service-links-favorite").click(function(event){
           event.preventDefault();
-          var url = unescape($(this).attr('href').replace(/\+/g, ' '));
-          var url = url.replace(/^[^\?]*\?/g, '');
+          var url = unescape($(this).attr('href').replace(/\+/g, ' ')).replace(/^[^\?]*\?q=/g, '');
           var title = url.replace(/^[^#]*#/g, '');
           url = url.replace(/#.*$/g, '');
 
