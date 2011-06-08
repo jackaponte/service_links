@@ -46,6 +46,22 @@ function service_links_help($path, $arg) {
 }
 
 /**
+ * Implements hook_hook_info().
+ */
+function service_links_hook_info() {
+  $hooks = array(
+    'service_links' => array(
+      'group' => 'service_links',
+    ),
+    'service_links_alter' => array(
+      'group' => 'service_links',
+    ),
+  );
+
+  return $hooks;
+}
+
+/**
  * Implements hook_permission().
  */
 function service_links_permission() {
