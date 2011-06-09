@@ -4,6 +4,10 @@
  * @file
  * Provide the bookmarking support for various browser.
  */
+
+/**
+ * Implements hook_service_links().
+ */
 function favorite_services_service_links() {
   $links['favorite'] = array(
     'name' => t('Favorite'),

@@ -10,8 +10,7 @@
         });
       } else if (window.opera && window.print) {
         $("a.service-links-favorite").each(function(){
-          var url = unescape($(this).attr('href').replace(/\+/g, ' '));
-          var url = url.replace(/^[^\?]*\?/g, '');
+          var url = unescape($(this).attr('href').replace(/\+/g, ' ')).replace(/^[^\?]*\?q=/g, '');
           var title = url.replace(/^[^#]*#/g, '');
           url = url.replace(/#.*$/g, '');
           $(this).attr('rel', 'sidebar').attr('href', url).attr('title', title);
