@@ -6,7 +6,7 @@
       if (window.chrome) {
         $("a.service-links-favorite").click(function(event){
           event.preventDefault();
-          alert(Drupal.t('Use CTRL + D for add this in your Bookmark'));
+          alert(Drupal.t('Use CTRL + D to add this to your bookmarks'));
         });
       } else if (window.opera && window.print) {
         $("a.service-links-favorite").each(function(){
