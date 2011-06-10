@@ -12,9 +12,9 @@ function widget_services_service_links() {
   $links = array();
 
   $links['facebook_widget'] = array(
-    'name' => 'Share on Facebook',
+    'name' => t('Share on Facebook'),
     'link' => 'http://www.facebook.com/sharer.php',
-    'description' => t('Share on Facebook'),
+    'description' => t('Share this post on Facebook'),
     'javascript' => array(
       'http://static.ak.fbcdn.net/connect.php/js/FB.Share',
       'facebook_share.js',
