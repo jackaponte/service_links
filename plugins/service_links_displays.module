@@ -128,7 +128,9 @@ function theme_sld_group_fisheye($variables) {
   $fields = $variables['fields'];
 
   if (service_links_show($fields['object']) && user_access('access service links')) {
-    return theme('service_links_fisheye_format', service_links_render($fields['object'], FALSE, SERVICE_LINKS_STYLE_FISHEYE));
+    return theme('service_links_fisheye_format', array(
+      'items' => service_links_render($fields['object'], FALSE, SERVICE_LINKS_STYLE_FISHEYE),
+    ));
   }
 }
 
