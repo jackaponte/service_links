@@ -185,7 +185,7 @@ function service_links_displays_form_alter(&$form, &$form_state, $form_id) {
     $settings['weight'] = variable_get('service_links_weight', NULL);
 
     $form['service_links']['service_links_displays'] = array('#tree' => TRUE);
-    $services = array_filter(array_keys($form['service_links']['service_links_weight']), _sld_only_keys);
+    $services = array_filter(array_keys($form['service_links']['service_links_weight']), '_sld_only_keys');
 
     foreach ($services as $service_id) {
       $weight = isset($settings['weight'][$service_id]) ? $settings['weight'][$service_id] : 0;
