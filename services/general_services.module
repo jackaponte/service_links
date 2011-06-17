@@ -82,11 +82,6 @@ function general_services_service_links() {
     'link' => 'http://bookmarks.yahoo.com/myresults/bookmarklet?u=<encoded-url>&t=<encoded-title>',
     'description' => t('Bookmark this post on Yahoo.'),
   );
-  $links['buzz'] = array(
-    'name' => 'Buzz Up!',
-    'link' => 'http://buzz.yahoo.com/buzz?targetUrl=<encoded-url>&headline=<encoded-title>&summary=<encoded-teaser>',
-    'description' => t('Buzz up this post on Yahoo! Buzz.'),
-  );
   $links['linkedin'] = array(
     'name' => 'LinkedIn',
     'link' => 'http://www.linkedin.com/shareArticle?mini=true&url=<encoded-url>&title=<encoded-title>&summary=<encoded-teaser>&source=<encoded-source>',
