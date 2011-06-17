@@ -60,16 +60,16 @@ function widget_services_service_links() {
  * Callback function for Twitter Widget.
  */
 function ws_twitter_widget_data(&$service, $subst) {
-  static $subst;
+  static $params;
 
-  if (!isset($subst)) {
-    $subst = array(
+  if (!isset($params)) {
+    $params = array(
       'count' => variable_get('service_links_tw_data_count', 'horizontal'),
       'via' => urlencode(variable_get('service_links_tw_data_via' , '')),
     );
   }
   
-  $service['url'][1] = array_merge($service['url'][1], $subst);
+  $service['url'][1] = array_merge($service['url'][1], $params);
 }
 
 /**
@@ -93,10 +93,10 @@ function ws_facebook_widget_share(&$service, $subst) {
  * Callback function for Facebook Like Widget.
  */
 function ws_facebook_widget_like(&$service, $subst) {
-  static $subst;
+  static $params;
 
-  if (!isset($subst)) {
-    $subst = array(
+  if (!isset($params)) {
+    $params = array(
       'layout' => variable_get('service_links_fl_layout', 'button_count'),
       'show_faces' => variable_get('service_links_fl_show_faces', 'false'),
       'action' => variable_get('service_links_fl_action', 'like'),
@@ -107,29 +107,29 @@ function ws_facebook_widget_like(&$service, $subst) {
     );
 
     $fl_settings = array(
-      'width' => $subst['width'],
+      'width' => $params['width'],
       'height' => '21',
     );
 
-    switch ($subst['layout']) {
+    switch ($params['layout']) {
       case 'standard':
         $fl_settings['height'] = '80';
-        $subst['height'] = '80';
+        $params['height'] = '80';
         break;
       case 'box_count':
         $fl_settings['height'] = '65';
-        $subst['height'] = '65';
+        $params['height'] = '65';
         break;
       //case 'button_count':
         //$fl_settings['height'] = 21;
-        //$subst['height'] = '21';
+        //$params['height'] = '21';
         //break;
     }
 
     drupal_add_js(array('ws_fl' => $fl_settings), 'setting');
   }
 
-  $service['url'][1] = array_merge($service['url'][1], $subst);
+  $service['url'][1] = array_merge($service['url'][1], $params);
 }
 
 /**
