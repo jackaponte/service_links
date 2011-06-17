@@ -122,5 +122,43 @@ function  widget_services_admin() {
     ),
   );
 
+  $form['digg_smart_button'] = array(
+    '#type' => 'fieldset',
+    '#collapsible' => TRUE,
+    '#collapsed' => FALSE,
+    '#title' => t('Digg Button'),
+  );
+  $form['digg_smart_button']['service_links_dsb_type'] = array(
+    '#title' => t('Type'),
+    '#type' => 'select',
+    '#default_value' => variable_get('service_links_dsb_type', 'DiggCompact'),
+    '#options' => array(
+      'DiggWide' => t('Wide'),
+      'DiggMedium' => t('Medium'),
+      'DiggCompact' => t('Compact'),
+      'DiggIcon' => t('Icon'),
+    ),
+  );
+  $form['digg_smart_button']['service_links_dsb_related'] = array(
+    '#title' => t('Related'),
+    '#type' => 'radios',
+    '#default_value' => variable_get('service_links_dsb_related', 'yes'),
+    '#options' => array(
+      'yes' => t('Yes'),
+      'no' => t('No'),
+    ),
+    '#attributes' => array('class' => array('container-inline')),
+  );
+  $form['digg_smart_button']['service_links_dsb_style'] = array(
+    '#title' => t('Default style'),
+    '#type' => 'radios',
+    '#default_value' => variable_get('service_links_dsb_style', 'yes'),
+    '#options' => array(
+      'yes' => t('Yes'),
+      'no' => t('No'),
+    ),
+    '#attributes' => array('class' => array('container-inline')),
+  );
+
   return system_settings_form($form);
 }
