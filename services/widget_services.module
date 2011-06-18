@@ -52,6 +52,18 @@ function widget_services_service_links() {
     'callback' => 'ws_digg_smart_button_data',
     'attributes' => array('class' => array('DiggThisButton', variable_get('service_links_dsb_type', 'DiggCompact'))),
   );
+  $links['google_plus_one'] = array(
+    'name' => 'Google Plus One',
+    'link' => '<url>',
+    'icon' => 'google.png',
+    'description' => t('Plus it'),
+    'javascript' => array(
+      'https://apis.google.com/js/plusone.js',
+      'google_plus_one.js',
+    ),
+    'style' => SERVICE_LINKS_STYLE_EMPTY,
+    'callback' => 'ws_google_plus_one_data',
+  );
 
   return $links;
 }
@@ -147,6 +159,22 @@ function ws_digg_smart_button_data(&$service, $subst) {
 
   // teaser on rel used as description ?
   $service['url'][1] = array_merge($service['url'][1], $params);
+}
+
+/**
+ * Callback function for Google Plus One.
+ */
+function ws_google_plus_one_data(&$service, $subst) {
+  static $gpo_settings;
+
+  if (!isset($gpo_settings)) {
+    $gpo_settings = array(
+      'type' => variable_get('service_links_gpo_type', ''),
+      'counter' => variable_get('service_links_gpo_counter', TRUE),
+    );
+
+    drupal_add_js(array('ws_gpo' => $gpo_settings), 'setting');
+  }
 }
 
 /**

@@ -160,5 +160,28 @@ function  widget_services_admin() {
     '#attributes' => array('class' => array('container-inline')),
   );
 
+  $form['google_plus_one'] = array(
+    '#type' => 'fieldset',
+    '#collapsible' => TRUE,
+    '#collapsed' => FALSE,
+    '#title' => t('Google Plus One'),
+  );
+  $form['google_plus_one']['service_links_gpo_type'] = array(
+    '#title' => t('Type'),
+    '#type' => 'select',
+    '#default_value' => variable_get('service_links_gpo_type', ''),
+    '#options' => array(
+      '' => t('Standard'),
+      'small' => t('Small'),
+      'medium' => t('Medium'),
+      'tall' => t('Tall'),
+    ),
+  );
+  $form['google_plus_one']['service_links_gpo_counter'] = array(
+    '#title' => t('Show counter'),
+    '#type' => 'checkbox',
+    '#default_value' => variable_get('service_links_gpo_counter', TRUE),
+  );
+
   return system_settings_form($form);
 }
