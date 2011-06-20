@@ -37,11 +37,6 @@ function general_services_service_links() {
     'link' => 'http://ping.fm/ref/?link=<encoded-url>&title=<encoded-title>&body=<encoded-teaser>',
     'description' => t('Submit to Ping.fm.'),
   );
-  $links['propeller'] = array(
-    'name' => 'Propeller',
-    'link' => 'http://www.propeller.com/submit/?U=<encoded-url>&T=<encoded-title>',
-    'description' => t('Submit to Propeller.'),
-  );
   $links['reddit'] = array(
     'name' => 'Reddit',
     'link' => 'http://reddit.com/submit?url=<encoded-url>&title=<encoded-title>',
