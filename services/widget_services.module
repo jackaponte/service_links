@@ -25,7 +25,7 @@ function widget_services_service_links() {
   );
   $links['twitter_widget'] = array(
     'name' => 'Tweet Widget',
-    'link' => 'http://twitter.com/share?url=<encoded-short-url>&count=<data-count>&via=<data-via>&text=<encoded-title>&counturl=<encoded-url>',
+    'link' => 'http://twitter.com/share?url=<raw-encoded-short-url>&count=<data-count>&via=<data-via>&text=<raw-encoded-title>&counturl=<raw-encoded-url>',
     'icon' => 'twitter.png',
     'description' => t('Tweet This'),
     'attributes' => array('class' => array('twitter-share-button')),
