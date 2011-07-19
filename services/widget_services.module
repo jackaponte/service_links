@@ -93,6 +93,7 @@ function ws_facebook_widget_share(&$service, $subst) {
   if (!isset($fs_settings)) {
     $fs_settings = array(
       'type' => variable_get('service_links_fs_type', 'button_count'),
+      'fix_count' => (boolean) variable_get('service_links_fs_fix_count', FALSE),
     );
 
     drupal_add_js(array('ws_fs' => $fs_settings), 'setting');

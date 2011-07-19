@@ -112,14 +112,19 @@ function  widget_services_admin() {
     '#title' => t('Facebook Share'),
   );
   $form['facebook_widget']['service_links_fs_type'] = array(
-    '#title' => t('Type'),
     '#type' => 'select',
+    '#title' => t('Type'),
     '#default_value' => variable_get('service_links_fs_type', 'button_count'),
     '#options' => array(
       'button_count' => t('Button Count'),
       'box_count' => t('Box Count'),
       'icon_link' => t('Icon Link'),
     ),
+  );
+  $form['facebook_widget']['service_links_fs_fix_count'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Show the counter also if zero'),
+    '#default_value' => variable_get('service_links_fs_fix_count', FALSE),
   );
 
   $form['digg_smart_button'] = array(
