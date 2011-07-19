@@ -35,7 +35,7 @@ function widget_services_service_links() {
   );
   $links['facebook_like'] = array(
     'name' => 'Facebook Like',
-    'link' => 'http://www.facebook.com/plugins/like.php?href=<encoded-url>&layout=<layout>&show_faces=<show_faces>&action=<action>&colorscheme=<colorscheme>&width=<width>&height=<height>&font=<font>',
+    'link' => 'http://www.facebook.com/plugins/like.php?href=<encoded-url>&layout=<layout>&show_faces=<show_faces>&action=<action>&colorscheme=<colorscheme>&width=<width>&height=<height>&font=<font>&locale=<locale>',
     'icon' => 'facebook.png',
     'description' => t('I Like it'),
     'javascript' => 'facebook_like.js',
@@ -117,6 +117,7 @@ function ws_facebook_widget_like(&$service, $subst) {
       'font' => check_plain(variable_get('service_links_fl_font', '')),
       'width' => (int) variable_get('service_links_fl_width', 100),
       'height' => '21',
+      'locale' => check_plain(variable_get('service_links_fl_locale', '')),
     );
 
     $fl_settings = array(
