@@ -56,7 +56,7 @@ function  widget_services_admin() {
   $form['facebook_like']['service_links_fl_width'] = array(
     '#title' => t('Width'),
     '#type' => 'textfield',
-    '#default_value' => variable_get('service_links_fl_width', '100'),
+    '#default_value' => variable_get('service_links_fl_width', 100),
     '#description' => t('A good value for button layout is 100, for box layout is 80 and for standard layout 450'),
     '#size' => '10',
   );
