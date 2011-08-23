@@ -427,24 +427,30 @@ function service_links_short_url($url, $nid = NULL) {
 }
 
 /**
- * Function that render the service links.
- * This is the function themers have to call for insert all the
- * Service Links selected in the admin page.
+ * Function that render all the selected services.
  *
  * @param $node
- *   Contain the current node object.
- *   If NULL will be considered a not-node page.
+ *   Contains the content structured as a node object.
+ *   Use the node_load() function to build one or set
+ *   NULL this variable to consider the current page.
  * @param $nodelink
- *   (optional) Decide how to render the services. Default is FALSE.
- *   If TRUE the final render will be an array compatible
- *   with the standard Drupal link section.
- * @param $style
- *   (optional) When specified, overwrite the style.
+ *   (optional) It determines the kind of render.
+ *   If TRUE the function return an array of items 
+ *   compatible with the standard Drupal link section.
+ *   If FALSE return an array of HTML links.
+ *   Default is FALSE.
+ * @param $options
+ *   (optional) Can assume the value of a valid service
+ *   style either an array containing the settings 
+ *   to override (look at _service_links_load_settings()
+ *   for more details).
  *
  * @return
- *   An Array of themed Service Links.
+ *   An array of HTML links if $nodelink = FALSE, an array
+ *   of structured links to be themed with theme_links() 
+ *   if $nodelink = TRUE.
  */
-function service_links_render($node, $nodelink = FALSE, $style = 0) {
+function service_links_render($node, $nodelink = FALSE, $options = NULL) {
   $links = array('weight' => array(), 'link' => array());
   $settings = _service_links_load_settings();
 
@@ -452,14 +458,17 @@ function service_links_render($node, $nodelink = FALSE, $style = 0) {
     return array();
   }
 
+  if (isset($options)) {
+    if (!is_array($options)) {
+      $options = array('style' => $options);
+    }  
+    $settings = array_merge($settings, $options);
+  }
+
   _service_links_get_tags($node, $settings);
 
   // Services are filtered in _service_links_load_settings().
   $services = service_links_get_links($settings['link_show']);
-
-  if ($style > 0) {
-    $settings['style'] = $style;
-  }
 
   foreach ($services as $service_id => $service) {
     // Load the position.
@@ -481,19 +490,31 @@ function service_links_render($node, $nodelink = FALSE, $style = 0) {
  * by their id.
  *
  * @param $service_ids
- *   The id of the needed service, can be just a string or an array of ids.
+ *   The list of requested services, can be just a
+ *   string, for a single services, or an array of
+ *   id, don't need enable them on the admin page.
  * @param $node
- *   the current node (optional).
+ *   Contains the content structured as a node object.
+ *   Use the node_load() function to build one or set
+ *   NULL this variable to consider the current page.
  * @param $nodelink
- *   Boolean, if TRUE render the service for use as a link into the node,
- *   default FALSE.
- * @param $style
- *   Overwrite the default style (optional).
+ *   (optional) It determines the kind of render.
+ *   If TRUE the function return an array of items 
+ *   compatible with the standard Drupal link section.
+ *   If FALSE return an array of HTML links.
+ *   Default is FALSE.
+ * @param $options
+ *   (optional) Can assume the value of a valid service
+ *   style either an array containing the settings 
+ *   to override (look at _service_links_load_settings()
+ *   for more details).
  *
  * @return
- *   An Array of HTML links
+ *   An array of HTML links if $nodelink = FALSE, an array
+ *   of structured links to be themed with theme_links() 
+ *   if $nodelink = TRUE.
  */
-function service_links_render_some($service_ids, $node = NULL, $nodelink = FALSE, $style = 0) {
+function service_links_render_some($service_ids, $node = NULL, $nodelink = FALSE, $options = NULL) {
   if (is_array($service_ids)) {
     $services = service_links_get_links($service_ids);
   }
@@ -502,15 +523,18 @@ function service_links_render_some($service_ids, $node = NULL, $nodelink = FALSE
   }
 
   if (empty($services)) {
-    return;
+    return array();
   }
 
   $settings = _service_links_load_settings();
-  _service_links_get_tags($node, $settings);
-
-  if ($style > 0) {
-    $settings['style'] = $style;
+  if (isset($options)) {
+    if (!is_array($options)) {
+      $options = array('style' => $options);
+    }  
+    $settings = array_merge($settings, $options);
   }
+
+  _service_links_get_tags($node, $settings);
 
   $links = array();
   foreach ($services as $service_id => $service) {
