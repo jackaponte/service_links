@@ -233,8 +233,14 @@ function service_links_block_view($delta = '') {
     switch ($delta) {
       case 'service_links_not_node':
         $block['subject'] = t('Bookmark/Search this post');
-        $style = variable_get('service_links_block_not_node_style', SERVICE_LINKS_STYLE_IMAGE_AND_TEXT);
-        $block['content'] = theme('service_links_block_format', array('items' => service_links_render(NULL, FALSE, $style), 'style' => $style));
+        $options = array(
+          'style' => variable_get('service_links_block_not_node_style', SERVICE_LINKS_STYLE_IMAGE_AND_TEXT),
+          'link_to_front' => variable_get('service_links_block_not_node_front', FALSE),
+        );
+        $block['content'] = theme('service_links_block_format', array(
+          'items' => service_links_render(NULL, FALSE, $options),
+          'style' => $options['style'],
+        ));
         break;
     }
     return $block;
@@ -730,9 +736,7 @@ function _service_links_get_tags($node, &$settings) {
  * Return the url for not-node pages.
  */
 function _service_links_get_page_url($node, $settings) {
-  $use_front = variable_get('service_links_block_not_node_front', FALSE);
-
-  if ($use_front) {
+  if ($settings['link_to_front']) {
     $url = url('<front>', array('absolute' => TRUE, 'query' => service_links_get_query($settings['text_to_append'])));
   }
   else {
@@ -842,6 +846,8 @@ function _service_links_load_settings() {
 
     $settings['title_override'] = variable_get('service_links_override_title', SERVICE_LINKS_TAG_TITLE_NODE);
     $settings['title_text'] = variable_get('service_links_override_title_text', '<title>');
+
+    $settings['link_to_front'] = FALSE;
   }
 
   return $settings;
