@@ -638,12 +638,11 @@ function _service_links_add_js($javascript) {
 function _service_links_get_tags($node, &$settings) {
   if (!empty($node)) {
     $title = _service_links_get_node_title($node, $settings); 
+
     $path = _service_links_get_node_path($node);
     $url = url("$path", array('absolute' => TRUE, 'query' => service_links_get_query($settings['text_to_append'])));
-    //$url = url("node/$node->nid", array('absolute' => TRUE, 'query' => service_links_get_query($settings['text_to_append'])));
 
-    //The choice of front_page shouldn't  affect the query which should point the original page
-    $query = preg_replace('/^\//', '', str_replace(preg_replace('/\/\/|(\?q\=)\/+/', '\1', url('/')), '', url("node/$node->nid")));
+    $query = drupal_get_path_alias("node/{$node->nid}");
 
     $teaser = (isset($node->body) && isset($node->language) && isset($node->body[$node->language])) ? strip_tags(text_summary($node->body[$node->language][0]['value'])) : '';
 
@@ -651,16 +650,25 @@ function _service_links_get_tags($node, &$settings) {
   }
   else {
     $title = drupal_get_title();
-    //$url = url($_GET['q'], array('absolute' => TRUE, 'query' => service_links_get_query($settings['text_to_append'])));
+
     $url = _service_links_get_page_url(NULL, $settings);
 
-    //The choice of front_page shouldn't  affect the query which should point the original page
+    // The choice of front_page shouldn't affect the query which points the original page
     $query = check_plain(arg(0)) . str_replace(url(arg(0)), '', url($_GET['q']));
     $teaser = '';
     $nid = NULL;
   }
 
   $source = variable_get('site_name', 'Drupal');
+
+  $front_page = url('<front>', array('absolute' => TRUE));
+  if ((variable_get('clean_url', 0) == 0) && (strpos($front_page, '?q=') === FALSE)) {
+    $front_page .= '?q=';
+  }
+  else {
+    // Ensure a trailing slash on multilingual sites.
+    $front_page = preg_replace('/\?q\=([0-9a-z-_]+)$/i', '?q=\1/', $front_page);
+  }
 
   switch ($settings['short_links_use']) {
     case SERVICE_LINKS_SHORT_URL_USE_NEVER:
@@ -695,6 +703,7 @@ function _service_links_get_tags($node, &$settings) {
     'query' => '<query>',
     'url' => '<url>',
     'title' => '<title>',
+    'front-page' => '<front-page>',
   );
   $settings['subst'] = array(
     //'raw-encoded-title' => rawurlencode($title),
@@ -729,6 +738,7 @@ function _service_links_get_tags($node, &$settings) {
     'query' => $query,
     'url' => $url,
     'title' => $title,
+    'front-page' => $front_page,
   );
 }
 
