@@ -1,0 +1,8 @@
+name = Farsi Services
+description = Provide the Farsi services: Balatarin, Donbaleh, Friendfa, Viwio.
+core = 7.x
+package = Service Links
+dependencies[] = service_links
+
+version = VERSION
+files[] = farsi_services.module
