@@ -554,6 +554,8 @@ function service_links_render_some($service_ids, $node = NULL, $nodelink = FALSE
  * The common render function used privately.
  */
 function _service_links_render($service_id, $service, $settings, $nodelink) {
+  // On Drupal 7 this tag should be filled before the split otherwise will be lost.
+  $service['link'] = str_replace('<front-page>', $settings['subst']['front-page'], $service['link']);
   $service['url'] = preg_split('/\?/', $service['link']);
   if (count($service['url']) > 1) {
     $service['url'][1] = service_links_get_query($service['url'][1]);
