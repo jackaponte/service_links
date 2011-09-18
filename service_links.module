@@ -393,7 +393,7 @@ function service_links_get_links($services = NULL, $reset = FALSE) {
     $services = array_combine($services, array_fill(0, count($services), 1));
   }
 
-  return isset($services) ? array_intersect_key($links, $services) : $links;
+  return isset($services) ? array_merge($services, array_intersect_key($links, $services)) : $links;
 }
 
 /**
