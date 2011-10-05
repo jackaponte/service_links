@@ -1,7 +1,7 @@
 name = Basque Services
 description = Provide the Basque Services: Zabaldu, Bildu, Aupatu
 core = 7.x
-package = Service Links
+package = Service Links - Services
 dependencies[] = service_links
 version = VERSION
 files[] = basque_services.module
