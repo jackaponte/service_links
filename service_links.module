@@ -562,7 +562,14 @@ function _service_links_render($service_id, $service, $settings, $nodelink, $nod
 
   // On Drupal 7 this tag should be filled before the split otherwise will be lost.
   $service['link'] = str_replace('<front-page>', $settings['subst']['front-page'], $service['link']);
-  $service['url'] = preg_split('/\?/', $service['link']);
+
+  if (strpos($service['link'], '=') === FALSE) {
+    $service['url'] = array($service['link']);
+  }
+  else {
+    $service['url'] = preg_split('/\?/', $service['link']);
+  }
+
   if (count($service['url']) > 1) {
     $service['url'][1] = service_links_get_query($service['url'][1]);
     $service['url'][1] = str_replace($settings['tag'], $settings['subst'], $service['url'][1]);
