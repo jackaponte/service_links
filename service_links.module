@@ -395,12 +395,32 @@ function service_links_get_links($services = NULL, $reset = FALSE) {
       cache_set('service_links_get_links', $links);
     }
   }
-  // If desired, return only the given services.
-  if (isset($services) && is_numeric(key($services))) {
-    $services = array_combine($services, array_fill(0, count($services), 1));
+
+  // If desired, return only the wanted services.
+  if (isset($services)) {
+    // Detect a manual request and populate the array correctly.
+    if (is_numeric(key($services))) {
+      $services = array_combine($services, array_fill(0, count($services), 1));
+    }
+
+    // Provide only the services requested.
+    $services = array_merge($services, array_intersect_key($links, $services));
+
+    // Remove a service if the related module is disabled and can't provide the values.
+    $services = array_filter($services, function ($value) use (&$services) {
+      if ($value === 1) {
+        drupal_set_message(t('The service having id "@id" is missing, reactivate its module or save again the list of services.', array('@id' => key($services))), 'warning', FALSE);
+        $res = FALSE;
+      }
+      else {
+        $res = TRUE;
+      }
+      next($services);
+      return $res;
+    });
   }
 
-  return isset($services) ? array_merge($services, array_intersect_key($links, $services)) : $links;
+  return isset($services) ? $services : $links;
 }
 
 /**
