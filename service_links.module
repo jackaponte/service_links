@@ -360,6 +360,25 @@ function service_links_theme() {
 }
 
 /**
+ * Remove a service from the list if the related module is disabled
+ * and can't provide the correct values.
+ */
+function service_links_array_filter($services) {
+  $result = array();
+
+  foreach ($services as $service_id => $service) {
+    if ($service === 1) {
+      drupal_set_message(t('The service having id "@id" is missing, reactivate its module or save again the list of services.', array('@id' => $service_id)), 'warning', FALSE);
+    }
+    else {
+      $result[$service_id] = $service;
+    }
+  }
+
+  return $result;
+}
+
+/**
  * Discover all available service links by invoking hook_service_links().
  *
  * @param $services
@@ -406,18 +425,8 @@ function service_links_get_links($services = NULL, $reset = FALSE) {
     // Provide only the services requested.
     $services = array_merge($services, array_intersect_key($links, $services));
 
-    // Remove a service if the related module is disabled and can't provide the values.
-    $services = array_filter($services, function ($value) use (&$services) {
-      if ($value === 1) {
-        drupal_set_message(t('The service having id "@id" is missing, reactivate its module or save again the list of services.', array('@id' => key($services))), 'warning', FALSE);
-        $res = FALSE;
-      }
-      else {
-        $res = TRUE;
-      }
-      next($services);
-      return $res;
-    });
+    // Remove the unknown services.
+    $services = service_links_array_filter($services);
   }
 
   return isset($services) ? $services : $links;
