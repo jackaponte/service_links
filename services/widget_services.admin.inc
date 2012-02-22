@@ -100,7 +100,7 @@ function  widget_services_admin() {
     '#default_value' => variable_get('service_links_fl_action', 'like'),
     '#options' => array(
       'like' => t('Like'),
-      'recommended' => t('Recommended'),
+      'recommend' => t('Recommend'),
     ),
     '#attributes' => array('class' => array('container-inline')),
   );
