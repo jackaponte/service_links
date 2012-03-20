@@ -1,5 +1,5 @@
 name = Widget Services
-description = Provide the Widgets: Digg Smart Button, Facebook Like, Facebook Share, Google Plus One, Linkedin Share Button, Twitter
+description = Digg Smart Button, Facebook Like, Facebook Share, Google Plus One, Linkedin Share Button, Pinterest, Twitter
 core = 7.x
 package = Service Links - Services
 dependencies[] = service_links

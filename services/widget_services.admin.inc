@@ -213,5 +213,46 @@ function  widget_services_admin() {
     ),
   );
 
+  $form['pinterest_button'] = array(
+    '#type' => 'fieldset',
+    '#collapsible' => TRUE,
+    '#collapsed' => FALSE,
+    '#title' => t('Pinterest Button'),
+  );
+  $form['pinterest_button']['service_links_pb_countlayout'] = array(
+    '#title' => t('Pin Count'),
+    '#type' => 'select',
+    '#default_value' => variable_get('service_links_pb_countlayout', 'horizontal'),
+    '#options' => array(
+      'horizontal' => t('Horizontal'),
+      'vertical' => t('Vertical'),
+      'none' => t('No Count'),
+    ),
+  );
+  $form['pinterest_button']['service_links_pb_mediatoken'] = array(
+    '#title' => t('Media parameter'),
+    '#type' => 'textfield',
+    '#default_value' => variable_get('service_links_pb_mediatoken', ''),
+    '#description' => t('Fill the media parameter with a token which will be evaluated by <a href=@url>Token</a> module.', array('@url' => 'http://www.drupal.org/project/token')),
+    '#size' => 40,
+  );
+  $form['pinterest_button']['service_links_pb_descriptiontoken'] = array(
+    '#title' => t('Description parameter'),
+    '#type' => 'textfield',
+    '#default_value' => variable_get('service_links_pb_descriptiontoken', ''),
+    '#description' => t('Fill the description parameter with a token which will be evaluated by <a href=@url>Token</a> module, if left blank will be replaced by the node teaser.', array('@url' => 'http://www.drupal.org/project/token')),
+    '#size' => 40,
+  );
+  if (module_exists('token')) {
+    $form['pinterest_button']['token_help'] = array(
+      '#type' => 'fieldset',
+      '#collapsible' => TRUE,
+      '#collapsed' => TRUE,
+      '#title' => t('Token help'),
+      '#theme' => 'token_tree',
+      '#token_types' => array('node'),
+    );
+  }
+
   return system_settings_form($form);
 }
