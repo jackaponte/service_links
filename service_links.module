@@ -704,8 +704,9 @@ function _service_links_get_tags($node, &$settings) {
 
     $url = _service_links_get_page_url(NULL, $settings);
 
-    // The choice of front_page shouldn't affect the query which points the original page
-    $query = check_plain(arg(0)) . str_replace(url(arg(0)), '', url($_GET['q']));
+    // The query shouldn't follow the front_page alias but point the original page.
+    $query = drupal_get_normal_path($_GET['q']);
+    
     $teaser = '';
     $nid = NULL;
   }
