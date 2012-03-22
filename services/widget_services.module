@@ -40,7 +40,7 @@ function widget_services_service_links() {
     'description' => t('I Like it'),
     'javascript' => 'facebook_like.js',
     'style' => SERVICE_LINKS_STYLE_EMPTY,
-    'callback' => 'ws_facebook_widget_like',
+    'callback' => 'ws_facebook_like_data',
   );
   $links['digg_smart_button'] = array(
     'name' => 'Digg Smart Button',
@@ -129,9 +129,9 @@ function ws_facebook_share_data(&$service, $subst) {
 }
 
 /**
- * Callback function for Facebook Like Widget.
+ * Callback function for Facebook Like.
  */
-function ws_facebook_widget_like(&$service, $subst) {
+function ws_facebook_like_data(&$service, $subst) {
   static $params;
 
   if (!isset($params)) {
