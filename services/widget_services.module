@@ -11,17 +11,17 @@
 function widget_services_service_links() {
   $links = array();
 
-  $links['facebook_widget'] = array(
+  $links['facebook_share'] = array(
     'name' => t('Share on Facebook'),
     'link' => 'http://www.facebook.com/sharer.php',
     'description' => t('Share this post on Facebook'),
     'javascript' => array(
-      'http://static.ak.fbcdn.net/connect.php/js/FB.Share',
+      //'http://static.ak.fbcdn.net/connect.php/js/FB.Share',
       'facebook_share.js',
     ),
     'icon' => 'facebook.png',
-    'style' => SERVICE_LINKS_STYLE_TEXT,
-    'callback' => 'ws_facebook_widget_share',
+    'style' => SERVICE_LINKS_STYLE_EMPTY,
+    'callback' => 'ws_facebook_share_data',
   );
   $links['twitter_widget'] = array(
     'name' => 'Tweet Widget',
@@ -110,15 +110,16 @@ function ws_twitter_widget_data(&$service, $subst) {
 }
 
 /**
- * Callback function for Facebook Share Widget.
+ * Callback function for Facebook Share.
  */
-function ws_facebook_widget_share(&$service, $subst) {
+function ws_facebook_share_data(&$service, $subst) {
   static $fs_settings;
 
   if (!isset($fs_settings)) {
     $fs_settings = array(
       'type' => check_plain(variable_get('service_links_fs_type', 'button_count')),
       'fix_count' => (boolean) variable_get('service_links_fs_fix_count', FALSE),
+      'text' => t('@text', array('@text' => (variable_get('service_links_fs_text', 'Share on Facebook')))),
     );
 
     drupal_add_js(array('ws_fs' => $fs_settings), 'setting');

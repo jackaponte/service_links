@@ -113,13 +113,13 @@ function  widget_services_admin() {
     '#attributes' => array('class' => array('container-inline')),
   );
  
-  $form['facebook_widget'] = array(
+  $form['facebook_share'] = array(
     '#type' => 'fieldset',
     '#collapsible' => TRUE,
     '#collapsed' => FALSE,
     '#title' => t('Facebook Share'),
   );
-  $form['facebook_widget']['service_links_fs_type'] = array(
+  $form['facebook_share']['service_links_fs_type'] = array(
     '#type' => 'select',
     '#title' => t('Type'),
     '#default_value' => variable_get('service_links_fs_type', 'button_count'),
@@ -129,7 +129,14 @@ function  widget_services_admin() {
       'icon_link' => t('Icon Link'),
     ),
   );
-  $form['facebook_widget']['service_links_fs_fix_count'] = array(
+  $form['facebook_share']['service_links_fs_text'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Text'),
+    '#default_value' => variable_get('service_links_fs_text', 'Share on Facebook'), 
+    '#description' => t('This is the text displayed in the button. Leave blank if you dont want show anything but the counter (Select also Button Count above).'),
+    '#size' => 40,
+  );
+  $form['facebook_share']['service_links_fs_fix_count'] = array(
     '#type' => 'checkbox',
     '#title' => t('Show the counter also if zero'),
     '#default_value' => variable_get('service_links_fs_fix_count', FALSE),
