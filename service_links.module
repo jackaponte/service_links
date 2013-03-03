@@ -825,7 +825,7 @@ function _service_links_get_node_title($node, $settings) {
       break;
   }
 
-  return check_plain($title);
+  return $title;
 }
 
 /**
