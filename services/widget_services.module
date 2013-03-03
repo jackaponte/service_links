@@ -77,7 +77,7 @@ function widget_services_service_links() {
   );
   $links['pinterest_button'] = array(
     'name' => 'Pinterest',
-    'link' => 'http://pinterest.com/pin/create/button/?url=<raw-encoded-url>&description=<raw-encoded-teaser>&media=<pinterest-media>',
+    'link' => 'http://pinterest.com/pin/create/button/?url=<raw-encoded-url>&description=<pinterest-description>&media=<pinterest-media>',
     'icon' => 'pinterest.png',
     'description' => t('Pin It'),
     'javascript' => array(
