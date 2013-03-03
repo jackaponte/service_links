@@ -660,6 +660,7 @@ function _service_links_render($service_id, $service, $settings, $nodelink, $nod
  * Load correctly the needed javascripts.
  */
 function _service_links_add_js($javascript) {
+  global $is_https;
   static $external_js;
 
   if (!is_array($javascript)) {
@@ -672,6 +673,11 @@ function _service_links_add_js($javascript) {
 
   foreach ($javascript as $js) {
     if (strpos($js, '://') !== FALSE) {
+      if ($is_https) {
+        // Ensure that we embed the https js library.
+        $js = str_replace('http://', 'https://', $js);
+      }
+
       if (!in_array($js, $external_js)) {
         drupal_add_js($js, array('type' => 'external'));
         $external_js[] = $js;
