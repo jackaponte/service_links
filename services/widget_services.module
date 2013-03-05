@@ -29,7 +29,7 @@ function widget_services_service_links() {
     'icon' => 'twitter.png',
     'description' => t('Tweet This'),
     'attributes' => array('class' => array('twitter-share-button')),
-    'javascript' => 'http://platform.twitter.com/widgets.js',
+    'javascript' => 'twitter_button.js',
     'style' => SERVICE_LINKS_STYLE_EMPTY,
     'callback' => 'ws_twitter_widget_data',
   );
@@ -46,10 +46,7 @@ function widget_services_service_links() {
     'name' => 'Google Plus One',
     'link' => '<url>',
     'description' => t('Plus it'),
-    'javascript' => array(
-      'https://apis.google.com/js/plusone.js',
-      'google_plus_one.js',
-    ),
+    'javascript' => 'google_plus_one.js',
     'style' => SERVICE_LINKS_STYLE_EMPTY,
     'callback' => 'ws_google_plus_one_data',
   );
@@ -59,8 +56,8 @@ function widget_services_service_links() {
     'icon' => 'linkedin.png',
     'description' => t('Share on Linkedin'),
     'javascript' => array(
+      'http://platform.linkedin.com/in.js?async=true',
       'linkedin_share_button.js',
-      'http://platform.linkedin.com/in.js',
     ),
     'style' => SERVICE_LINKS_STYLE_EMPTY,
     'callback' => 'ws_linkedin_share_button_data',
