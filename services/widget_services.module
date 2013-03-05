@@ -42,16 +42,6 @@ function widget_services_service_links() {
     'style' => SERVICE_LINKS_STYLE_EMPTY,
     'callback' => 'ws_facebook_like_data',
   );
-  $links['digg_smart_button'] = array(
-    'name' => 'Digg Smart Button',
-    'link' => 'http://digg.com/submit?url=<raw-encoded-url>&title=<raw-encoded-title>&related=<related>&style=<style>',
-    'icon' => 'digg.png',
-    'description' => t('Digg It'),
-    'javascript' => 'http://digg.com/tools/diggthis.js',
-    'style' => SERVICE_LINKS_STYLE_EMPTY,
-    'callback' => 'ws_digg_smart_button_data',
-    'attributes' => array('class' => array('DiggThisButton', variable_get('service_links_dsb_type', 'DiggCompact'))),
-  );
   $links['google_plus_one'] = array(
     'name' => 'Google Plus One',
     'link' => '<url>',
@@ -169,23 +159,6 @@ function ws_facebook_like_data(&$service, $subst) {
     drupal_add_js(array('ws_fl' => $fl_settings), 'setting');
   }
 
-  $service['url'][1] = array_merge($service['url'][1], $params);
-}
-
-/**
- * Callback function for Digg Button.
- */
-function ws_digg_smart_button_data(&$service, $subst) {
-  static $params;
-
-  if (!isset($params)) {
-    $params = array(
-      'related' => check_plain(variable_get('service_links_dsb_related', 'yes')),
-      'style' => check_plain(variable_get('service_links_dsb_style', 'yes')),
-    );
-  }
-
-  // teaser on rel used as description ?
   $service['url'][1] = array_merge($service['url'][1], $params);
 }
 
