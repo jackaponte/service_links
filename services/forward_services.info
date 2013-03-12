@@ -4,6 +4,3 @@ core = 7.x
 package = Service Links - Services
 dependencies[] = service_links 
 dependencies[] = forward
-
-version = VERSION
-files[] = forward_services.module

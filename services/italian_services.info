@@ -3,6 +3,3 @@ description = Provide the Italian Services: Diggita, Meemi, OkNotizie, Segnalo.c
 core = 7.x
 package = Service Links - Services
 dependencies[] = service_links
-
-version = VERSION
-files[] = italian_services.module
