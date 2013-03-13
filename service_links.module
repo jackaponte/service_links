@@ -614,7 +614,7 @@ function _service_links_render($service_id, $service, $settings, $nodelink, $nod
     $service['url'][0] = str_replace($settings['tag'], $settings['subst'], $service['url'][0]);
   }
 
-  $service['attributes']['title'] = $service['description'];
+  $service['attributes']['title'] = t($service['description']);
   $class = str_replace(array('][', '_', ' '), '-', 'service_links-'. $service_id);
   $service['attributes']['class'] = isset($service['attributes']['class']) ? array_merge($service['attributes']['class'], array($class)) : array($class);
   $service['attributes'] += $settings['attributes'];
@@ -645,7 +645,7 @@ function _service_links_render($service_id, $service, $settings, $nodelink, $nod
 
   // Create the HTML.
   $link = theme('service_links_build_link', array(
-    'text' => $service['name'],
+    'text' => t($service['name']),
     'url' => $service['url'],
     'image' => $service['icon'],
     'nodelink' => $nodelink,
