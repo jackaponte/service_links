@@ -72,6 +72,11 @@ function general_services_service_links() {
     'link' => 'http://www.google.com/bookmarks/mark?op=add&bkmk=<encoded-url>&title=<encoded-title>',
     'description' => t('Bookmark this post on Google.'),
   );
+  $links['google_plus'] = array(
+    'name' => 'Google+',
+    'link' => 'https://plus.google.com/share?url=<encoded-url>',
+    'description' => t('Share this on Google+.'),
+  );
   $links['yahoo'] = array(
     'name' => 'Yahoo',
     'link' => 'http://bookmarks.yahoo.com/myresults/bookmarklet?u=<encoded-url>&t=<encoded-title>',
