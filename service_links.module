@@ -719,6 +719,8 @@ function _service_links_get_tags($node, &$settings) {
 
   $source = variable_get('site_name', 'Drupal');
 
+  $long_url = $url;
+
   $front_page = url('<front>', array('absolute' => TRUE));
   if ((variable_get('clean_url', 0) == 0) && (strpos($front_page, '?q=') === FALSE)) {
     $front_page .= '?q=';
@@ -746,16 +748,19 @@ function _service_links_get_tags($node, &$settings) {
     'raw-encoded-url' => '<raw-encoded-url>',
     'raw-encoded-teaser' => '<raw-encoded-teaser>',
     'raw-encoded-short-url' => '<raw-encoded-short-url>',
+    'raw-encoded-long-url' => '<raw-encoded-long-url>',
     'raw-encoded-query' => '<raw-encoded-query>',
     'raw-encoded-source' => '<raw-encoded-source>',
     'encoded-title' => '<encoded-title>',
     'encoded-url' => '<encoded-url>',
     'encoded-teaser' => '<encoded-teaser>',
     'encoded-short-url' => '<encoded-short-url>',
+    'encoded-long-url' => '<encoded-long-url>',
     'encoded-query' => '<encoded-query>',
     'encoded-source' => '<encoded-source>',
     'teaser' => '<teaser>',
     'short-url' => '<short-url>',
+    'long-url' => '<long-url>',
     'source' => '<source>',
     'node-id' => '<node-id>',
     'query' => '<query>',
@@ -772,6 +777,8 @@ function _service_links_get_tags($node, &$settings) {
     'raw-encoded-teaser' => $teaser,
     //'raw-encoded-short-url' => rawurlencode($short_url),
     'raw-encoded-short-url' => $short_url,
+    //'raw-encoded-long-url' => rawurlencode($long_url),
+    'raw-encoded-long-url' => $long_url,
     //'raw-encoded-query' => rawurlencode($query),
     'raw-encoded-query' => $query,
     //'raw-encoded-source' => rawurlencode($source),
@@ -784,6 +791,8 @@ function _service_links_get_tags($node, &$settings) {
     'encoded-teaser' => $teaser,
     //'encoded-short-url' => urlencode($short_url),
     'encoded-short-url' => $short_url,
+    //'encoded-long-url' => urlencode($long_url),
+    'encoded-long-url' => $long_url,
     //'encoded-query' => urlencode($query),
     'encoded-query' => $query,
     //'encoded-source' => urlencode($source),
@@ -791,6 +800,7 @@ function _service_links_get_tags($node, &$settings) {
     //Not needed
     'teaser' => $teaser,
     'short-url' => $short_url,
+    'long-url' => $long_url,
     'source' => $source,
     'node-id' => $nid,
     'query' => $query,
