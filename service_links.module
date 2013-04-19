@@ -118,41 +118,29 @@ function service_links_menu() {
  * Implements hook_node_view().
  */
 function service_links_node_view($node, $view_mode) {
+  static $view_modes_allowed;
+ 
+  if (!isset($view_modes_allowed)) {
+    $view_modes_allowed = array_filter(variable_get('service_links_node_view_modes', array()));
+  }
+
   if ((arg(2) != 'edit') && service_links_show($node) && user_access('access service links')) {
+
     $node->service_links = service_links_render($node, TRUE);
 
-    if ($view_mode == 'rss') {
-      $node->service_links_rendered = theme('service_links_block_format', array('items' => service_links_render($node, FALSE), 'style' => SERVICE_LINKS_STYLE_IMAGE));
-    }
-    else {
-      $node->service_links_rendered = theme('service_links_node_format', array('links' => $node->service_links, 'label' => variable_get('service_links_label_in_node', t('Bookmark/Search this post with'))));
-    }
+    if (!empty($view_modes_allowed) && (in_array($view_mode, $view_modes_allowed))) {
 
-    switch (variable_get('service_links_in_node', SERVICE_LINKS_DISABLED)) {
-      case SERVICE_LINKS_IN_TEASER:
-        if (($view_mode == 'teaser') || ($view_mode == 'rss')) {
-          $node->content['service_links'] = array(
-            '#markup' => $node->service_links_rendered,
-            '#weight' => variable_get('service_links_weight_in_node', 10),
-          );
-        }
-        break;
-      case SERVICE_LINKS_IN_FULL:
-        if (($view_mode == 'full') || ($view_mode == 'rss')) {
-          $node->content['service_links'] = array(
-            '#markup' => $node->service_links_rendered,
-            '#weight' => variable_get('service_links_weight_in_node', 10),
-          );
-        }
-        break;
-      case SERVICE_LINKS_IN_BOTH:
-        if (($view_mode == 'teaser') || ($view_mode == 'full') || ($view_mode == 'rss')) {
-          $node->content['service_links'] = array(
-            '#markup' => $node->service_links_rendered,
-            '#weight' => variable_get('service_links_weight_in_node', 10),
-          );
-        }
-        break;
+      if ($view_mode == 'rss') {
+        $node->service_links_rendered = theme('service_links_block_format', array('items' => service_links_render($node, FALSE), 'style' => SERVICE_LINKS_STYLE_IMAGE));
+      }
+      else {
+        $node->service_links_rendered = theme('service_links_node_format', array('links' => $node->service_links, 'label' => variable_get('service_links_label_in_node', t('Bookmark/Search this post with'))));
+      }
+
+      $node->content['service_links'] = array(
+        '#markup' => $node->service_links_rendered,
+        '#weight' => variable_get('service_links_weight_in_node', 10),
+      );
     }
 
     _service_links_link($node, $view_mode);
@@ -163,29 +151,13 @@ function service_links_node_view($node, $view_mode) {
  * Create an array of links for the link section.
  */
 function _service_links_link($node, $view_mode) {
-  $teaser = ($view_mode == 'teaser') ? TRUE : FALSE;
-  $rss = ($view_mode == 'rss') ? TRUE : FALSE;
-  $full = ($view_mode == 'full') ? TRUE : FALSE;
-
-  switch (variable_get('service_links_in_links', SERVICE_LINKS_DISABLED)) {
-    case SERVICE_LINKS_DISABLED:
-      $show_links = FALSE;
-      break;
-    case SERVICE_LINKS_IN_TEASER:
-      $show_links = ($teaser || $rss) ? TRUE : FALSE;
-      break;
-    case SERVICE_LINKS_IN_FULL:
-      $show_links = ($full || $rss) ? TRUE : FALSE;
-      break;
-    case SERVICE_LINKS_IN_BOTH:
-      $show_links = TRUE;
-      break;
-    default:
-      $show_links = FALSE;
-      break;
+  static $view_modes_allowed;
+ 
+  if (!isset($view_modes_allowed)) {
+    $view_modes_allowed = array_filter(variable_get('service_links_link_view_modes', array()));
   }
 
-  if ($show_links) {
+  if (in_array($view_mode, $view_modes_allowed)) {
     $links = $node->service_links;
     if (!empty($links)) {
       $node->content['links']['node']['#links'] = array_merge($node->content['links']['node']['#links'], $links);
