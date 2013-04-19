@@ -11,13 +11,27 @@
         $(this).replaceWith(script_obj);
       });
 
-      IN.init({
-        onLoad: "Drupal.behaviors.ws_lsb.parse"
-      });
+      try {
+        IN.init({
+          onLoad: "Drupal.behaviors.ws_lsb.parse"
+        });
+      }
+      catch(e) {
+        if (window.console && window.console.log) {
+          console.log(e);
+        }
+      }
     },
 
     parse: function(context) {
-      IN.parse(context);
+      try {
+        IN.parse(context);
+      }
+      catch(e) {
+        if (window.console && window.console.log) {
+          console.log(e);
+        }
+      }
     }
   }
 })(jQuery);
