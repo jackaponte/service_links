@@ -124,6 +124,7 @@ function  widget_services_admin() {
     '#title' => t('Type'),
     '#default_value' => variable_get('service_links_fs_type', 'button_count'),
     '#options' => array(
+      'button' => t('Button'),
       'button_count' => t('Button Count'),
       'box_count' => t('Box Count'),
       'icon_link' => t('Icon Link'),
