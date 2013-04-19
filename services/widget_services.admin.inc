@@ -108,7 +108,7 @@ function  widget_services_admin() {
     '#title' => t('Locale'),
     '#type' => 'textfield',
     '#default_value' => variable_get('service_links_fl_locale', ''),
-    '#description' => t('Enter the language code and the country code separated by an underscore (i.e. es_ES, en_EN, en_US, it_IT, fr_FR, pt_BR, pt_PT)'),
+    '#description' => t('Enter the language code and the country code separated by an underscore (i.e. es_ES, en_GB, en_US, it_IT, fr_FR, pt_BR, pt_PT)'),
     '#size' => 5,
     '#attributes' => array('class' => array('container-inline')),
   );
