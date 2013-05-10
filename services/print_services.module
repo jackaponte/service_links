@@ -20,7 +20,7 @@ function print_services_service_links() {
 
   if (module_exists('print_pdf')) {
     $links['printpdf'] = array(
-      'name' => 'Print Pdf',
+      'name' => 'Print PDF',
       'link' => '<front-page>printpdf/<query>',
       'description' => t('PDF version'),
     );
