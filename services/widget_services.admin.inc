@@ -132,17 +132,19 @@ function  widget_services_admin() {
   );
   $form['facebook_share']['service_links_fs_text'] = array(
     '#type' => 'textfield',
-    '#title' => t('Text'),
-    '#default_value' => variable_get('service_links_fs_text', 'Share on Facebook'), 
-    '#description' => t('This is the text displayed in the button. Leave blank if you dont want show anything but the counter (Select also Button Count above).'),
+    '#title' => t('App ID'),
+    '#default_value' => variable_get('service_links_fs_app_id', '150123828484431'), 
+    '#description' => t('You may generate your app ID at the <a href=@url>Facebook apps</a> page', array('@url' => 'https://developers.facebook.com/apps')),
     '#size' => 40,
   );
-  $form['facebook_share']['service_links_fs_fix_count'] = array(
-    '#type' => 'checkbox',
-    '#title' => t('Show the counter also if zero'),
-    '#default_value' => variable_get('service_links_fs_fix_count', FALSE),
+  $form['facebook_share']['service_links_fs_css'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Style'),
+    '#default_value' => variable_get('service_links_fs_css', ''), 
+    '#description' => t('Apply a CSS style providing a single string (i.e. %style)', array('%style' => 'text-align:left;vertical-align:top;margin-top:4px')),
+    '#size' => 80,
   );
-
+ 
   $form['google_plus_one'] = array(
     '#type' => 'fieldset',
     '#collapsible' => TRUE,

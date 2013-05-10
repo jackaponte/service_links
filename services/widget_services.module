@@ -15,10 +15,7 @@ function widget_services_service_links() {
     'name' => t('Share on Facebook'),
     'link' => 'http://www.facebook.com/sharer.php',
     'description' => t('Share this post on Facebook'),
-    'javascript' => array(
-      //'http://static.ak.fbcdn.net/connect.php/js/FB.Share',
-      'facebook_share.js',
-    ),
+    'javascript' => 'facebook_share.js',
     'icon' => 'facebook.png',
     'style' => SERVICE_LINKS_STYLE_EMPTY,
     'callback' => 'ws_facebook_share_data',
@@ -106,8 +103,8 @@ function ws_facebook_share_data(&$service, $subst) {
   if (!isset($fs_settings)) {
     $fs_settings = array(
       'type' => check_plain(variable_get('service_links_fs_type', 'button_count')),
-      'fix_count' => (boolean) variable_get('service_links_fs_fix_count', FALSE),
-      'text' => t('@text', array('@text' => (variable_get('service_links_fs_text', 'Share on Facebook')))),
+      'app_id' => check_plain(variable_get('service_links_fs_app_id', '150123828484431')),
+      'css' => check_plain(preg_replace('/[^0-9a-z\-:;]/', '', variable_get('service_links_fs_css', ''))),
     );
 
     drupal_add_js(array('ws_fs' => $fs_settings), 'setting');
