@@ -9,10 +9,15 @@
         iframe.setAttribute('frameborder', 0);
         iframe.setAttribute('allowTransparency', 'true');
 
-        $(iframe).css('border', 'none').css('overflow', 'hidden')
-                 .css('width', Drupal.settings.ws_fl.width + 'px')
-                 .css('height', Drupal.settings.ws_fl.height + 'px');
-        
+        $(iframe).css({
+          'border': 'none',
+          'overflow': 'hidden',
+          'width': Drupal.settings.ws_fl.width + 'px',
+          'height': Drupal.settings.ws_fl.height + 'px',
+        });
+       
+        $(iframe).addClass($(this).attr('class'));
+
         $(this).replaceWith(iframe);
       });
     }
