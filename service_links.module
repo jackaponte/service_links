@@ -677,6 +677,13 @@ function _service_links_get_tags($node, &$settings) {
 
     $nid = $node->nid;
   }
+  elseif (isset($settings['data'])) {
+    $title = isset($settings['data']['title']) ? $settings['data']['title'] : '';
+    $url = isset($settings['data']['url']) ? $settings['data']['url'] : '';
+    $query = isset($settings['data']['query']) ? $settings['data']['query'] : '';
+    $teaser = isset($settings['data']['teaser']) ? $settings['data']['teaser'] : '';
+    $nid = isset($settings['data']['node_id']) ? $settings['data']['node_id'] : NULL;
+  }
   else {
     $title = drupal_get_title();
 
