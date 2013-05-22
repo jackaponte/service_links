@@ -130,7 +130,7 @@ function  widget_services_admin() {
       'icon_link' => t('Icon Link'),
     ),
   );
-  $form['facebook_share']['service_links_fs_text'] = array(
+  $form['facebook_share']['service_links_fs_app_id'] = array(
     '#type' => 'textfield',
     '#title' => t('App ID'),
     '#default_value' => variable_get('service_links_fs_app_id', '150123828484431'), 
