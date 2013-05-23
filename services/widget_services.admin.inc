@@ -60,6 +60,13 @@ function  widget_services_admin() {
     '#description' => t('A good value for button layout is 100, for box layout is 80 and for standard layout 450'),
     '#size' => 10,
   );
+  $form['facebook_like']['service_links_fl_height'] = array(
+    '#title' => t('Width'),
+    '#type' => 'textfield',
+    '#default_value' => variable_get('service_links_fl_height', 21),
+    '#description' => t('A good value for button layout is 21, for box layout is 65 and for standard layout is 80'),
+    '#size' => 10,
+  );
   $form['facebook_like']['service_links_fl_font'] = array(
     '#title' => t('Font'),
     '#type' => 'select',
@@ -83,6 +90,7 @@ function  widget_services_admin() {
       'false' => t('No'),
     ),
     '#attributes' => array('class' => array('container-inline')),
+    '#description' => t('This works only when the standard layout is set on'),
   );
   $form['facebook_like']['service_links_fl_colorscheme'] = array(
     '#title' => t('Color Scheme'),
