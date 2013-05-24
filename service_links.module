@@ -673,7 +673,8 @@ function _service_links_get_tags($node, &$settings) {
 
     $query = drupal_get_path_alias("node/{$node->nid}");
 
-    $teaser = (isset($node->body) && isset($node->language) && isset($node->body[$node->language])) ? strip_tags(text_summary($node->body[$node->language][0]['value'])) : '';
+    $body = field_get_items('node', $node, 'body');
+    $teaser = $body ? strip_tags(text_summary($body[0]['value'])) : '';
 
     $nid = $node->nid;
   }
