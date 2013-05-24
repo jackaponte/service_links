@@ -150,8 +150,11 @@ function ws_google_plus_one_data(&$service, $subst) {
 
   if (!isset($gpo_settings)) {
     $gpo_settings = array(
-      'type' => check_plain(variable_get('service_links_gpo_type', '')),
-      'counter' => (boolean) variable_get('service_links_gpo_counter', TRUE),
+      'size' => check_plain(variable_get('service_links_gpo_size', '')),
+      'annotation' => check_plain(variable_get('service_links_gpo_annotation', '')),
+      'lang' => check_plain(variable_get('service_links_gpo_lang', '')),
+      'callback' => check_plain(variable_get('service_links_gpo_callback', '')),
+      'width' => (int) variable_get('service_links_gpo_width', 300),
     );
 
     drupal_add_js(array('ws_gpo' => $gpo_settings), 'setting');

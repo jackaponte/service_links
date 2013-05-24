@@ -61,7 +61,7 @@ function  widget_services_admin() {
     '#size' => 10,
   );
   $form['facebook_like']['service_links_fl_height'] = array(
-    '#title' => t('Width'),
+    '#title' => t('Height'),
     '#type' => 'textfield',
     '#default_value' => variable_get('service_links_fl_height', 21),
     '#description' => t('A good value for button layout is 21, for box layout is 65 and for standard layout is 80'),
@@ -159,10 +159,10 @@ function  widget_services_admin() {
     '#collapsed' => FALSE,
     '#title' => t('Google Plus One'),
   );
-  $form['google_plus_one']['service_links_gpo_type'] = array(
-    '#title' => t('Type'),
+  $form['google_plus_one']['service_links_gpo_size'] = array(
+    '#title' => t('Size'),
     '#type' => 'select',
-    '#default_value' => variable_get('service_links_gpo_type', ''),
+    '#default_value' => variable_get('service_links_gpo_size', ''),
     '#options' => array(
       '' => t('Standard'),
       'small' => t('Small'),
@@ -170,10 +170,37 @@ function  widget_services_admin() {
       'tall' => t('Tall'),
     ),
   );
-  $form['google_plus_one']['service_links_gpo_counter'] = array(
-    '#title' => t('Show counter'),
-    '#type' => 'checkbox',
-    '#default_value' => variable_get('service_links_gpo_counter', TRUE),
+  $form['google_plus_one']['service_links_gpo_annotation'] = array(
+    '#title' => t('Annotation'),
+    '#type' => 'select',
+    '#default_value' => variable_get('service_links_gpo_annotation', ''),
+    '#options' => array(
+      '' => t('Bubble'),
+      'none' => t('None'),
+      'inline' => t('Inline'),
+    ),
+  );
+  $form['google_plus_one']['service_links_gpo_width'] = array(
+    '#title' => t('Max width'),
+    '#type' => 'textfield',
+    '#default_value' => variable_get('service_links_gpo_width', 300),
+    '#description' => t('If annotation is set to "inline", this parameter sets the width in pixels to use for the button and its inline annotation. If the width is omitted, a button and its inline annotation use 450px. A minimum value of 120 is required.
+See <a href="@url">Inline annotation widths</a> for examples of how the annotation is displayed for various width settings', array('@url' => 'https://developers.google.com/+/web/+1button/?hl=it#inline-annotation')),
+    '#size' => 10,
+  );
+  $form['google_plus_one']['service_links_gpo_lang'] = array(
+    '#title' => t('Language'),
+    '#type' => 'textfield',
+    '#default_value' => variable_get('service_links_gpo_lang', ''),
+    '#description' => t('Sets the language to use for the +1 buttons on the page when annotation is set to "inline". For available language code values, see the <a href="@url">list of supported language codes</a>', array('@url' => 'https://developers.google.com/+/web/+1button/?hl=it#available-languages')),
+    '#size' => 5,
+  );
+  $form['google_plus_one']['service_links_gpo_callback'] = array(
+    '#title' => t('Callback function'),
+    '#type' => 'textfield',
+    '#default_value' => variable_get('service_links_gpo_callback', ''),
+    '#description' => t('If specified, this function is called after the user clicks the +1 button.'),
+    '#size' => 40,
   );
 
   $form['linkedin_share_button'] = array(
