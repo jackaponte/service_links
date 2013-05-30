@@ -836,10 +836,8 @@ function _service_links_get_node_path($node) {
   }
 
   $path = "node/$node->nid";
-  if (isset($node->uri)) {
-    if (((object)$node->uri['path'] == $front_page) || ($path == $front_page)) {
-      $path = '<front>';
-    }
+  if (($path == $front_page) || (isset($node->uri) && ((object)$node->uri['path'] == $front_page))) {
+    $path = '<front>';
   }
 
   return $path;
