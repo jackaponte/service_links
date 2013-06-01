@@ -30,8 +30,9 @@ function theme_service_links_build_link($variables) {
         );
         break;
       case SERVICE_LINKS_STYLE_IMAGE:
+        $alt_text = t('!name logo', array('!name' => $text));
         $link = array(
-          'title' => theme('image', array('path' => service_links_expand_path($image), 'alt' => $text)),
+          'title' => theme('image', array('path' => service_links_expand_path($image), 'alt' => $alt_text)),
           'href' => $url[0],
           'query' => $query,
           'attributes' => $attributes,
@@ -39,8 +40,9 @@ function theme_service_links_build_link($variables) {
         );
         break;
       case SERVICE_LINKS_STYLE_IMAGE_AND_TEXT:
+        $alt_text = t('!name logo', array('!name' => $text));
         $link = array(
-          'title' => theme('image', array('path' => service_links_expand_path($image), 'alt' => $text)) .' '. $text,
+          'title' => theme('image', array('path' => service_links_expand_path($image), 'alt' => $alt_text)) .' '. $text,
           'href' => $url[0],
           'query' => $query,
           'attributes' => $attributes,
@@ -72,11 +74,13 @@ function theme_service_links_build_link($variables) {
         break;
       case SERVICE_LINKS_STYLE_IMAGE:
         $attributes = array_merge($attributes, array('html' => TRUE));
-        $link = l(theme('image', array('path' => service_links_expand_path($image), 'alt' => $text)), $url[0], $attributes);
+        $alt_text = t('!name logo', array('!name' => $text));
+        $link = l(theme('image', array('path' => service_links_expand_path($image), 'alt' => $alt_text)), $url[0], $attributes);
         break;
       case SERVICE_LINKS_STYLE_IMAGE_AND_TEXT:
         $attributes = array_merge($attributes, array('html' => TRUE));
-        $link = l(theme('image', array('path' => service_links_expand_path($image), 'alt' => $text)) .' '. $text, $url[0], $attributes);
+        $alt_text = t('!name logo', array('!name' => $text));
+        $link = l(theme('image', array('path' => service_links_expand_path($image), 'alt' => $alt_text)) .' '. $text, $url[0], $attributes);
         break;
       case SERVICE_LINKS_STYLE_EMPTY:
         $attributes = array_merge($attributes, array('html' => TRUE));
