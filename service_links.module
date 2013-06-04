@@ -2,11 +2,17 @@
 
 /**
  * @file
- * Original Author: Fredrik Jonsson fredrik at combonet dot se
- * Ex Maintainer: Sivanandhan, P. apsivam .at. apsivam .dot. in
- * Current Maintainer and 2.x branch starter: Fabio Mucciante aka TheCrow
- * Co Mantainer: Rob Loach
- * A module that adds Digg, del.icio.us, reddit, Technorati etc. links to nodes.
+ * Adds social network links to the content.
+ *
+ * This module is the enhanced version of Service Links 1.x developed
+ * by Fredrik Jonsson, rewritten and improved to fit the new purposes:
+ * extend easily the number of services supported and provide APIs to
+ * print links everywhere within any content.
+ * At the @link http://servicelinks.altervista.org/?q=service home page
+ * @endlink a web interface helps to create a module including the
+ * services not availables in the standard package.
+ *
+ * @author: Fabio Mucciante (TheCrow)
  */
 
 define('SERVICE_LINKS_STYLE_NONE', 0);

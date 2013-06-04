@@ -2,7 +2,9 @@
 
 /**
  * @file
- * Services most used and supported from the start by Service Links module.
+ * Extends Service Links with the most known services.
+ *
+ * @author Fabio Mucciante (TheCrow)
  */
 
 /**

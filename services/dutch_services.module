@@ -2,8 +2,9 @@
 
 /**
  * @file
- * Dutch services that extend Service Links module
- * Collected by Kasper Souren
+ * Extends Service Links with Dutch services.
+ *
+ * @author Kasper Souren
  */
 
 /**

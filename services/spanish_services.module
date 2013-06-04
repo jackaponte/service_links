@@ -2,8 +2,9 @@
 
 /**
  * @file
- * Spanish services that extend Service Links module
- * Funded by ateneatech
+ * Extends Service Links with Spanish services.
+ * 
+ * @author ateneatech
  */
 
 /**

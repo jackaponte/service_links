@@ -2,7 +2,9 @@
 
 /**
  * @file
- * Widgets show some info about the content and the social network.
+ * Extends Service Links with dynamic buttons.
+ *
+ * @author Fabio Mucciante (TheCrow)
  */
 
 /**

@@ -2,8 +2,9 @@
 
 /**
  * @file
- * Farsi services that extend Service Links module,
- * provided by @lameei.
+ * Extends Service Links with Farsi services.
+ * 
+ * @author lameei
  */
 
 /**

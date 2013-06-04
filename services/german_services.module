@@ -2,8 +2,9 @@
 
 /**
  * @file
- * German services that extend Service Links module
- * Collected by Sanduhrs and funana
+ * Extends Service Links with German services.
+ * 
+ * @authors Sanduhrs, funana
  */
 
 /**

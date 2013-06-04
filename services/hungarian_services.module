@@ -2,8 +2,9 @@
 
 /**
  * @file
- * Hungarian services that extend Service Links module
- * by Denes Szabo
+ * Extends Service Links with Hungarian services.
+ *
+ * @author Denes Szabo
  */
 
 /**
