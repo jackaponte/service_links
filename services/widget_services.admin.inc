@@ -33,9 +33,6 @@ function  widget_services_admin() {
     '#default_value' => variable_get('service_links_tw_data_via', ''),
     '#size' => 40,
   );
-  //data-related
-  //lang
-  //counturl
 
   $form['facebook_like'] = array(
     '#type' => 'fieldset',

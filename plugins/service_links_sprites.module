@@ -18,10 +18,12 @@ define('SLS_GD_MIME', 'mime');
 define('SLS_FILENAME', 'sl_sprites');
 
 /**
- * Load the CSS file if requested.
+ * Implements hook_init().
  */
-if (variable_get('service_links_use_internal_sprites', 0)) {
-  drupal_add_css(variable_get('file_public_path', conf_path() . '/files') . '/' . SLS_FILENAME . '.css');
+function service_links_sprites_init() {
+  if (variable_get('service_links_use_internal_sprites', 0)) {
+    drupal_add_css(variable_get('file_public_path', conf_path() . '/files') . '/' . SLS_FILENAME . '.css');
+  }
 }
 
 /**
@@ -138,6 +140,7 @@ function service_links_sprites_validate($form, &$form_state) {
     $icon = isset($service['icon']) ? $service['icon'] : $service_id . '.png';
     $paths[$service_id] = service_links_expand_path($icon);
   }
+
   sls_build_sprites($paths);
 }
 

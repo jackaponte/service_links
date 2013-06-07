@@ -22,11 +22,6 @@ define('SERVICE_LINKS_STYLE_IMAGE_AND_TEXT', 3);
 define('SERVICE_LINKS_STYLE_EMPTY', 4);
 define('SERVICE_LINKS_STYLE_FISHEYE', 5);
 
-define('SERVICE_LINKS_DISABLED', 0);
-define('SERVICE_LINKS_IN_TEASER', 1);
-define('SERVICE_LINKS_IN_FULL', 2);
-define('SERVICE_LINKS_IN_BOTH', 3);
-
 define('SERVICE_LINKS_SHORT_URL_USE_NEVER', 0);
 define('SERVICE_LINKS_SHORT_URL_USE_WHEN_REQUESTED', 1);
 define('SERVICE_LINKS_SHORT_URL_USE_ALWAYS', 2);
@@ -136,13 +131,13 @@ function service_links_node_view($node, $view_mode) {
 
     if (!empty($view_modes_allowed) && (in_array($view_mode, $view_modes_allowed))) {
 
-      if ($view_mode == 'rss') {
-        $node->service_links_rendered = theme('service_links_block_format', array('items' => service_links_render($node, FALSE), 'style' => SERVICE_LINKS_STYLE_IMAGE));
-      }
-      else {
-        $node->service_links_rendered = theme('service_links_node_format', array('links' => $node->service_links, 'label' => variable_get('service_links_label_in_node', t('Bookmark/Search this post with'))));
-      }
-
+      $node->service_links_rendered = theme('service_links_node_format', array(
+        'links' => $node->service_links,
+        'label' => variable_get('service_links_label_in_node', t('Bookmark/Search this post with')),
+        'view_mode' => $view_mode,
+        'node_type' => $node->type,
+      ));
+  
       $node->content['service_links'] = array(
         '#markup' => $node->service_links_rendered,
         '#weight' => variable_get('service_links_weight_in_node', 10),
@@ -320,7 +315,12 @@ function service_links_theme() {
       'file' => 'service_links.theme.inc',
     ),
     'service_links_node_format' => array(
-      'variables' => array('links' => NULL, 'label' => NULL),
+      'variables' => array(
+        'links' => NULL,
+        'label' => NULL,
+        'view_mode' => NULL,
+        'node_type' => NULL
+      ),
       'file' => 'service_links.theme.inc',
     ),
     'service_links_block_format' => array(
