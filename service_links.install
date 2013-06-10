@@ -43,11 +43,10 @@ function service_links_update_6200() {
   }
 
   // delete old service variables
-  $result = db_query('SELECT name FROM {variable} v WHERE LOCATE("service_links_show_",v.name) > 0');
-  while ($row = db_fetch_object($result)) {
-    variable_del($row->name);
-  }
-
+  db_delete('variable')
+    ->condition('name', 'service_links_show_%', 'LIKE')
+    ->execute();
+  
   // Aggregator2 support
   variable_del('service_links_agg2_link');
 }
