@@ -61,6 +61,9 @@ function service_links_hook_info() {
     'service_links_alter' => array(
       'group' => 'service_links',
     ),
+    'service_links_node_settings_alter' => array(
+      'group' => 'service_links',
+    ),
   );
 
   return $hooks;
@@ -794,6 +797,8 @@ function _service_links_get_tags($node, &$settings) {
     'title' => $title,
     'front-page' => $front_page,
   );
+  // Invoke an alter hook to let other modules modify these values if needed.
+  drupal_alter('service_links_node_settings', $settings, $node);
 }
 
 /**
