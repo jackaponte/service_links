@@ -4,7 +4,9 @@ Author and Drupal mantainer: Fabio Mucciante aka TheCrow (since the 2.x branch)
 Current Drupal co-mantainer: Simon Georges
 License:              GPL (see LICENSE.txt)
 
-Ported to Backdrop by Jack Aponte (https://github.com/jackaponte)
+Ported to Backdrop by Jack Aponte (https://github.com/jackaponte) of Palante Technology Cooperative (http://palantetech.coop)
+
+Backdrop port sponsored by the Audre Lorde Project (http://alp.org)
 
 Introduction
 ------------
