@@ -151,7 +151,7 @@ function service_links_admin_settings() {
   if ($visibility == SERVICE_LINKS_VISIBILITY_PHP && !$access) {
     $form['page_match'] = array(
       'service_links_visibility_for_node' => array(
-        '#type' => 'value', 
+        '#type' => 'value',
         '#value' => SERVICE_LINKS_VISIBILITY_PHP,
       ),
       'service_links_page_match_for_node' => array(
@@ -441,14 +441,13 @@ function _service_links_get_terms($included_vocs = array()) {
   $types = array();
   $vocabularies = taxonomy_get_vocabularies();
   foreach ($vocabularies as $vocabulary) {
-    if (in_array($vocabulary->vid, $included_vocs)) {
-      $tree = taxonomy_get_tree($vocabulary->vid);
+    if (in_array($vocabulary->machine_name, $included_vocs)) {
+      $tree = taxonomy_get_tree($vocabulary->machine_name);
       foreach ($tree as $term) {
         $types[$term->tid] = check_plain($term->name);
       }
     }
   }
-
   return $types;
 }
 
@@ -459,11 +458,8 @@ function _service_links_get_vocabularies() {
   $list_vocs = taxonomy_get_vocabularies();
   $vocs = array();
   foreach ($list_vocs as $vocabulary) {
-    if ($vocabulary->module == 'taxonomy') {
-      $vocs[$vocabulary->vid] = check_plain($vocabulary->name);
-    }
+    $vocs[$vocabulary->machine_name] = check_plain($vocabulary->name);
   }
-
   return $vocs;
 }
 
