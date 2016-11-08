@@ -1,6 +1,6 @@
 name = Swedish Services
 description = Provide the Swedish Services: Bloggy, Pusha
-core = 7.x
+backdrop = 1.x
 package = Service Links - Services
 dependencies[] = service_links
 
