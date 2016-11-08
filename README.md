@@ -1,9 +1,10 @@
-Service Links 2.x:
+Service Links:
 ------------------
-Author and mantainer: Fabio Mucciante aka TheCrow (since the 2.x branch)
-Current co-mantainer: Simon Georges
-Requirements:         Drupal 7
+Author and Drupal mantainer: Fabio Mucciante aka TheCrow (since the 2.x branch)
+Current Drupal co-mantainer: Simon Georges
 License:              GPL (see LICENSE.txt)
+
+Ported to Backdrop by Jack Aponte (https://github.com/jackaponte)
 
 Introduction
 ------------
@@ -62,7 +63,7 @@ http://servicelinks.altervista.org/?q=about
 Installation and configuration
 -------------------------------
 1) Copy the whole 'service_links' folder under your 'modules' directory and then
-   
+
 2) Point your browser to administer >> modules', enable 'Service Links' and one
    of the 'XXX Services' provided, 'General Services' contain the most know social
    networks, and 'Widgets Services' the most used buttons
