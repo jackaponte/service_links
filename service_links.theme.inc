@@ -18,7 +18,7 @@ function theme_service_links_build_link($variables) {
 
   if ($nodelink) {
     $query = isset($url[1]) ? $url[1] : NULL;
- 
+
     switch ($style) {
       case SERVICE_LINKS_STYLE_TEXT:
         $link = array(
@@ -29,9 +29,10 @@ function theme_service_links_build_link($variables) {
         );
         break;
       case SERVICE_LINKS_STYLE_IMAGE:
+        $img_path = service_links_expand_path($image);
         $alt_text = t('!name logo', array('!name' => $text));
         $link = array(
-          'title' => theme('image', array('path' => service_links_expand_path($image), 'alt' => $alt_text)),
+          'title' => theme('image', array('uri' => $img_path, 'alt' => $alt_text)),
           'href' => $url[0],
           'query' => $query,
           'attributes' => $attributes,
@@ -39,9 +40,10 @@ function theme_service_links_build_link($variables) {
         );
         break;
       case SERVICE_LINKS_STYLE_IMAGE_AND_TEXT:
+        $img_path = service_links_expand_path($image);
         $alt_text = t('!name logo', array('!name' => $text));
         $link = array(
-          'title' => theme('image', array('path' => service_links_expand_path($image), 'alt' => $alt_text)) .' '. $text,
+          'title' => theme('image', array('uri' => $img_path, 'alt' => $alt_text)) .' '. $text,
           'href' => $url[0],
           'query' => $query,
           'attributes' => $attributes,
@@ -73,13 +75,15 @@ function theme_service_links_build_link($variables) {
         break;
       case SERVICE_LINKS_STYLE_IMAGE:
         $attributes['html'] = TRUE;
+        $img_path = service_links_expand_path($image);
         $alt_text = t('!name logo', array('!name' => $text));
-        $link = l(theme('image', array('path' => service_links_expand_path($image), 'alt' => $alt_text)), $url[0], $attributes);
+        $link = l(theme('image', array('uri' => $img_path, 'alt' => $alt_text)), $url[0], $attributes);
         break;
       case SERVICE_LINKS_STYLE_IMAGE_AND_TEXT:
         $attributes['html'] = TRUE;
+        $img_path = service_links_expand_path($image);
         $alt_text = t('!name logo', array('!name' => $text));
-        $link = l(theme('image', array('path' => service_links_expand_path($image), 'alt' => $alt_text)) .' '. $text, $url[0], $attributes);
+        $link = l(theme('image', array('uri' => $img_path, 'alt' => $alt_text)) .' '. $text, $url[0], $attributes);
         break;
       case SERVICE_LINKS_STYLE_EMPTY:
         $attributes['html'] = TRUE;
@@ -115,7 +119,7 @@ function theme_service_links_node_format($variables) {
 
     return '<div class="service-links">' . implode(' ', $result) . '</div>';
   }
-  
+
   if (isset($label) && !empty($label)) {
     return '<div class="service-links"><div class="service-label">'. t('@label', array('@label' => $label)) .' </div>'. theme('links', array('links' => $links)) .'</div>';
   }
