@@ -347,8 +347,27 @@ function service_links_admin_settings() {
   }
   $form['#validate'][] = 'service_links_admin_services_validate';
 
-  return system_settings_form($form);
+  $form['actions']['#type'] = 'actions';
+  $form['actions']['submit'] = array(
+    '#type' => 'submit',
+    '#value' => t('Save configurationnnn'),
+  );
+
+return $form;
 }
+
+function service_links_admin_settings_submit($form, &$form_state)
+{
+    foreach ($form_state['values'] as $key => $value) {
+        if (is_array($value) && isset($form_state['values']['array_filter'])) {
+            $value = array_keys(array_filter($value));
+        }
+        config_set('service_links.settings', $key, $value);
+    }
+
+    backdrop_set_message(t('The configuration options have been saved!'));
+}
+
 
 /**
  * Check if domain address textbox is empty when should be not,
@@ -431,7 +450,25 @@ function service_links_admin_services() {
     drupal_set_message(t('You need to load at least one of XXX Services module, please enable them in <a href="@url">admin > modules</a> page', array('@url' => url('admin/modules'))), 'warning');
   }
 
-  return system_settings_form($form);
+  $form['actions']['#type'] = 'actions';
+  $form['actions']['submit'] = array(
+    '#type' => 'submit',
+    '#value' => t('Save configurationnnn'),
+  );
+
+return $form;
+}
+
+function service_links_admin_services_submit($form, &$form_state)
+{
+    foreach ($form_state['values'] as $key => $value) {
+        if (is_array($value) && isset($form_state['values']['array_filter'])) {
+            $value = array_keys(array_filter($value));
+        }
+        config_set('service_links.settings', $key, $value);
+    }
+
+    backdrop_set_message(t('The configuration options have been saved!'));
 }
 
 /**
