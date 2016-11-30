@@ -63,7 +63,7 @@ function theme_service_links_drag_table($variables) {
  * Menu callback administration settings for general options.
  */
 function service_links_admin_settings() {
-
+  $config = config('service_links.settings');
   $form['where_to_show_the_links'] = array(
     '#type' => 'fieldset',
     '#collapsible' => TRUE,
@@ -74,12 +74,12 @@ function service_links_admin_settings() {
   $form['where_to_show_the_links']['service_links_node_types'] = array(
     '#type' => 'checkboxes',
     '#title' => t('Content types'),
-    '#default_value' => variable_get('service_links_node_types', array()),
+    '#default_value' => $config->get('service_links_node_types', array()),
     '#options' => array_map('check_plain', node_type_get_names()),
     '#attributes' => array('class' => array('container-inline')),
   );
   if (module_exists('taxonomy')) {
-    $selected_vocs = variable_get('service_links_category_vocs', array());
+    $selected_vocs = $config->get('service_links_category_vocs', array());
     $vocabularies = _service_links_get_vocabularies();
     $form['where_to_show_the_links']['service_links_category_vocs'] = array(
       '#type' => 'checkboxes',
@@ -91,7 +91,7 @@ function service_links_admin_settings() {
 
     $terms = _service_links_get_terms(array_values(array_filter($selected_vocs)));
     $count = count($terms);
-    $selected_types = variable_get('service_links_category_types', array());
+    $selected_types = $config->get('service_links_category_types', array());
     if ($count > 0) {
       $form['where_to_show_the_links']['service_links_category_types'] = array(
         '#type' => 'select',
@@ -127,14 +127,14 @@ function service_links_admin_settings() {
   $form['places_to_show_the_links']['service_links_link_view_modes'] = array(
     '#type' => 'checkboxes',
     '#title' => t('Service links in the links'),
-    '#default_value' => variable_get('service_links_link_view_modes', array()),
+    '#default_value' => $config->get('service_links_link_view_modes', array()),
     '#options' => _service_links_get_view_modes(),
     '#description' => t('Select for what view mode display the services in the link section.'),
   );
   $form['places_to_show_the_links']['service_links_node_view_modes'] = array(
     '#type' => 'checkboxes',
     '#title' => t('Service links in the content'),
-    '#default_value' => variable_get('service_links_node_view_modes', array()),
+    '#default_value' => $config->get('service_links_node_view_modes', array()),
     '#options' => _service_links_get_view_modes(),
     '#description' => t('Select for what view modes display the services in the content section.'),
   );
@@ -146,8 +146,8 @@ function service_links_admin_settings() {
     '#collapsed' => FALSE,
   );
   $access = user_access('use PHP for service visibility');
-  $visibility = variable_get('service_links_visibility_for_node', SERVICE_LINKS_VISIBILITY_NOT_LISTED);
-  $pages = variable_get('service_links_page_match_for_node', '');
+  $visibility = $config->get('service_links_visibility_for_node', SERVICE_LINKS_VISIBILITY_NOT_LISTED);
+  $pages = $config->get('service_links_page_match_for_node', '');
   if ($visibility == SERVICE_LINKS_VISIBILITY_PHP && !$access) {
     $form['page_match'] = array(
       'service_links_visibility_for_node' => array(
@@ -199,7 +199,7 @@ function service_links_admin_settings() {
   $form['how_to_show_the_links']['service_links_style'] = array(
     '#type' => 'select',
     '#title' => t('Choose a style'),
-    '#default_value' => variable_get('service_links_style', SERVICE_LINKS_STYLE_IMAGE),
+    '#default_value' => $config->get('service_links_style', SERVICE_LINKS_STYLE_IMAGE),
     '#options' => array(
       SERVICE_LINKS_STYLE_TEXT => t('Only Text'),
       SERVICE_LINKS_STYLE_IMAGE => t('Only Image'),
@@ -215,12 +215,12 @@ function service_links_admin_settings() {
   $form['how_to_show_the_links']['service_links_hide_if_unpublished'] = array(
     '#type' => 'checkbox',
     '#title' => t("Don't show links if the content is unpublished"),
-    '#default_value' => variable_get('service_links_hide_if_unpublished', 0),
+    '#default_value' => $config->get('service_links_hide_if_unpublished', 0),
   );
   $form['how_to_show_the_links']['service_links_hide_for_author'] = array(
     '#type' => 'checkbox',
     '#title' => t("Don't show links if the actual user is the author of the node"),
-    '#default_value' => variable_get('service_links_hide_for_author', 0),
+    '#default_value' => $config->get('service_links_hide_for_author', 0),
   );
   $form['how_to_show_the_links']['in_node'] = array(
     '#type' => 'fieldset',
@@ -229,14 +229,14 @@ function service_links_admin_settings() {
   $form['how_to_show_the_links']['in_node']['service_links_label_in_node'] = array(
     '#type' => 'textfield',
     '#title' => t('Print the label'),
-    '#default_value' => variable_get('service_links_label_in_node', t('Bookmark/Search this post with')),
+    '#default_value' => $config->get('service_links_label_in_node', t('Bookmark/Search this post with')),
     '#size' => '40',
   );
   $form['how_to_show_the_links']['in_node']['service_links_weight_in_node'] = array(
     '#type' => 'weight',
     '#delta' => 100,
     '#title' => t('Assign a weight'),
-    '#default_value' => variable_get('service_links_weight_in_node', 10),
+    '#default_value' => $config->get('service_links_weight_in_node', 10),
     '#description' => t('The weight help to place the Service Links section above or below the other elements.'),
   );
 
@@ -255,7 +255,7 @@ function service_links_admin_settings() {
     '#type' => 'checkbox',
     '#title' => t('Use the default icons if missing'),
     '#description' => t('Check every icon in the standard folder and if not available, consider the default path %path', array('%path' => service_links_expand_path(NULL, 'preset'))),
-    '#default_value' => variable_get('service_links_check_icons', FALSE),
+    '#default_value' => $config->get('service_links_check_icons', FALSE),
   );
 
   $form['extra_options'] = array(
@@ -267,14 +267,14 @@ function service_links_admin_settings() {
   $form['extra_options']['service_links_new_window'] = array(
     '#type' => 'select',
     '#title' => t('Open link in...'),
-    '#default_value' => variable_get('service_links_new_window', 0),
+    '#default_value' => $config->get('service_links_new_window', 0),
     '#options' => array(0 => t('Same window'), 1 => t('New window')),
   );
   $form['extra_options']['service_links_append_to_url'] = array(
     '#type' => 'textfield',
     '#title' => t('Append the following text to your URL'),
     '#description' => t('This text will be inserted at the end of the current URL (i.e. %param => %url)', array('%param' => 'param1=value1&param2=value2', '%url' => 'http://domain.com/current-page&param1=value1&param2=value2')),
-    '#default_value' => variable_get('service_links_append_to_url', ''),
+    '#default_value' => $config->get('service_links_append_to_url', ''),
     '#size' => 40,
   );
   $form['extra_options']['title'] = array(
@@ -283,7 +283,7 @@ function service_links_admin_settings() {
   $form['extra_options']['title']['service_links_override_title'] = array(
     '#type' => 'select',
     '#title' => t('How to fill the title tag'),
-    '#default_value' => variable_get('service_links_override_title', SERVICE_LINKS_TAG_TITLE_NODE),
+    '#default_value' => $config->get('service_links_override_title', SERVICE_LINKS_TAG_TITLE_NODE),
     '#options' => array(
       SERVICE_LINKS_TAG_TITLE_NODE => t('Use the original node title'),
       SERVICE_LINKS_TAG_TITLE_OVERRIDE => t('Override the original title'),
@@ -292,7 +292,7 @@ function service_links_admin_settings() {
   $form['extra_options']['title']['service_links_override_title_text'] = array(
     '#type' => 'textfield',
     '#description' => t("Enter the text that override the title: use @title for referrer the original title, either the various tokens offered by <a href='@url'>Token</a> if it's enabled and the related option active.", array('@url' => 'http://www.drupal.org/project/token', '@title' => '<title>')),
-    '#default_value' => variable_get('service_links_override_title_text', '<title>'),
+    '#default_value' => $config->get('service_links_override_title_text', '<title>'),
     '#size' => 40,
   );
 
@@ -319,17 +319,17 @@ function service_links_admin_settings() {
   $form['short_links']['service_links_short_links_use'] = array(
     '#type' => 'select',
     '#title' => t('Use short links'),
-    '#default_value' => variable_get('service_links_short_links_use', SERVICE_LINKS_SHORT_URL_USE_NEVER),
+    '#default_value' => $config->get('service_links_short_links_use', SERVICE_LINKS_SHORT_URL_USE_NEVER),
     '#options' => array(
       SERVICE_LINKS_SHORT_URL_USE_NEVER => t('Never'),
       SERVICE_LINKS_SHORT_URL_USE_WHEN_REQUESTED => t('Only when requested'),
       SERVICE_LINKS_SHORT_URL_USE_ALWAYS => t('Always')),
   );
-  if (variable_get('service_links_short_links_use', SERVICE_LINKS_SHORT_URL_USE_NEVER) > 0) {
+  if ($config->get('service_links_short_links_use', SERVICE_LINKS_SHORT_URL_USE_NEVER) > 0) {
     $form['short_links']['service_links_short_links_type'] = array(
       '#type' => 'select',
       '#title' => t('How generate short links'),
-      '#default_value' => variable_get('service_links_short_links_type', SERVICE_LINKS_SHORT_URL_TYPE_NODE),
+      '#default_value' => $config->get('service_links_short_links_type', SERVICE_LINKS_SHORT_URL_TYPE_NODE),
       '#description' => t('If you select "Short URL," it will use the service selected with the <a href="@shorten">Shorten URLs module</a>. If you have not enabled the module, Service Links will default to TinyURL.', array('@shorten' => 'http://drupal.org/project/shorten')),
       '#options' => array(
         SERVICE_LINKS_SHORT_URL_TYPE_NODE => t('Use node/xxx alias'),
@@ -341,7 +341,7 @@ function service_links_admin_settings() {
       '#type' => 'textfield',
       '#title' => t('Domain to redirect'),
       '#description' => t('Enter the complete address without trailing slash (i.e. %name)', array('%name' => 'http://www.example.com') ),
-      '#default_value' => variable_get('service_links_domain_redirect', ''),
+      '#default_value' => $config->get('service_links_domain_redirect', ''),
       '#size' => 40,
     );
   }
@@ -350,7 +350,7 @@ function service_links_admin_settings() {
   $form['actions']['#type'] = 'actions';
   $form['actions']['submit'] = array(
     '#type' => 'submit',
-    '#value' => t('Save configurationnnn'),
+    '#value' => t('Save configuration'),
   );
 
 return $form;
@@ -358,14 +358,12 @@ return $form;
 
 function service_links_admin_settings_submit($form, &$form_state)
 {
+    $config = config('service_links.settings');
     foreach ($form_state['values'] as $key => $value) {
-        if (is_array($value) && isset($form_state['values']['array_filter'])) {
-            $value = array_keys(array_filter($value));
-        }
-        config_set('service_links.settings', $key, $value);
+      $config->set($key, $value);
     }
-
-    backdrop_set_message(t('The configuration options have been saved!'));
+    $config->save();
+    backdrop_set_message(t('The configuration options have been saved.'));
 }
 
 
@@ -415,11 +413,12 @@ function service_links_admin_services_validate($form, &$form_state) {
  * Menu callback administration settings for services links list.
  */
 function service_links_admin_services() {
+  $config = config('service_links.settings');
   $settings = array();
 
   $services = service_links_get_links(NULL, TRUE);
-  $settings['show'] = variable_get('service_links_show', NULL);
-  $settings['weight'] = variable_get('service_links_weight', NULL);
+  $settings['show'] = $config->get('service_links_show', NULL);
+  $settings['weight'] = $config->get('service_links_weight', NULL);
 
   $form['service_links'] = array('#theme' => 'service_links_drag_table');
   $form['service_links']['service_links_show'] = array('#tree' => TRUE);
@@ -453,7 +452,7 @@ function service_links_admin_services() {
   $form['actions']['#type'] = 'actions';
   $form['actions']['submit'] = array(
     '#type' => 'submit',
-    '#value' => t('Save configurationnnn'),
+    '#value' => t('Save configuration'),
   );
 
 return $form;
@@ -461,14 +460,12 @@ return $form;
 
 function service_links_admin_services_submit($form, &$form_state)
 {
-    foreach ($form_state['values'] as $key => $value) {
-        if (is_array($value) && isset($form_state['values']['array_filter'])) {
-            $value = array_keys(array_filter($value));
-        }
-        config_set('service_links.settings', $key, $value);
-    }
-
-    backdrop_set_message(t('The configuration options have been saved!'));
+  $config = config('service_links.settings');
+  foreach ($form_state['values'] as $key => $value) {
+    $config->set($key, $value);
+  }
+  $config->save();
+    backdrop_set_message(t('The configuration options have been saved.'));
 }
 
 /**
