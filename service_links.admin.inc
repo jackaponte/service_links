@@ -347,6 +347,8 @@ function service_links_admin_settings() {
   }
   $form['#validate'][] = 'service_links_admin_services_validate';
 
+  $form['#submit'][] = 'service_links_admin_settings_submit';
+
   $form['actions']['#type'] = 'actions';
   $form['actions']['submit'] = array(
     '#type' => 'submit',
@@ -448,6 +450,8 @@ function service_links_admin_services() {
   if (empty($services)) {
     drupal_set_message(t('You need to load at least one of XXX Services module, please enable them in <a href="@url">admin > modules</a> page', array('@url' => url('admin/modules'))), 'warning');
   }
+
+  $form['#submit'][] = 'service_links_admin_services_submit';
 
   $form['actions']['#type'] = 'actions';
   $form['actions']['submit'] = array(
