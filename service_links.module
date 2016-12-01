@@ -291,16 +291,17 @@ function service_links_block_configure($delta = '') {
  * Implements hook_block_save().
  */
 function service_links_block_save($delta = '', $edit = array()) {
+  $config = config('service_links.settings');
   switch ($delta) {
     case 'service_links':
-      variable_set('service_links_block_style', $edit['service_links_block_style']);
+      $config->set('service_links_block_style', $edit['service_links_block_style']);
       break;
     case 'service_links_fisheye':
-      variable_set('service_links_path_fisheye', $edit['service_links_path_fisheye']);
+      $config->set('service_links_path_fisheye', $edit['service_links_path_fisheye']);
       break;
     case 'service_links_not_node':
-      variable_set('service_links_block_not_node_style', $edit['service_links_block_not_node_style']);
-      variable_set('service_links_block_not_node_front', $edit['service_links_block_not_node_front']);
+      $config->set('service_links_block_not_node_style', $edit['service_links_block_not_node_style']);
+      $config->set('service_links_block_not_node_front', $edit['service_links_block_not_node_front']);
       break;
   }
 }

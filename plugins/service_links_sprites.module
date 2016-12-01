@@ -31,7 +31,8 @@ function service_links_sprites_init() {
  * Build the CSS file and images.
  */
 function sls_build_sprites($files = array()) {
-  $sprite_filename = config_get('service_links.settings', 'file_public_path', conf_path() . '/files') . '/' . SLS_FILENAME;
+  $config = config('service_links.settings');
+  $sprite_filename = $config->get('file_public_path', conf_path() . '/files') . '/' . SLS_FILENAME;
   $tot_height = array();
   $images = array();
   $sizes = array();
@@ -105,7 +106,7 @@ function sls_build_sprites($files = array()) {
     fclose($css_fhandler);
   }
 
-  variable_set('service_links_sprites_sizes', $sizes);
+  $config->set('service_links_sprites_sizes', $sizes);
 }
 
 /**
