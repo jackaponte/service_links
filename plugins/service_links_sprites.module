@@ -23,7 +23,7 @@ define('SLS_FILENAME', 'sl_sprites');
 function service_links_sprites_init() {
   $config = config('service_links.settings');
   if ($config->get('service_links_use_internal_sprites', 0)) {
-    drupal_add_css($config->get('file_public_path', conf_path() . '/files') . '/' . SLS_FILENAME . '.css');
+    drupal_add_css(config_get('system.core', 'file_public_path', conf_path() . '/files') . '/' . SLS_FILENAME . '.css');
   }
 }
 
@@ -31,8 +31,7 @@ function service_links_sprites_init() {
  * Build the CSS file and images.
  */
 function sls_build_sprites($files = array()) {
-  $config = config('service_links.settings');
-  $sprite_filename = $config->get('file_public_path', conf_path() . '/files') . '/' . SLS_FILENAME;
+  $sprite_filename = config_get('system.core', 'file_public_path', conf_path() . '/files') . '/' . SLS_FILENAME;
   $tot_height = array();
   $images = array();
   $sizes = array();
@@ -106,7 +105,7 @@ function sls_build_sprites($files = array()) {
     fclose($css_fhandler);
   }
 
-  $config->set('service_links_sprites_sizes', $sizes);
+  config_set('service_links.settings', 'service_links_sprites_sizes', $sizes);
 }
 
 /**
