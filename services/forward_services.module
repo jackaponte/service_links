@@ -15,7 +15,7 @@ function forward_services_service_links() {
 
   $links['forward'] = array(
     'name' => 'Forward',
-    'link' => (variable_get('clean_url', 0) == 1) ? '<front-page>forward?path=<encoded-query>' : '<front-page>forward&path=<encoded-query>',
+    'link' => (config_get('service_links.settings', 'clean_url', 0) == 1) ? '<front-page>forward?path=<encoded-query>' : '<front-page>forward&path=<encoded-query>',
     'description' => t('Send to a friend'),
     'preset' => 'forward_url_fix',
   );

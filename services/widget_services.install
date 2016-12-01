@@ -9,6 +9,7 @@
  * Remove unused variables.
  */
 function widget_services_update_7201(&$sandbox) {
+  $config = config('service_links.settings');
   // Digg Smart Button
   variable_del('service_links_dsb_type');
   variable_del('service_links_dsb_related');
@@ -19,12 +20,12 @@ function widget_services_update_7201(&$sandbox) {
   variable_del('service_links_fs_fix_count');
 
   // Google Plus one unused
-  variable_set('service_links_gpo_size', variable_get('service_links_gpo_type', ''));
+  variable_set('service_links_gpo_size', $config->get('service_links_gpo_type', ''));
   variable_del('service_links_gpo_type');
   variable_del('service_links_gpo_counter');
 
   // Facebook Like height
-  $layout = variable_get('service_links_fl_layout', 'button_count');
+  $layout = $config->get('service_links_fl_layout', 'button_count');
   switch ($layout) {
     case 'box_count':
       variable_set('service_links_fl_height', 65);

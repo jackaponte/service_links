@@ -54,8 +54,9 @@ function hook_service_links() {
  *   An object containt the current node.
  */
 function my_service_preset(&$service, &$settings, $node = NULL) {
+  $config = config('service_links.settings');
   $settings['tags']['new-tag'] = '<new-tag>';
-  $settings['subst']['new-tag'] = check_plain(variable_get('some_variable', 'default'));
+  $settings['subst']['new-tag'] = check_plain($config->get('some_variable', 'default'));
 }
 
 /**

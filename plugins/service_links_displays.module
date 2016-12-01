@@ -45,6 +45,7 @@ function service_links_displays_theme() {
  * Implements hook_ds_fields_info().
  */
 function service_links_displays_ds_fields_info($entity_type) {
+  $config = config('service_links.settings');
   $fields = array(
     'service_links_displays_group' => array(
       'title' => t('Service Links Group'),
@@ -60,7 +61,7 @@ function service_links_displays_ds_fields_info($entity_type) {
     ),
   );
 
-  $services = array_filter(variable_get('service_links_displays', array()));
+  $services = array_filter($config->get('service_links_displays', array()));
   if (!empty($services)) {
     $services = service_links_get_links($services);
     foreach ($services as $service_id => $service) {
@@ -131,10 +132,11 @@ function theme_sld_single_image_and_text($variables) {
  * Apply the FishEye format to the field Service Links Group.
  */
 function theme_sld_group_fisheye($variables) {
+  $config = config('service_links.settings');
   $node = $variables['entity'];
 
   if (service_links_show($node) && user_access('access service links')) {
-    $services = array_filter(variable_get('service_links_displays', array()));
+    $services = array_filter($config->get('service_links_displays', array()));
     $options = array(
       'style' => SERVICE_LINKS_STYLE_FISHEYE,
       'link_show' => $services,
@@ -150,10 +152,11 @@ function theme_sld_group_fisheye($variables) {
  * Apply the Text format to the field Service Links Group.
  */
 function theme_sld_group_text($variables) {
+  $config = config('service_links.settings');
   $node = $variables['entity'];
 
   if (service_links_show($node) && user_access('access service links')) {
-    $services = array_filter(variable_get('service_links_displays', array()));
+    $services = array_filter($config->get('service_links_displays', array()));
     $options = array(
       'style' => SERVICE_LINKS_STYLE_TEXT,
       'link_show' => $services,
@@ -170,10 +173,11 @@ function theme_sld_group_text($variables) {
  * Apply the Image format to the field Service Links Group.
  */
 function theme_sld_group_image($variables) {
+  $config = config('service_links.settings');
   $node = $variables['entity'];
 
   if (service_links_show($node) && user_access('access service links')) {
-    $services = array_filter(variable_get('service_links_displays', array()));
+    $services = array_filter($config->get('service_links_displays', array()));
     $options = array(
       'style' => SERVICE_LINKS_STYLE_IMAGE,
       'link_show' => $services,
@@ -190,10 +194,11 @@ function theme_sld_group_image($variables) {
  * Apply the Image and Text format to the field Service Links Group.
  */
 function theme_sld_group_image_and_text($variables) {
+  $config = config('service_links.settings');
   $node = $variables['entity'];
 
   if (service_links_show($node) && user_access('access service links')) {
-    $services = array_filter(variable_get('service_links_displays', array()));
+    $services = array_filter($config->get('service_links_displays', array()));
     $options = array(
       'style' => SERVICE_LINKS_STYLE_IMAGE_AND_TEXT,
       'link_show' => $services,
@@ -210,9 +215,10 @@ function theme_sld_group_image_and_text($variables) {
  * Implements hook_form_alter().
  */
 function service_links_displays_form_alter(&$form, &$form_state, $form_id) {
+  $config = config('service_links.settings');
   if ($form_id == 'service_links_admin_services') {
-    $settings['displays'] = variable_get('service_links_displays', array());
-    $settings['weight'] = variable_get('service_links_weight', NULL);
+    $settings['displays'] = $config->get('service_links_displays', array());
+    $settings['weight'] = $config->get('service_links_weight', NULL);
 
     $form['service_links']['service_links_displays'] = array('#tree' => TRUE);
     $services = array_filter(array_keys($form['service_links']['service_links_weight']), '_sld_only_keys');
@@ -255,9 +261,9 @@ function service_links_displays_sl_servicestable_alter(&$table, $form) {
     $col =  drupal_render($service['displays']);
 
     $table['rows'][$num_row]['data'][$col_num] = $col;
-      
+
     $num_row++;
-  } 
+  }
 }
 
 /**

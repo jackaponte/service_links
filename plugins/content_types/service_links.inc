@@ -22,6 +22,7 @@ $plugin = array(
  * Output function for the 'service_links' content type.
  */
 function service_links_service_links_content_type_render($subtype, $conf, $panel_args, &$context) {
+  $config = config('service_links.settings');
   $content = NULL;
   $node = menu_get_object('node');
 
@@ -56,7 +57,7 @@ function service_links_service_links_content_type_render($subtype, $conf, $panel
       case 'service_links':
         $options = array(
           'style' => $style,
-          'link_to_front' => variable_get('service_links_block_not_node_front', FALSE),
+          'link_to_front' => $config->get('service_links_block_not_node_front', FALSE),
         );
         $content = theme('service_links_block_format', array(
           'items' => panel_service_links_render(NULL, FALSE, $options, $panel_services),
