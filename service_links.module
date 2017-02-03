@@ -224,7 +224,7 @@ function service_links_block_view($delta = '') {
           'link_to_front' => $config->get('service_links_block_not_node_front', FALSE),
         );
         $block['content'] = theme('service_links_block_format', array(
-          'items' => service_links_render(NULL, FALSE, $options),
+          'items' => service_links_render(NULL, FALSE, $options['style']),
           'style' => $options['style'],
         ));
         break;
